@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page</title>
+    <link rel="stylesheet" href="/mc-calendar.min.css" />
+</head>
+<body>
+<p>hello</p>  
+
+<!-- to do for intake:
+- after a user logs/signs in, they have to fill out a short survey
+- survey asks: 
+   1. what is the bad habit   
+      - option to click and add another bad habit
+   2. how much does this bad habit cost you on a weekly basis
+   3. what rewards would you like to add 
+      - option to click and keep adding rewards
+  - survey info gets stored in the database
+
+to do for reinforcer:
+- if there is a streak, then the dom should display how 
+much money they have theoretically saved (take survey question 3, 
+divide that number by 7 and then keep multiplying that amount by 
+the amount of days in the streak)
+- using google maps api, the user should be able to plug in their 
+location and once they begin their excersize the computer should be
+tracking the route and once the user presses the "done exerceising"
+button then the computer will stop tracking the route
+    - an alternative is to ask the user how far they ran/walked
+    - or connect their info to another gps tracker app
+- if there is a streak and the user has opted to track an excersize
+during that streak, then the dom should display how far they have 
+excersized (in distance) by day  -->
+
+<!-- to do for calendar: 
+- when a user hover over the day, a check image should show up
+- when a user clicks the day, the box should be replaced with
+an image that has a solid background and a line strike
+- the computer should be counting the days when they are 
+clicked consecutively and storing the streak count
+- display the streak on the dom
+- if a streak is created (meaning more than one day has been
+clicked on), then a pop up box should emerge and ask the user
+if they would like to reward themselves.
+- the rewards should be displayed in a list order with radio
+buttons and the computer should store which reward was given
+- question: how will this work if a user has more than one
+bad habit? do we scrap that option or reimagine the calendar? 
+    - idea: when a user clicks on a day, they get redirected to a 
+    list of their habits, and they click which one they didn't 
+    engage with
+- ***thing to do at the end: display current month only-->
+
+
+
+<script src="/mc-calendar.min.js"></script>
+<input id="day" type="text"/>
+<script>
+
+const myDatePicker = MCDatepicker.create({ 
+      el: '#day',
+      autoClose: false,
+      closeOndblclick: true,
+      closeOnBlur: false,
+      customOkBTN: 'OK',
+      customClearBTN: 'Clear',
+      customCancelBTN: 'CANCEL',
+      firstWeekday: 0, // ex: 1 accept numbers 0-6;
+      minDate: null,
+      maxDate: null,
+      jumpToMinMax: true,
+      jumpOverDisabled: true,
+      disableDates: [], // ex: [new Date(2019,11, 25), new Date(2019, 11, 26)]
+      allowedMonths: [], // ex: [0,1] accept numbers 0-11;
+      allowedYears: [], // ex: [2022, 2023]
+      disableMonths: [], /// ex: [3,11] accept numbers 0-11;
+      disableYears: [], // ex: [2010, 2011]
+      markDates: [],
+      theme: defaultTheme,
+})
+
+myDatePicker.open()
+myDatePicker.onSelect((date, formatedDate) => console.log('date:', date, "formattedDate:" + formatedDate))
+console.log(myDatePicker)
+
+
+  </script>
+
+<script src="/main.js"></script>
+
+</body>
+</html>
+
+<!-- 
+<div id="calendar">
+    <h1>December</h1>
+    <table>
+      <tr><td class="lastmonth">30</td><td>1</td><td>2</td><td>3</td>
+        <td class="hastask">4</td><td>5</td><td>6</td></tr>
+      <tr><td>7</td><td class="current">8</td>
+        <td class="hastask">9</td><td>10</td><td>11</td>
+        <td class="hastask">12</td><td>13</td></tr>
+      <tr><td>14</td>
+        <td class="hastask">15</td>
+        <td>16</td><td>17</td><td>18</td><td>19</td><td>20</td></tr>
+      <tr><td class="hastask">21</td><td>22</td><td>23</td><td>24</td><td>25</td>
+        <td class="hastask">26</td><td>27</td></tr>
+      <tr><td>28</td><td>29</td>
+        <td class="hastask">30</td><td>31</td>
+        <td class="nextmonth">1</td><td>2</td><td>3</td></tr>
+    </table>
+  </div>
+
+  <style>
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+
+*{margin:0;padding:0;}
+
+
+#calendar{
+  width:358px;
+  margin:0 auto;
+  margin-top:2%;
+  margin-bottom:2%;
+  border-radius:5px;
+  font-family:'Open Sans',sans-serif;
+  text-align:center;
+  color:#555;
+  box-shadow:0 0 50px -14px rgba(0,0,0,.8);
+}
+
+#calendar h1{
+  background:#ee3333;
+  border-radius:5px 5px 0 0;
+  padding:20px;
+  font-size:140%;
+  font-weight:300;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:#fff;
+  cursor:default;
+  text-shadow:0 0 10px rgba(0,0,0,.8);
+}
+
+#calendar table{
+  border-top:1px solid #ddd;
+  border-left:1px solid #ddd;
+  border-spacing:0;
+  border-radius:0 0 5px 5px;
+}
+
+#calendar td{
+  width:38px;
+  height:38px;
+  background:#eee;
+  border-right:1px solid #ddd;
+  border-bottom:1px solid #ddd;
+  padding:6px;
+  cursor:pointer;
+  transition:background .3s;
+  -webkit-transition:background .3s;
+}
+
+#calendar td:hover:not(.current){
+  background:#ddd;
+}
+
+#calendar .lastmonth,
+#calendar .nextmonth,
+#calendar .nextmonth ~ *{
+  background:#fff;
+  color:#999;
+}
+
+#calendar .current{
+  background:#ee3333;
+  font-weight:700;
+  color:#fff;
+  text-shadow:0 0 10px rgba(0,0,0,.5);
+}
+
+#calendar .hastask{
+  font-weight:700;
+}
+#calendar tr:last-of-type td:first-of-type{border-radius:0 0 0 5px;}
+
+#calendar tr:last-of-type td:last-of-type{border-radius:0 0 5px 0;}
+  </style> -->
+ 
