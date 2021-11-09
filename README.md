@@ -16,7 +16,7 @@ Users will be able to log in and sign up for a free account. When they create an
 
 3. `A Reinforcement tool`  If users are substituting a vice for exercise, the app will use a maps API to track/log the distance. In addition to seeing how much money the user has theoretically saved up during their streaks, they'll also figuratively and literally see how far they've gone too (this is where the maps API will come in and spit its data back out).
 
-4. `Enhanced Accountability`  Where users can share their progress calendar with their friends, thus adding pressure, accountability, and access to the progress of each habit.
+4. `Enhanced Accountability`  Where users can share their habit tracker calendar with their friends, thus adding pressure, accountability, and access to the progress of each habit.
 
 ## How it's made
 > Made using CSS, Javascript, Node.js, APIs, JSON, Express, EJS, MongoDB, mongoose, Multer, and User Authentification using passport.
