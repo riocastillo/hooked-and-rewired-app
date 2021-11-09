@@ -14,7 +14,7 @@ Users will be able to log in and sign up for a free account. The app has three m
 
 `2. A Rewards tool` where people can customize what kind of reward they'd like to give themselves. The system gives them the option to reward themselves after every streak is created, 
 
-`3. A Reinforcement tool `  If users are substituting a vice for exercise, the app will use a maps API to track/log the distance. The intake survery a user has to fill out before engaging with the app involces filling out a section about how much their habit costs them on a weekly basis (if monetary + applicable). The reinforcement tool breaks down that costs, and with every streak created, a user gets to see how much money they theoritically have saved during those days.
+`3. A Reinforcement tool` If users are substituting a vice for exercise, the app will use a maps API to track/log the distance. The intake survery a user has to fill out before engaging with the app involces filling out a section about how much their habit costs them on a weekly basis (if monetary + applicable). The reinforcement tool breaks down that costs, and with every streak created, a user gets to see how much money they theoritically have saved during those days.
 
 ## How it's made
 > Made using CSS, Javascript, Node.js, APIs, JSON, Express, EJS, MongoDB, mongoose, Multer, and User Authentification using passport.
