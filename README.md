@@ -1,4 +1,4 @@
-<img src = "hooked.gif" width = 100%>
+<img src = "new.gif" width = 100%>
 <img src = "user.png" width = 100%>
 
 ## Notes
