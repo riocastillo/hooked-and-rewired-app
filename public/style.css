@@ -124,6 +124,7 @@ body{
 #logInPic{
     width:85%;
     padding:3%;
+    margin-bottom:5%;
 }
 
 #logInPic:hover{
@@ -158,7 +159,7 @@ form:after {
 	position: relative;
 	text-align: center;
 	width: 50%;
-    height:350px;
+    height:420px;
     box-shadow: 5px 5px 1px rgba(0, 0, 0, 0.507);
 }
 
@@ -205,6 +206,7 @@ form:after {
 #content form { 
     margin: 0 20px; 
     position: relative;
+
 }
 
 #content form input[type="text"],
@@ -303,7 +305,7 @@ form:after {
 
 
 .bottom{
-    height:600px;
+    height:680px;
 }
 
 #man{

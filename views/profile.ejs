@@ -230,7 +230,7 @@ excersized (in distance) by day  -->
               </svg>
             </div>
 
-            <div class="shadow w-full rounded-lg bg-white overflow-hidden w-full block p-8">
+            <div class="shadow w-full rounded-lg bg-white overflow-hidden w-full block p-8" id="rewards">
 
               <h2 class="font-bold text-xl mb-6 text-gray-800 border-b pb-2 congrats" >Below are the list of your habits. Please check which ones you didn't engage with.</h2>
 
@@ -238,10 +238,11 @@ excersized (in distance) by day  -->
                 <ul>
                   <% for (let habit of habits) { %>
                     <li for="<%= habit.habit %>">
-                      <input class="habit_checkbox m-2 form-checkbox h-5 w-5 text-yellow-600 r-45" id="habit" id="test2" name="habit" type="checkbox" checked data-reward="<%= habit.reward %>">
+                      <input class="habit_checkbox m-2 form-checkbox h-5 w-5 text-yellow-600 r-45" id="habit" id="test2" name="habit" type="checkbox" checked data-reward="<%= habit.reward %>" value="<%= habit.habit %>">
                       <label for="habit" class="text-lg">Refained from: <%= habit.habit %></label>
-                      <% } %>
                     </li>
+                      <% } %>
+                   
                 </ul>
               </div>
 
@@ -258,8 +259,9 @@ excersized (in distance) by day  -->
                 </button>
               </div>
               <br><br>
-              <!-- <h3 class="congrats"></h3> -->
+              <!-- rewards box -->
               <ul class="rewardList"></ul>
+              <div class="mt-8 text-right" id= "rewardButs"></div>
             </div>
           </div>
         </div>

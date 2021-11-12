@@ -88,8 +88,9 @@ function app() {
             for (let i = 0; i < habitCheckboxes.length; i++) {
                 // below is a variable for the current checkbox
                 const habitCheckbox = habitCheckboxes[i];
+                console.log(habitCheckbox)
                 // adds the data for each checkbox
-                habitData.push({ habit: habitCheckbox.name, didHabit: habitCheckbox.checked, reward: habitCheckbox.dataset.reward })
+                habitData.push({ habit: habitCheckbox.value, didHabit: habitCheckbox.checked, reward: habitCheckbox.dataset.reward })
             }
             const dataForServer = {
                 habits: habitData,
@@ -162,38 +163,65 @@ function displayRewards(habitData) {
     let habitButtons = document.querySelector('.habitButtons')
     habitButtons.classList.add('hideThis')
     habitList.classList.add('hideThis')
-    document.querySelector('.congrats').innerText = 'Congratulations! This is your race at your pace. Because you did great today, you have the option to reward yourself.'
-
+    let congrats = false
+    //this is going to filter and put the didHabits into a new array
+    let didHabits = habitData.filter(habit => habit.didHabit === true)
+    let ratio = Math.floor((didHabits.length / habitData.length) * 100)
+    if (ratio > 75){
+        document.querySelector('.congrats').innerText = `Look at you! This is your race at your pace. Because you refrained from ${ratio}% of all your habits, you have more options to reward yourself.`
+    }
+    else if (ratio > 50){
+        document.querySelector('.congrats').innerText = `Good work! This is your race at your pace. Because you still refrained from ${ratio}% of all your habits, you still have some options for rewards today.`
+    }
+    else if (ratio > 25){
+        document.querySelector('.congrats').innerText = `You're doing okay. This is your race at your pace. Because you still refrained from ${ratio}% of all your habits, you don't have as many options for rewards today.`
+    }
+    else if (ratio === 0){
+        document.querySelector('.congrats').innerText = 'Unfortunately, you did not refrain from any of your habits... Tommorrow is another day.'
+    }
+    else if (ratio === 100){
+        document.querySelector('.congrats').innerText = 'Congratulations! This is your race at your pace. Because you refrained from all of your habits, you have the option to reward yourself plenty today.'
+    }
+    //consider doing a ratio for the whole week too! bar chart where you create that ratio for each day*******
+    //whats your progress looking like page
+    //if you failed on a day - you can ask them "what is your trigger today"
+    // create a graph of their triggers
+ 
     //create a for loop that is running conditional tests on the habitData array
     habitData.forEach(habit => {
-        let rewardItem = document.createElement('li')
-        document.querySelector('.rewardList').appendChild(rewardItem)
-        let rewardCheckbox = document.createElement('input')
-        let sendReward = document.createElement('button')
-        sendReward.innerText = "reward myself"
-        let noReward = document.createElement('button')
-        noReward.innerText = "no reward today"
-        let habitList = document.querySelector('.habitList')
-        habitList.appendChild(sendReward)
-        habitList.appendChild(noReward)
-        rewardCheckbox.setAttribute('type', 'checkbox')
         if (habit.didHabit === true) {
-            rewardItem.innerText = habit.reward
+            let rewardItem = document.createElement('li')
+            // rewardItem.classList.add('')
+            let rewardLabel = document.createElement('label')
+            rewardLabel.classList.add('text-lg')
+            document.querySelector('.rewardList').appendChild(rewardItem)
+            let rewardCheckbox = document.createElement('input')
+            rewardCheckbox.classList.add('m-2','form-checkbox', 'h-5', 'w-5', 'text-yellow-600', 'r-45')
+            rewardCheckbox.setAttribute('type', 'checkbox')
+            rewardLabel.innerText = habit.reward + ' ' + 'for refraining from:' + ' ' + habit.habit
             rewardItem.appendChild(rewardCheckbox)
+            rewardItem.appendChild(rewardLabel)
+            //move these so they arent in the li
         }
+        else {}
 
         // to do: 
-        // - figure out how to get style of reward page to look like the previous one
-        // - append two buttons at the rewards page 
-        //         1 - reward myself
-        //         2 - no rewards today
-        // - add the didHabits to this page   
-        //     - ex. "unengaged habit: x, available reward for this: "
         // - document the rewards in the database
         // - get the color boxes to stay up \  send info to the database
-        
-    }
-    )
+    })
+
+    let sendReward = document.createElement('button')
+    sendReward.classList.add('sendRewardButton')
+    sendReward.innerText = "reward myself"
+    sendReward.classList.add('bg-gray-800', 'hover:bg-gray-700', 'text-white', 'font-semibold', 'py-2', 'px-4', 'border', 'border-gray-700', 'rounded-lg', 'shadow-sm')
+
+    let noReward = document.createElement('button')
+    noReward.innerText = "no reward today"
+    noReward.classList.add('sendRewardButton')
+    noReward.classList.add('bg-white', 'hover:bg-gray-100', 'text-gray-700', 'font-semibold', 'py-2', 'px-4', 'border', 'border-gray-300', 'rounded-lg', 'shadow-sm', 'mr-2')
+
+    document.getElementById('rewards').appendChild(sendReward)
+    document.getElementById('rewards').appendChild(noReward)
 
 
     // next we want to grab the data of which reward checkboxes were checked and store that in the db
@@ -214,37 +242,37 @@ function displayRewards(habitData) {
 
 }
 //dataForServer contains habit name, reward name, date, and didHabit
-function setBackground(dataForServer){
-    console.log('dataForServer.date'+ dataForServer.date.getDate())
+function setBackground(dataForServer) {
+    console.log('dataForServer.date' + dataForServer.date.getDate())
 
     let div = document.querySelectorAll('.calendarDate')
     let streakDate = Array.from(div).reduce((diva, divb) => {
         console.log(diva)
-        if(diva.innerText == dataForServer.date.getDate()){
+        if (diva.innerText == dataForServer.date.getDate()) {
             return diva
         }
-        else{
+        else {
             return divb
         }
     })
-console.log('streakDate: ' + streakDate)
+    console.log('streakDate: ' + streakDate)
 
-//grab the number of true results within didHabit
-let didHabitCounter = 0
-let habitCounter = dataForServer.habits.length
-let scale = 255/habitCounter
-let finalShadeNum = 300
-dataForServer.habits.forEach((habit) => {
-    if(habit.didHabit === true){
-        didHabitCounter += 1
-        finalShadeNum -= scale 
-    }
-})
-streakDate.style.background = `rgb(0,0, 255, 0.${Math.floor(finalShadeNum)})`
-console.log(`rgb(0,${Math.floor(finalShadeNum)},0)`)
-console.log('counter: ' + didHabitCounter)
-console.log('scale: ' + scale)
-console.log('finalshadenum: ' + finalShadeNum)
+    //grab the number of true results within didHabit
+    let didHabitCounter = 0
+    let habitCounter = dataForServer.habits.length
+    let scale = 255 / habitCounter
+    let finalShadeNum = 300
+    dataForServer.habits.forEach((habit) => {
+        if (habit.didHabit === true) {
+            didHabitCounter += 1
+            finalShadeNum -= scale
+        }
+    })
+    streakDate.style.background = `rgb(0,0, 255, 0.${Math.floor(finalShadeNum)})`
+    console.log(`rgb(0,${Math.floor(finalShadeNum)},0)`)
+    console.log('counter: ' + didHabitCounter)
+    console.log('scale: ' + scale)
+    console.log('finalshadenum: ' + finalShadeNum)
 }
 //using rgb values we are going to assign the numbers to different shades on the rgb scale
 //do math: didHabitCounter out of habitCounter total 

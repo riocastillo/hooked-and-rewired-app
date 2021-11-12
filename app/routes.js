@@ -8,7 +8,6 @@ module.exports = function (app, passport, db) {
     res.render('index.ejs'); // spits out the html and respond
   });
 
-
   // PROFILE SECTION =========================
   //isloggedin is a function all the way at the bottom to see if theyre logged in
   app.get('/profile', isLoggedIn, function (req, res) {
@@ -70,6 +69,7 @@ module.exports = function (app, passport, db) {
 //   // })
 //   
 app.post("/calendar", (req, res) => {
+  console.log('saving to calendar', req.body.dataForServer)
     db.collection("calendar").insertOne(
       {dataForServer: req.body.dataForServer },
       {
@@ -143,13 +143,13 @@ app.post("/calendar", (req, res) => {
   // SIGNUP =================================
   // show the signup form
   app.get('/signup', function (req, res) {
-    res.render('signup.ejs', { message: req.flash('signupMessage') });
+    res.render('profile.ejs', { message: req.flash('signupMessage') });
   });
 
   // process the signup form
   app.post('/signup', passport.authenticate('local-signup', {
     successRedirect: '/profile', // redirect to the secure profile section
-    failureRedirect: '/signup', // redirect back to the signup page if there is an error
+    failureRedirect: '/', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
   }));
 
