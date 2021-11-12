@@ -12,11 +12,11 @@ module.exports = function (app, passport, db) {
   // PROFILE SECTION =========================
   //isloggedin is a function all the way at the bottom to see if theyre logged in
   app.get('/profile', isLoggedIn, function (req, res) {
-    db.collection('demo-day').find({ user: req.body.user }).toArray((err, result) => {
+    db.collection('habits').find({ email: req.user.local.email }).toArray((err, habits) => {
       if (err) return console.log(err)
-      console.log(result)
+      console.log(habits)
       res.render('profile.ejs', {
-        userEntries: result
+        habits
       })
     })
   });
@@ -27,7 +27,7 @@ module.exports = function (app, passport, db) {
     res.redirect('/');
   });
 
-  // message board routes ===============================================================
+  // habit profile routes ===============================================================
 
 //   app.post('/messages', (req, res) => {
 //     db.collection('messages').save({ name: req.body.name, msg: req.body.msg, thumbUp: 0 }, (err, result) => {
@@ -68,25 +68,39 @@ module.exports = function (app, passport, db) {
 //   //   .then(result => { res.send(result) })
 //   //   .catch(err => { res.send(err) })
 //   // })
-//   app.put("/checkOne", (req, res) => {
-//     db.collection("budget").findOneAndUpdate(
-//       { _id: new mongoose.mongo.ObjectID(req.body.id) },
-//       {
-//         $set: {
-//           completed: true,
-//         },
-//       },
-//       {
-//         sort: { _id: -1 },
-//         upsert: false,
-//       },
-//       (err, result) => {
-//         if (err) return res.send(500, err);
-//         res.send("checked!");
-//       }
-//     );
-//   });
+//   
+app.post("/calendar", (req, res) => {
+    db.collection("calendar").insertOne(
+      {dataForServer: req.body.dataForServer },
+      {
+        $set: {
+          // completed: true,
+        },
+      },
+      {
+        sort: { _id: -1 },
+        upsert: false,
+      },
+      (err, result) => {
+        if (err) return res.send(500, err);
+        res.send("sent!");
+      }
+    );
+  });
 
+  app.post("/intakeHabit", isLoggedIn, (req, res) => {
+    console.log(req.user)
+    // object destructuring
+    const {habit, cost, reward, extraNotes} = req.body
+    db.collection("habits").insertOne(
+      //we can omit the colon 'ex. habit: habit' because when properties
+      // and the value are the same, the computer knows they are the same
+      // this only works if the value is a variable***
+      {habit, cost, reward, extraNotes, email: req.user.local.email}
+    )
+    //add error handling
+   res.redirect("/profile")
+  });
 
 //   app.delete("/deleteOne", (req, res) => {
 //     db.collection("budget").findOneAndDelete(

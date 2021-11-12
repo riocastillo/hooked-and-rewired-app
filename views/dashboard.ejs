@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://unpkg.com/tailwindcss@1.2.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="h-screen overflow-hidden flex items-center justify-center" style="background: #edf2f7;">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    
+    <style>
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 5px;
+        }
+
+        @keyframes twinkle {
+            0% {
+                transform: scale(1, 1);
+                background: rgba(255, 255, 255, 0);
+                animation-timing-function: linear;
+            }
+
+            40% {
+                transform: scale(0.8, 0.8);
+                background: rgba(255, 255, 255, 1);
+                animation-timing-function: ease-out;
+            }
+
+            80% {
+                background: rgba(255, 255, 255, 0);
+                transform: scale(1, 1);
+            }
+
+            100% {
+                background: rgba(255, 255, 255, 0);
+                transform: scale(1, 1);
+            }
+        }
+    </style>
+
+    <section class="homescreen m-0 flex flex-col w-screen justify-center bg-gray-800 h-screen text-gray-100 ">
+        <nav>
+            <ul class="flex justify-between text-xl py-8 px-8 md:px-48 ">
+            </ul>
+        </nav>
+        <h1>hello wow this is example text hi!</h1>
+    </section>
+
+    <script>
+        for (var i = 0; i < 100; i++) {
+            var star =
+                '<div class="star m-0" style="animation: twinkle ' +
+                (Math.random() * 5 + 5) +
+                's linear ' +
+                (Math.random() * 1 + 1) +
+                's infinite; top: ' +
+                Math.random() * $(window).height() +
+                'px; left: ' +
+                Math.random() * $(window).width() +
+                'px;"></div>';
+            $('.homescreen').append(star);
+        }
+
+    </script>
+</body>
+
+</html>
