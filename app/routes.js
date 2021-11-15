@@ -143,9 +143,13 @@ app.post("/calendar", (req, res) => {
   // SIGNUP =================================
   // show the signup form
   app.get('/signup', function (req, res) {
-    res.render('profile.ejs', { message: req.flash('signupMessage') });
+    res.render('signup.ejs', { message: req.flash('signupMessage') });
   });
 
+
+  app.get('/profile/dashboard', function (req, res) {
+    res.render('dashboard.ejs', { message: req.flash('dashboard entered') });
+  });
   // process the signup form
   app.post('/signup', passport.authenticate('local-signup', {
     successRedirect: '/profile', // redirect to the secure profile section

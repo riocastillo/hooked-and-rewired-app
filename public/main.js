@@ -1,4 +1,14 @@
-
+function toggle () {
+    let links = document.getElementById("links");
+    let blob = document.getElementById("blob");
+    blob.classList.toggle("open");
+    if(links.style.display == "block") {
+      links.style.display = "none";
+    } else {
+      links.style.display = "block";
+    }
+  };
+  
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -63,14 +73,6 @@ function app() {
             return today.toDateString() === d.toDateString() ? true : false;
         },
 
-        // setClass() {
-        //     console.log('accessed')
-        //     const today = new Date();
-        //     const d = new Date(this.year, this.month, date);
-
-        //     return '' today.toDateString() === d.toDateString() ? true : false;
-        // },
-
         showEventModal(date) {
             // open the modal
             this.openEventModal = true;
@@ -125,7 +127,6 @@ function app() {
                 event_title: this.event_title,
                 event_theme: this.event_theme
             });
-            console.log(this.events);
             // clear the form data
             this.event_title = '';
             this.event_date = '';
@@ -241,13 +242,13 @@ function displayRewards(habitData) {
     // this 'newDate' converts the string version of date into a real date for storing in mongodb
 
 }
+
 //dataForServer contains habit name, reward name, date, and didHabit
 function setBackground(dataForServer) {
     console.log('dataForServer.date' + dataForServer.date.getDate())
 
     let div = document.querySelectorAll('.calendarDate')
     let streakDate = Array.from(div).reduce((diva, divb) => {
-        console.log(diva)
         if (diva.innerText == dataForServer.date.getDate()) {
             return diva
         }
@@ -255,7 +256,6 @@ function setBackground(dataForServer) {
             return divb
         }
     })
-    console.log('streakDate: ' + streakDate)
 
     //grab the number of true results within didHabit
     let didHabitCounter = 0
@@ -269,55 +269,20 @@ function setBackground(dataForServer) {
         }
     })
     streakDate.style.background = `rgb(0,0, 255, 0.${Math.floor(finalShadeNum)})`
-    console.log(`rgb(0,${Math.floor(finalShadeNum)},0)`)
-    console.log('counter: ' + didHabitCounter)
-    console.log('scale: ' + scale)
-    console.log('finalshadenum: ' + finalShadeNum)
 }
-//using rgb values we are going to assign the numbers to different shades on the rgb scale
-//do math: didHabitCounter out of habitCounter total 
-// create scale 
-// first level is if the didHabitCounter was 25 and the habitCounter was 100
-//second level is if the didHabitCounter was 50 and the habitCounter was 100
-//third level is if the didHabitCounter was 75 and the habitCounter was 100
+//changing innertext of the main box
+document.getElementById('other').addEventListener('click', showResources)
+function showResources() {
+    document.querySelector('.welcomeTo').innerText = 'Additional Resources to Support Yourself in This Journey'
+    document.querySelector('.welcomeTo').classList.add('text-xl')
+    let form = document.querySelector('.replace')
+    form.innerText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+}
 
-
-// document.getElementById('other').addEventListener('click', showResources)
-// document.getElementById('contact').addEventListener('click', showContact)
-// document.getElementById('results').addEventListener('click', showResults)
-// document.getElementById('mission').addEventListener('click', showMission)
-
-// function showMission() {
-//     console.log('mission')
-//     let form = document.querySelector('.hide')
-//     form.style.display = 'none'
-//     const mission = document.createElement('h3')
-//     mission.innerText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-//     document.querySelector('div').appendChild(mission)
-// }
-
-
-// function showResources() {
-//     console.log('showing other resources')
-//     let form = document.querySelector('.hide')
-//     form.style.display = 'none'
-//     const resources = document.createElement('h3')
-//     resources.innerText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-//     document.querySelector('div').appendChild(resources)
-// }
-
-// function showContact() {
-//     console.log('contact us form')
-//     let form = document.querySelector('.hide')
-//     form.style.display = 'none'
-//     const contact = document.createElement('h3')
-//     contact.innerText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-//     document.querySelector('div').appendChild(contact)
-// }
-
-// function showResults() {
-//     console.log('show results')
-//     let form = document.querySelector('.hide')
-//     form.style.display = 'none'
-
-// }
+document.getElementById('mission').addEventListener('click', showMission)
+function showMission() {
+    document.querySelector('.welcomeTo').innerText = 'What Is Hooked & Rewired?'
+    document.querySelector('.welcomeTo').classList.add('text-xl')
+    let form = document.querySelector('.replace')
+    form.innerText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+}

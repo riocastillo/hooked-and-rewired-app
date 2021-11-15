@@ -388,3 +388,65 @@ form:after {
   from{border-right-color: rgba(255,255,255,.75);}
   to{border-right-color: transparent;}
 }
+
+svg {
+  position:absolute;
+  height: 500px;
+   left: -600px;
+    top: -600px;
+  display: block;
+  filter: drop-shadow(10px 20px 5px #00000032);
+  transition: left 0.5s, top 0.5s;
+}
+
+.nav {
+    
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  font-family: 'Inconsolata', monospace;
+  display: block;
+  position: absolute;
+}
+
+svg.open {
+  top: -280px;
+  left: -250px; 
+}
+
+.nav #links {
+  display: none;
+}
+
+.nav a {
+  color: black;
+  padding: 7px 10px;
+  text-decoration: none;
+  font-size: 25px;
+  display: block;
+  animation-name: text;
+  animation-duration: 1s;
+}
+
+@keyframes text {
+  0% {
+    opacity: 0%;
+    transform: translateX(-100px);
+  }
+  50% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+#links a {
+  padding-left: 15px; 
+  padding-top:0;
+  /* margin:0; */
+}

@@ -1,0 +1,65 @@
+.star {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 5px;
+}
+
+
+@keyframes twinkle {
+    0% {
+        transform: scale(1, 1);
+        background: rgba(255, 255, 255, 0);
+        animation-timing-function: linear;
+    }
+
+    40% {
+        transform: scale(0.8, 0.8);
+        background: rgba(255, 255, 255, 0.75);
+        animation-timing-function: ease-out;
+    }
+
+    80% {
+        background: rgba(255, 255, 255, 0);
+        transform: scale(1, 1);
+    }
+
+    100% {
+        background: rgba(255, 255, 255, 0);
+        transform: scale(2, 1);
+    }
+}
+
+/* .bg-black-alt  {
+    background:#101010;
+}
+.text-black-alt  {
+    color:#101010;
+}
+.border-black-alt {
+    border-color: #101010;
+} */
+
+/* .h-screen {
+    height: 5vh;
+} */
+
+.font-Inconsolata {
+    font-family: 'Inconsolata', monospace;
+}
+
+.card{
+    box-shadow: 5px 10px 4px rgba(33,33,33,.7);
+}
+
+.font-londrina{
+    font-family: 'Londrina Solid', cursive;
+    letter-spacing: 3px;
+    text-shadow: 3px 5px 1px rgba(23, 22, 22, 0.3);
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+}
+
+.hr {
+    border-top-width: 7px;
+}

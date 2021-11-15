@@ -66,7 +66,7 @@ body {
 	font-family: 'Londrina Solid', cursive;
 	font-size: 25px;
 	letter-spacing: .5px;
-	color: #999;
+	color: rgb(0, 0, 0);
 	background-color: transparent;
 	border: none;
 	outline: none;
@@ -78,12 +78,16 @@ body {
 	color: #fff;
 	transform: translateX(90px);
 	font: 50px 'Londrina Solid', cursive;
+	letter-spacing: 3px;
+
 }
 
 .form-wrapper.is-active .switcher-signup {
 	color: #fff;
 	transform: translateX(-90px);
 	font: 50px 'Londrina Solid', cursive;
+	letter-spacing: 3px;
+
 }
 
 .underline {
@@ -127,6 +131,8 @@ body {
 	padding: 30px 25px;
   border-radius: 5px;
 	transform-origin: top;
+	letter-spacing: 1px;
+
 }
 
 .form-login {
@@ -285,6 +291,7 @@ body {
 	transform: translateX(-30%);
 	height:90px;
 	box-shadow: 5px 5px 1px rgba(0, 0, 0, 0.507);
+
 }
 
 .btn-login:hover,
@@ -305,3 +312,67 @@ body {
 	box-shadow: 5px 5px 1px rgba(0, 0, 0, 0.507);
 }
 
+
+svg {
+	margin-top:2%;
+	position:absolute;
+	height: 550px;
+	 left: -600px;
+	  top: -600px;
+	display: block;
+	filter: drop-shadow(10px 20px 5px #00000032);
+	transition: left 0.5s, top 0.5s;
+  }
+  
+  .nav {
+	margin-top:1%;
+	margin-left:1%;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	font-family: 'Inconsolata', monospace;
+	display: block;
+	position: absolute;
+  }
+  
+  svg.open {
+	top: -280px;
+	left: -250px; 
+  }
+  
+  .nav #links {
+	display: none;
+  }
+  
+  .nav a {
+	color: black;
+	padding: 7px 10px;
+	text-decoration: none;
+	font-size: 30px;
+	display: block;
+	animation-name: text;
+	animation-duration: 1s;
+  }
+  
+  @keyframes text {
+	0% {
+	  opacity: 0%;
+	  transform: translateX(-100px);
+	}
+	50% {
+	  opacity: 0%;
+	}
+	100% {
+	  opacity: 100%;
+	}
+  }
+  
+  .nav a:hover {
+	text-decoration: underline;
+  }
+  
+  #links a {
+	padding-left: 15px; 
+
+	/* margin:0; */
+  }

@@ -8,6 +8,8 @@
   <title>User Page</title>
   <link rel="dns-prefetch" href="//unpkg.com" />
   <link rel="stylesheet" href="profile.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@800&family=Tourney:ital,wght@1,400&family=Londrina+Solid:wght@900&family=Rock+Salt&display=swap"
+  rel="stylesheet">    
 
   <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
   <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">
@@ -27,7 +29,7 @@
 
   <!-- intake style form box -->
 
-  <body class="h-screen overflow-hidden flex items-center justify-center" style="background: #edf2f7;">
+  <body class="h-screen overflow-hidden font-Inconsolata flex items-center justify-center" style="background: #edf2f7;">
 
     <div class="w-full max-w-6xl min-w-0 mx-auto px-6 pt-10">
       <div class="flex mt-12 bg-white rounded-md shadow">
@@ -44,28 +46,29 @@
               id="form">
               Submit a habit
             </a>
-            <a href="#" class="block bg-black py-3 px-6 text-white font-semibold border-b border-white" id="results">
+            <a href="/profile/dashboard" class="block bg-black py-3 px-6 text-white font-semibold border-b border-white" id="results">
               Current Results
             </a>
             <a href="#" class="block bg-black py-3 px-6 text-white font-semibold border-b border-white" id="other">
               Other resources
             </a>
-            <a href="#" class="block bg-black py-3 px-6 text-white font-semibold border-b border-white" id="contact">
-              Contact us
+            <a href="/profile/texts" class="block bg-black py-3 px-6 text-white font-semibold border-b border-white" id="texts">
+              Sign up for text alerts
             </a>
           </div>
           <img src="hooked.png" class="p-3 pt-10">
         </div>
-        <div class="flex-grow hide">
+        <div class="flex-grow">
           <br>
-          <h2 class="pb-8 font-semibold text-yellow text-lg px-10">Welcome to Hooked & Rewired, Rio!</h2>
-          <div class="flex flex-col mx-40 mt-15">
+          <h2 class="welcomeTo font-londrina pb-8 font-semibold text-yellow text-4xl px-10">Welcome, Rio!</h2>
+
+          <div class="replace flex flex-col mx-40 mt-15">
 
             <div class="flex items-center mb-4">
-              <form method="post" action="/intakeHabit">
+              <form method="post" action="/intakeHabit" >
                 <label for="habit" class="w-24 font-semibold text-black-700 pr-12">Habit</label>
                 <input type="text" name="habit" class="border-double border-4 border-black rounded py-1 px-3"
-                  placeholder="enter name of first habit" />
+                  placeholder="name of first habit" />
             </div>
             <div class="flex items-center mb-4">
               <label for="cost" class="w-24 font-semibold text-black-700">Weekly spending <br>on habit</label>
@@ -84,7 +87,7 @@
             </div>
             <div class="flex items-center mb-4">
               <button
-                class="submit py-1 px-4 bg-black text-white font-semibold hover:bg-black-900 hover:shadow border border-black-200 rounded mr-2 mb-3">Submit</button>
+                class="submit py-1 px-4 bg-black text-white text-xl font-semibold hover:bg-black-900 hover:shadow border border-black-200 rounded mr-2 mb-3">Submit</button>
               </form>
             </div>
           </div>
@@ -148,8 +151,8 @@ excersized (in distance) by day  -->
 
             <div class="flex items-center mt-5 justify-between py-2 px-6">
               <div>
-                <span x-text="MONTH_NAMES[month]" class="text-5xl font-bold text-gray-800"></span>
-                <span x-text="year" class="ml-1 text-5xl text-gray-600 font-normal"></span>
+                <span x-text="MONTH_NAMES[month]" class="text-6xl font-londrina font-bold text-gray-800"></span>
+                <span x-text="year" class="ml-1 text-5xl font-londrina text-gray-600 font-normal"></span>
               </div>
               <div class="border rounded-lg px-1" style="padding-top: 2px;">
                 <button type="button"
@@ -178,7 +181,7 @@ excersized (in distance) by day  -->
               <div class="flex flex-wrap" style="margin-bottom: -40px;">
                 <template x-for="(day, index) in DAYS" :key="index">
                   <div style="width: 14.26%" class="px-2 py-2">
-                    <div x-text="day" class="text-gray-600 text-sm uppercase tracking-wide font-bold text-center"></div>
+                    <div x-text="day" class=" float-right pr-2 text-yellow-700 text-xl uppercase tracking-wide font-bold text-center"></div>
                   </div>
                 </template>
               </div>
@@ -188,16 +191,16 @@ excersized (in distance) by day  -->
                   <div style="width: 14.28%; height: 120px" class="text-center border-r border-b px-4 pt-2"></div>
                 </template>
                 <template x-for="(date, dateIndex) in no_of_days" :key="dateIndex">
-                  <div style="width: 14.28%; height: 120px" class="px-4 pt-2 border-r border-b relative calendarDate">
+                  <div style="width: 14.28%; height: 120px" class="px-4 cal-londrina text-3xl pt-2 border-r border-b relative calendarDate">
                     <div @click="showEventModal(date)" x-text="date"
                       class="inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100"
-                      :class="{'bg-green-500 p-2 text-white': isToday(date) == true, 'text-gray-700 hover:bg-blue-200': isToday(date) == false }">
+                      :class="{'bg-yellow-700 p-6 text-white': isToday(date) == true, 'text-gray-700 hover:bg-blue-200': isToday(date) == false }">
                     </div>
                     <div style="height: 80px;" class="overflow-y-auto mt-1">
 
                       <template
                         x-for="event in events.filter(e => new Date(e.event_date).toDateString() ===  new Date(year, month, date).toDateString() )">
-                        <div class="px-2 py-1 rounded-lg mt-1 overflow-hidden border" :class="{
+                        <div class="px-2 py-1 rounded-xl mt-1 overflow-hidden border" :class="{
 												'border-blue-200 text-blue-800 bg-blue-100': event.event_theme === 'blue',
 												'border-red-200 text-red-800 bg-red-100': event.event_theme === 'red',
 												'border-yellow-200 text-yellow-800 bg-yellow-100': event.event_theme === 'yellow',
@@ -232,14 +235,14 @@ excersized (in distance) by day  -->
 
             <div class="shadow w-full rounded-lg bg-white overflow-hidden w-full block p-8" id="rewards">
 
-              <h2 class="font-bold text-xl mb-6 text-gray-800 border-b pb-2 congrats" >Below are the list of your habits. Please check which ones you didn't engage with.</h2>
+              <h2 class="font-bold text-3xl text-black below-are mb-6 text-gray-800 border-b pb-2 congrats" >Below are the list of your habits. Please check which ones you didn't engage with.</h2>
 
               <div class="mb-4 habitList">
                 <ul>
                   <% for (let habit of habits) { %>
                     <li for="<%= habit.habit %>">
                       <input class="habit_checkbox m-2 form-checkbox h-5 w-5 text-yellow-600 r-45" id="habit" id="test2" name="habit" type="checkbox" checked data-reward="<%= habit.reward %>" value="<%= habit.habit %>">
-                      <label for="habit" class="text-lg">Refained from: <%= habit.habit %></label>
+                      <label for="habit" class="text-xl">Refained from: <%= habit.habit %></label>
                     </li>
                       <% } %>
                    

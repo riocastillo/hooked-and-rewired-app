@@ -12,3 +12,29 @@ ol, ul.rewardList {
 .sendRewardButton{
     margin-right:3%;
 }
+
+.font-Inconsolata {
+    font-family: 'Inconsolata', monospace;
+}
+
+.font-londrina{
+    color:rgb(114, 150, 3);
+    font-family: 'Londrina Solid', cursive;
+    letter-spacing: 3px;
+    text-shadow: 3px 5px 1px rgba(23, 22, 22, 0.3);
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+
+.cal-londrina{
+    font-family: 'Londrina Solid', cursive;
+    letter-spacing: 3px;
+    text-shadow: 3px 5px 1px rgba(23, 22, 22, 0.3);
+}
+
+
+.below-are{
+    font-family: 'Londrina Solid', cursive;
+    letter-spacing: 2px;
+    text-shadow: 1px 2px 1px rgba(23, 22, 22, 0.3);
+}
