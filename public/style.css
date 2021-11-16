@@ -391,7 +391,7 @@ form:after {
 
 svg {
   position:absolute;
-  height: 500px;
+  height: 530px;
    left: -600px;
     top: -600px;
   display: block;
@@ -446,7 +446,7 @@ svg.open {
 }
 
 #links a {
-  padding-left: 15px; 
-  padding-top:0;
+  padding-left: 35px; 
+  padding-top:2px;
   /* margin:0; */
 }

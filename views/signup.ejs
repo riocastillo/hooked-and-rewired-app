@@ -59,16 +59,16 @@ rel="stylesheet">
               Login
               <span class="underline"></span>
             </button>
-            <form class="form form-signup" action="/login" method="post">
+            <form  action="/login" method="post" class="form form-signup">
               <fieldset>
                 <legend>Please, enter your email and password for signup.</legend>
                 <div class="input-block">
                   <label for="signup-email">Username</label>
-                  <input id="signup-email" type="text" placeholder="username" id="username" required>
+                  <input type="text" name="email" placeholder="username" id="username" required>
                 </div>
                 <div class="input-block">
                   <label for="signup-password">Password</label>
-                  <input id="signup-password" placeholder="password" id="password" name="password" type="password" required>
+                  <input type="password" name="password" placeholder="password" id="password"   required>
                 </div>
               </fieldset>
               <button type="submit" value="Log in" class="btn-signup"></button>

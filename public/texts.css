@@ -255,7 +255,7 @@
 
   svg {
     position:absolute;
-    height: 540px;
+    height: 610px;
      left: -600px;
       top: -600px;
     display: block;
@@ -310,7 +310,7 @@
   }
   
   #links a {
-    padding-left: 15px; 
-    padding-top:0;
+    padding-left: 25px; 
+    padding-top:5px;
     /* margin:0; */
   }

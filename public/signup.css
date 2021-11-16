@@ -316,7 +316,7 @@ body {
 svg {
 	margin-top:2%;
 	position:absolute;
-	height: 550px;
+	height: 590px;
 	 left: -600px;
 	  top: -600px;
 	display: block;
@@ -372,7 +372,8 @@ svg {
   }
   
   #links a {
-	padding-left: 15px; 
+	padding-left: 25px; 
+	padding-top:20px;
 
 	/* margin:0; */
   }
