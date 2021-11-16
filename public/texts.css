@@ -1,0 +1,316 @@
+:root {
+    --pink: #ffffff;
+    --pink-dark: #bebdbd;
+    --tape-gray: #fefdec;
+    --tape-edge-gray: #edeaca;
+    --transparent: rgba(255, 255, 255, 0);
+  }
+  
+  body {
+    background-color: rgb(196, 147, 0);
+    padding: 20px;
+    display:block;
+    justify-content: center;
+  }
+  
+  .pink {
+    --paper-color: var(--pink);
+    --paper-dark: var(--pink-dark);
+    --shadow-size: 1px;
+    --transparent: rgba(236, 178, 186, 0);
+  }
+  
+  .blue {
+    --paper-color: #d5e0f9;
+    --paper-dark: #c2d0ea;
+    --shadow-size: 3px;
+    --transparent: rgba(213, 224, 249, 0);
+  }
+  
+  .paper {
+    position: relative;
+    background: linear-gradient(
+        var(--transparent),
+        50%,
+        var(--paper-dark),
+        51%,
+        var(--transparent)
+      ),
+      linear-gradient(
+        to right,
+        var(--transparent),
+        50%,
+        var(--paper-dark),
+        51%,
+        var(--transparent)
+      );
+    width: 450px;
+    height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-size) var(--shadow-size) 2px var(--paper-dark);
+    margin: auto;
+    margin-top: 9%;
+    border:7px solid black;
+    box-shadow: 10px 10px 3px rgba(0, 0, 0, 0.507);
+    background-color:rgba(255, 255, 255, 0.973);
+
+  }
+  
+  .paper::after {
+    content: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        var(--transparent),
+        50%,
+        var(--paper-dark),
+        51%,
+        var(--transparent)
+      ),
+      linear-gradient(
+        to right,
+        var(--transparent),
+        50%,
+        var(--paper-dark),
+        51%,
+        var(--transparent)
+      );
+  }
+  
+  .tape-section {
+    position: absolute;
+    width: 100%;
+  }
+  
+  .top-tape {
+    position: absolute;
+    height: 4vmin;
+    top: -5px;
+    width: 110%;
+    background-color: var(--tape-gray);
+    border-right: 1px dotted var(--tape-edge-gray);
+    border-left: 1px dotted var(--tape-edge-gray);
+    opacity: 0.5;
+  }
+  
+  .tape-section:first-of-type {
+    top: 0;
+  }
+  
+  .tape-section:last-of-type {
+    bottom: 0;
+  }
+  
+  .tape-section::before,
+  .tape-section::after {
+    content: "";
+    width: 10vmin;
+    height: 4vmin;
+    position: absolute;
+    background-color: var(--tape-gray);
+    opacity: 0.5;
+    border-right: 1px dotted var(--tape-edge-gray);
+    border-left: 1px dotted var(--tape-edge-gray);
+  }
+  
+  .tape-section:last-of-type::after {
+    transform: rotate(-45deg);
+    right: -4vmin;
+    top: -3vmin;
+  }
+  
+  .tape-section:first-of-type::before {
+    transform: rotate(-45deg);
+    left: -4vmin;
+  }
+  
+  .tape-section:first-of-type::after {
+    transform: rotate(45deg);
+    right: -4vmin;
+    top: 0;
+  }
+  
+  .tape-section:last-of-type::before {
+    transform: rotate(45deg);
+    left: -4vmin;
+    bottom: 0;
+  }
+
+  h1{
+      padding:2%;
+      width:95%;
+      margin:auto;
+      text-align: center;
+      margin-bottom:2%;
+      color:black;
+      font: 55px 'Tourney', cursive;
+        letter-spacing: 1px;
+        text-shadow: 3px 5px 1px rgba(23, 22, 22, 0.3);
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+  }
+
+  input{
+    font: 25px 'Inconsolata', monospace;
+    width:75%;
+    margin:2%;
+    padding:10px;
+    border:none;
+    border-radius: 5px;
+    box-shadow: 5px 5px 1px rgba(0, 0, 0, 0.507);
+    margin-bottom:5%;
+    z-index: 10;
+  }
+
+  .insides{
+      margin-top:-5%;
+      text-align: center;
+
+  }
+
+
+/* button */
+.button-cover {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #18181a;
+    color: #18181a;
+    display: inline-block;
+    font-size: 25px;
+    line-height: 15px;
+    padding: 18px 18px 17px;
+    text-decoration: none;
+    cursor: pointer;
+    background: #fff;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .button-cover span:first-child {
+    position: relative;
+    transition: color 600ms cubic-bezier(0.48, 0, 0.12, 1);
+    z-index: 10;
+  }
+  
+  .button-cover span:last-child {
+    color: white;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    transition: all 500ms cubic-bezier(0.48, 0, 0.12, 1);
+    z-index: 100;
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform: translateY(225%) translateX(-50%);
+    height: 14px;
+    line-height: 13px;
+  }
+  
+  .button-cover:after {
+    content: "";
+    position: absolute;
+    bottom: -50%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    transform-origin: bottom center;
+    transition: transform 600ms cubic-bezier(0.48, 0, 0.12, 1);
+    transform: skewY(9.3deg) scaleY(0);
+    z-index: 50;
+  }
+  
+  .button-cover:hover:after {
+    transform-origin: bottom center;
+    transform: skewY(9.3deg) scaleY(2);
+  }
+  
+  .button-cover:hover span:last-child {
+    transform: translateX(-50%) translateY(-100%);
+    opacity: 1;
+    transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
+  }
+
+  button{
+    font: 30px 'Tourney', cursive;
+    margin:2%;
+    width:30%;
+    box-shadow: 8px 8px 1px rgba(0, 0, 0, 0.507);
+    padding:5px;
+  }
+
+  span{
+      margin-top:7%;
+  }
+
+  form{
+      margin-top:3.5%;
+      
+  }
+
+  svg {
+    position:absolute;
+    height: 540px;
+     left: -600px;
+      top: -600px;
+    display: block;
+    filter: drop-shadow(10px 20px 5px #00000032);
+    transition: left 0.5s, top 0.5s;
+  }
+  
+  .nav {
+      
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    font-family: 'Inconsolata', monospace;
+    display: block;
+    position: absolute;
+  }
+  
+  svg.open {
+    top: -280px;
+    left: -250px; 
+  }
+  
+  .nav #links {
+    display: none;
+  }
+  
+  .nav a {
+    color: black;
+    padding: 7px 10px;
+    text-decoration: none;
+    font-size: 25px;
+    display: block;
+    animation-name: text;
+    animation-duration: 1s;
+  }
+  
+  @keyframes text {
+    0% {
+      opacity: 0%;
+      transform: translateX(-100px);
+    }
+    50% {
+      opacity: 0%;
+    }
+    100% {
+      opacity: 100%;
+    }
+  }
+  
+  .nav a:hover {
+    text-decoration: underline;
+  }
+  
+  #links a {
+    padding-left: 15px; 
+    padding-top:0;
+    /* margin:0; */
+  }

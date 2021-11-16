@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
+const {sendSMS} = require('./services/twilio.js')
+const {signUpMsg} = require('./services/smsTemplates/template.js')
 module.exports = function (app, passport, db) {
 
-  // normal routes ===============================================================
+  // normal routes  ===============================================================
 
   // show the home page (will also have our login links)
   app.get('/', function (req, res) {
@@ -14,8 +16,10 @@ module.exports = function (app, passport, db) {
     db.collection('habits').find({ email: req.user.local.email }).toArray((err, habits) => {
       if (err) return console.log(err)
       console.log(habits)
+      console.log(req.user)
       res.render('profile.ejs', {
-        habits
+        habits, 
+        email: req.user.local.email
       })
     })
   });
@@ -68,6 +72,17 @@ module.exports = function (app, passport, db) {
 //   //   .catch(err => { res.send(err) })
 //   // })
 //   
+
+app.get("/getHabits/:email", isLoggedIn, (req,res) => {
+  const userEmail = req.params.email
+  console.log(req.params)
+  db.collection('habits').find({ email: userEmail }).toArray((err, habits) => {
+    if (err) return console.log(err)
+    console.log(habits)
+    console.log(req.user)
+    return res.send(habits)
+  })
+})
 app.post("/calendar", (req, res) => {
   console.log('saving to calendar', req.body.dataForServer)
     db.collection("calendar").insertOne(
@@ -99,7 +114,15 @@ app.post("/calendar", (req, res) => {
       {habit, cost, reward, extraNotes, email: req.user.local.email}
     )
     //add error handling
-   res.redirect("/profile")
+   res.redirect("/texts")
+  });
+
+  app.post("/getTexts", isLoggedIn, (req, res) => {
+   const phoneNumber = req.body.phone
+   console.log(phoneNumber)
+   sendSMS(signUpMsg, phoneNumber)
+    //add error handling
+   res.redirect("/profile/texts")
   });
 
 //   app.delete("/deleteOne", (req, res) => {
@@ -150,6 +173,11 @@ app.post("/calendar", (req, res) => {
   app.get('/profile/dashboard', function (req, res) {
     res.render('dashboard.ejs', { message: req.flash('dashboard entered') });
   });
+
+  app.get('/profile/texts', function (req, res) {
+    res.render('texts.ejs', { message: req.flash('texts entered') });
+  });
+
   // process the signup form
   app.post('/signup', passport.authenticate('local-signup', {
     successRedirect: '/profile', // redirect to the secure profile section

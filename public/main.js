@@ -1,3 +1,11 @@
+window.addEventListener("DOMContentLoaded", function() {
+    const userEmail = document.getElementById('userEmail').value
+    fetch(`/getHabits/${userEmail}`).then(res => {
+        console.log(res.json())
+    })
+    console.log(userEmail)
+}, false);
+
 function toggle () {
     let links = document.getElementById("links");
     let blob = document.getElementById("blob");
@@ -244,6 +252,7 @@ function displayRewards(habitData) {
 }
 
 //dataForServer contains habit name, reward name, date, and didHabit
+//to do: 
 function setBackground(dataForServer) {
     console.log('dataForServer.date' + dataForServer.date.getDate())
 

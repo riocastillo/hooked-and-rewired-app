@@ -39,28 +39,28 @@
             <img src="greenCat.png" width=125px class="pt-8">
           </div>
           <div class="mt-8 border-t border-white">
-            <a href="#" class="block bg-black py-3 px-6 text-white font-semibold border-b border-white" id="mission">
+            <a href="#" class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="mission">
               Mission of H&R
             </a>
-            <a href="/profile" class="block py-3 px-6 bg-gray-800 text-white font-semibold border-b border-white"
+            <a href="/profile" class="block py-3 text-lg px-6 bg-gray-800 text-white font-semibold border-b border-white"
               id="form">
               Submit a habit
             </a>
-            <a href="/profile/dashboard" class="block bg-black py-3 px-6 text-white font-semibold border-b border-white" id="results">
-              Current Results
+            <a href="/profile/dashboard" class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="results">
+              Go to dashboard
             </a>
-            <a href="#" class="block bg-black py-3 px-6 text-white font-semibold border-b border-white" id="other">
+            <a href="/profile/texts" class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="texts">
+              Get text alerts
+            </a>
+            <a href="#" class="block bg-black py-3 px-6 text-lg text-white font-semibold border-b border-white" id="other">
               Other resources
-            </a>
-            <a href="/profile/texts" class="block bg-black py-3 px-6 text-white font-semibold border-b border-white" id="texts">
-              Sign up for text alerts
             </a>
           </div>
           <img src="hooked.png" class="p-3 pt-10">
         </div>
         <div class="flex-grow">
           <br>
-          <h2 class="welcomeTo font-londrina pb-8 font-semibold text-yellow text-4xl px-10">Welcome, Rio!</h2>
+          <h2 class="welcomeTo font-londrina pb-8 font-semibold text-yellow text-4xl px-10">Welcome, <%= email %>!</h2>
 
           <div class="replace flex flex-col mx-40 mt-15">
 
@@ -140,7 +140,7 @@ excersized (in distance) by day  -->
         margin-left: -3%;
       }
     </style>
-
+<input value="<%= email %>" id="userEmail" class="hideThis"/>
     <!-- structure of calendar  -->
 
     <div class="antialiased sans-serif bg-gray-100 h-screen pt-6">
@@ -149,7 +149,7 @@ excersized (in distance) by day  -->
 
           <div class="bg-white rounded-lg shadow overflow-hidden">
 
-            <div class="flex items-center mt-5 justify-between py-2 px-6">
+            <div class="flex items-center mt-5 justify-between  px-6">
               <div>
                 <span x-text="MONTH_NAMES[month]" class="text-6xl font-londrina font-bold text-gray-800"></span>
                 <span x-text="year" class="ml-1 text-5xl font-londrina text-gray-600 font-normal"></span>
