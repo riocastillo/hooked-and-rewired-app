@@ -1,17 +1,17 @@
 // set up ======================================================================
 // get all the tools we need
-var express  = require('express');
-var app      = express();
-var port     = process.env.PORT || 2222;
+var express = require('express');
+var app = express();
+var port = process.env.PORT || 2222;
 const MongoClient = require('mongodb').MongoClient
 var mongoose = require('mongoose');
 var passport = require('passport');
-var flash    = require('connect-flash');
-
-var morgan       = require('morgan');
+var flash = require('connect-flash');
+const Chart = require('chart.js');
+var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-var session      = require('express-session');
+var bodyParser = require('body-parser');
+var session = require('express-session');
 
 var configDB = require('./config/database.js');
 
@@ -38,9 +38,9 @@ app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
 app.use(session({
-    secret: 'rcbootcamp2021b', // session secret
-    resave: true,
-    saveUninitialized: true
+  secret: 'rcbootcamp2021b', // session secret
+  resave: true,
+  saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions

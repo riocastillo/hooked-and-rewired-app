@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const {sendSMS} = require('./services/twilio.js')
-const {signUpMsg} = require('./services/smsTemplates/template.js')
+const { sendSMS } = require('./services/twilio.js')
+const { signUpMsg } = require('./services/smsTemplates/template.js')
 module.exports = function (app, passport, db) {
 
   // normal routes  ===============================================================
@@ -15,11 +15,13 @@ module.exports = function (app, passport, db) {
   app.get('/profile', isLoggedIn, function (req, res) {
     db.collection('habits').find({ email: req.user.local.email }).toArray((err, habits) => {
       if (err) return console.log(err)
-      console.log(habits)
-      console.log(req.user)
-      res.render('profile.ejs', {
-        habits, 
-        email: req.user.local.email
+      db.collection('calendar').find({ email: req.user.local.email }).toArray((err2, calendar) => {
+        if (err) return console.log(err)
+        res.render('profile.ejs', {
+          habits,
+          calendar,
+          email: req.user.local.email
+        })
       })
     })
   });
@@ -32,61 +34,42 @@ module.exports = function (app, passport, db) {
 
   // habit profile routes ===============================================================
 
-//   app.post('/messages', (req, res) => {
-//     db.collection('messages').save({ name: req.body.name, msg: req.body.msg, thumbUp: 0 }, (err, result) => {
-//       if (err) return console.log(err)
-//       console.log('saved to database')
-//       res.redirect('/profile')
-//     })
-//   })
+  //   app.post('/messages', (req, res) => {
+  //     db.collection('messages').save({ name: req.body.name, msg: req.body.msg, thumbUp: 0 }, (err, result) => {
+  //       if (err) return console.log(err)
+  //       console.log('saved to database')
+  //       res.redirect('/profile')
+  //     })
+  //   })
 
-//   app.post('/budget', (req, res) => {
-//     console.log('req.body:', req.body)
-//     db.collection('budget')
-//       .save({
-//         'goal': req.body.goal,
-//         'amount': req.body.amount,
-//         'spent': req.body.spent,
-//         'balance': req.body.balance,
-//         'amountLeft': req.body.amountLeft,
-//         'note': req.body.note,
-//         'completed': req.body.completed,
-//         'userEmail': req.user.local.email
-//       }, (err, result) => {
-//         if (err) return res.send(err)
-//         res.send(result)
-//       })
-//   })
+  //   // Promises Example - Then / Catch
+  //   // app.post('/budget', (req, res) => {
+  //   //   db.collection('budget')
+  //   //   .save({
+  //   //     'goal': req.body.goal,
+  //   //     'amount': req.body.amount,
+  //   //     'balance':req.body.balance,
+  //   //     'note': req.body.note,
+  //   //     'completed': req.body.completed,
+  //   //   })
+  //   //   .then(result => { res.send(result) })
+  //   //   .catch(err => { res.send(err) })
+  //   // })
+  //   
 
-//   // Promises Example - Then / Catch
-//   // app.post('/budget', (req, res) => {
-//   //   db.collection('budget')
-//   //   .save({
-//   //     'goal': req.body.goal,
-//   //     'amount': req.body.amount,
-//   //     'balance':req.body.balance,
-//   //     'note': req.body.note,
-//   //     'completed': req.body.completed,
-//   //   })
-//   //   .then(result => { res.send(result) })
-//   //   .catch(err => { res.send(err) })
-//   // })
-//   
-
-app.get("/getHabits/:email", isLoggedIn, (req,res) => {
-  const userEmail = req.params.email
-  console.log(req.params)
-  db.collection('habits').find({ email: userEmail }).toArray((err, habits) => {
-    if (err) return console.log(err)
-    console.log(habits)
-    console.log(req.user)
-    return res.send(habits)
+  app.get("/getHabits/:email", isLoggedIn, (req, res) => {
+    const userEmail = req.params.email
+    console.log(req.params)
+    db.collection('calendar').find({ email: userEmail }).toArray((err, habits) => {
+      if (err) return console.log(err)
+      console.log(habits)
+      console.log(req.user)
+      return res.send(habits)
+    })
   })
-})
-app.post("/calendar", (req, res) => {
-  console.log('saving to calendar', req.body.dataForServer)
+  app.post("/calendar", (req, res) => {
     db.collection("calendar").insertOne(
-      {dataForServer: req.body.dataForServer },
+      { dataForServer: req.body.dataForServer, email: req.body.email },
       {
         $set: {
           // completed: true,
@@ -106,43 +89,58 @@ app.post("/calendar", (req, res) => {
   app.post("/intakeHabit", isLoggedIn, (req, res) => {
     console.log(req.user)
     // object destructuring
-    const {habit, cost, reward, extraNotes} = req.body
+    const { habit, cost, reward, extraNotes } = req.body
     db.collection("habits").insertOne(
       //we can omit the colon 'ex. habit: habit' because when properties
       // and the value are the same, the computer knows they are the same
       // this only works if the value is a variable***
-      {habit, cost, reward, extraNotes, email: req.user.local.email}
+      { habit, cost, reward, extraNotes, email: req.user.local.email }
     )
     //add error handling
-   res.redirect("/texts")
+    res.redirect("/profile")
   });
 
   app.post("/getTexts", isLoggedIn, (req, res) => {
-   const phoneNumber = req.body.phone
-   console.log(phoneNumber)
-   sendSMS(signUpMsg, phoneNumber)
+    const phoneNumber = req.body.phone
+    console.log(phoneNumber)
+    sendSMS(signUpMsg, phoneNumber)
     //add error handling
-   res.redirect("/profile/texts")
+    res.redirect("/profile/texts")
   });
 
-//   app.delete("/deleteOne", (req, res) => {
-//     db.collection("budget").findOneAndDelete(
-//       { _id: new mongoose.mongo.ObjectID(req.body.id) },
-//       (err, result) => {
-//         if (err) return res.send(500, err);
-//         res.send("deleted!");
-//         // console.log(result);
-//       }
-//     );
-//   });
+  app.post("/streaks", isLoggedIn, (req, res) => {
+    const streakData = req.body.streakData
+    const email = req.user.local.email
+    const dataForServer = req.body.dataForServer
+    console.log('streakData', streakData)
+    console.log('email', email)
+    console.log('dataForServer', dataForServer)
 
-//   app.delete('/clear', (req, res) => {
-//     db.collection('budget').deleteMany({ userEmail: req.user.local.email }, (err, result) => {
-//       if (err) return res.send(500, err)
-//       res.send('Spreadsheet deleted!')
-//       console.log(result)
-//     })
-//   })
+    db.collection("streaks").insertOne(
+      { streakData, email: req.user.local.email, dataForServer }
+    )
+    //add error handling
+    res.redirect("/profile")
+  });
+
+  //   app.delete("/deleteOne", (req, res) => {
+  //     db.collection("budget").findOneAndDelete(
+  //       { _id: new mongoose.mongo.ObjectID(req.body.id) },
+  //       (err, result) => {
+  //         if (err) return res.send(500, err);
+  //         res.send("deleted!");
+  //         // console.log(result);
+  //       }
+  //     );
+  //   });
+
+  //   app.delete('/clear', (req, res) => {
+  //     db.collection('budget').deleteMany({ userEmail: req.user.local.email }, (err, result) => {
+  //       if (err) return res.send(500, err)
+  //       res.send('Spreadsheet deleted!')
+  //       console.log(result)
+  //     })
+  //   })
 
   // =============================================================================
   // AUTHENTICATE (FIRST LOGIN) ==================================================
@@ -151,10 +149,10 @@ app.post("/calendar", (req, res) => {
   // locally --------------------------------
   // LOGIN ===============================
 
-//   // show the login form
-//   app.get('/login', function (req, res) {
-//     res.render('login.ejs', { message: req.flash('loginMessage') });
-//   });
+  //   // show the login form
+  //   app.get('/login', function (req, res) {
+  //     res.render('login.ejs', { message: req.flash('loginMessage') });
+  //   });
 
   // process the login form
   app.post('/login', passport.authenticate('local-login', {
@@ -171,7 +169,10 @@ app.post("/calendar", (req, res) => {
 
 
   app.get('/profile/dashboard', function (req, res) {
-    res.render('dashboard.ejs', { message: req.flash('dashboard entered') });
+    db.collection('habits').find({ email: req.user.local.email }).toArray((err, habits) => {
+      if (err) return console.log(err)
+      res.render('dashboard.ejs', { habits, message: req.flash('dashboard entered') });
+    })
   });
 
   app.get('/profile/texts', function (req, res) {

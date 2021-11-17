@@ -1,5 +1,5 @@
 <img src = "new.gif" width = 100%>
-<img src = "user.png" width = 100%>
+<img src = "home.png" width = 100%>
 
 ## Notes
 _This app will be ready to launch in December._

@@ -1,22 +1,30 @@
-window.addEventListener("DOMContentLoaded", function() {
-    const userEmail = document.getElementById('userEmail').value
-    fetch(`/getHabits/${userEmail}`).then(res => {
-        console.log(res.json())
-    })
-    console.log(userEmail)
-}, false);
+// window.addEventListener("DOMContentLoaded", function() {
+//     const userEmail = document.getElementById('userEmail').value
+//     fetch(`/getHabits/${userEmail}`).then(res => {
+//         return res.json()
+//     }).then(res => {
+//         console.log(res)
+//         res.forEach(data => {
+//             //res is an array that contains our habits object
+//             //the loop is going thru the arrays 
+//             //we're passing the DataForServer thats inside data to the setBackground function
+//             setBackground(data.dataForServer)
+//         })
+//     })
+//     console.log(userEmail)
+// }, false);
 
-function toggle () {
+function toggle() {
     let links = document.getElementById("links");
     let blob = document.getElementById("blob");
     blob.classList.toggle("open");
-    if(links.style.display == "block") {
-      links.style.display = "none";
+    if (links.style.display == "block") {
+        links.style.display = "none";
     } else {
-      links.style.display = "block";
+        links.style.display = "block";
     }
-  };
-  
+};
+
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -27,7 +35,7 @@ function app() {
         no_of_days: [],
         blankdays: [],
         days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-
+        initializePage,
         events: [
             // fill this in with habits
             // {
@@ -108,15 +116,15 @@ function app() {
                 // this 'newDate' converts the string version of date into a real date for storing in mongodb
             }
             console.log("addEvent: should send this data to the server in a fetch", dataForServer);
-
             setBackground(dataForServer)
             displayRewards(habitData)
-
+            const userEmail = document.getElementById('userEmail').value
             fetch("calendar", {
                 method: "post",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    dataForServer: dataForServer
+                    dataForServer: dataForServer,
+                    email: userEmail
                 }),
             })
                 .then((response) => {
@@ -176,26 +184,26 @@ function displayRewards(habitData) {
     //this is going to filter and put the didHabits into a new array
     let didHabits = habitData.filter(habit => habit.didHabit === true)
     let ratio = Math.floor((didHabits.length / habitData.length) * 100)
-    if (ratio > 75){
+    if (ratio > 75) {
         document.querySelector('.congrats').innerText = `Look at you! This is your race at your pace. Because you refrained from ${ratio}% of all your habits, you have more options to reward yourself.`
     }
-    else if (ratio > 50){
+    else if (ratio > 50) {
         document.querySelector('.congrats').innerText = `Good work! This is your race at your pace. Because you still refrained from ${ratio}% of all your habits, you still have some options for rewards today.`
     }
-    else if (ratio > 25){
+    else if (ratio > 25) {
         document.querySelector('.congrats').innerText = `You're doing okay. This is your race at your pace. Because you still refrained from ${ratio}% of all your habits, you don't have as many options for rewards today.`
     }
-    else if (ratio === 0){
+    else if (ratio === 0) {
         document.querySelector('.congrats').innerText = 'Unfortunately, you did not refrain from any of your habits... Tommorrow is another day.'
     }
-    else if (ratio === 100){
+    else if (ratio === 100) {
         document.querySelector('.congrats').innerText = 'Congratulations! This is your race at your pace. Because you refrained from all of your habits, you have the option to reward yourself plenty today.'
     }
     //consider doing a ratio for the whole week too! bar chart where you create that ratio for each day*******
     //whats your progress looking like page
     //if you failed on a day - you can ask them "what is your trigger today"
     // create a graph of their triggers
- 
+
     //create a for loop that is running conditional tests on the habitData array
     habitData.forEach(habit => {
         if (habit.didHabit === true) {
@@ -205,14 +213,14 @@ function displayRewards(habitData) {
             rewardLabel.classList.add('text-lg')
             document.querySelector('.rewardList').appendChild(rewardItem)
             let rewardCheckbox = document.createElement('input')
-            rewardCheckbox.classList.add('m-2','form-checkbox', 'h-5', 'w-5', 'text-yellow-600', 'r-45')
+            rewardCheckbox.classList.add('m-2', 'form-checkbox', 'h-5', 'w-5', 'text-yellow-600', 'r-45')
             rewardCheckbox.setAttribute('type', 'checkbox')
             rewardLabel.innerText = habit.reward + ' ' + 'for refraining from:' + ' ' + habit.habit
             rewardItem.appendChild(rewardCheckbox)
             rewardItem.appendChild(rewardLabel)
             //move these so they arent in the li
         }
-        else {}
+        else { }
 
         // to do: 
         // - document the rewards in the database
@@ -226,39 +234,42 @@ function displayRewards(habitData) {
 
     let noReward = document.createElement('button')
     noReward.innerText = "no reward today"
-    noReward.classList.add('sendRewardButton')
+    noReward.classList.add('NoSendRewardButton')
     noReward.classList.add('bg-white', 'hover:bg-gray-100', 'text-gray-700', 'font-semibold', 'py-2', 'px-4', 'border', 'border-gray-300', 'rounded-lg', 'shadow-sm', 'mr-2')
 
     document.getElementById('rewards').appendChild(sendReward)
     document.getElementById('rewards').appendChild(noReward)
 
 
-    // next we want to grab the data of which reward checkboxes were checked and store that in the db
-    //create a new post to the db that documents when the user took these specific rewards
+    // next we are grabbing the data of which reward checkboxes were checked and store that in the db
 
-    //  const rewardCheckboxes = document.getElementsByClassName("reward_checkbox");
-    //         const rewardData = [];
-    //         // loop through all the checkboxes
-    //         for (let i = 0; i < habitData.length; i++) {
-    //             const rewardCheckbox = rewardCheckboxes[i];
-    //             // adds the data for each checkbox
-    //             habitData.push({ habit: habitCheckbox.name, didHabit: habitCheckbox.checked })
-    //         }
-    //         const dataForServer = {
-    //             habits: habitData,
-    //             date: new Date(this.event_date) 
+    const rewardCheckboxes = document.getElementsByClassName('form-checkbox')
+
+     document.querySelector(".sendRewardButton").addEventListener('click', () => {
+        const rewardData = [];
+        // loop through all the checkboxes
+        for (let i = 0; i < habitData.length; i++) {
+            const rewardCheckbox = rewardCheckboxes[i];
+            // adds the data for each checkbox
+            habitData.push({ habit: habitCheckbox.name, didHabit: habitCheckbox.checked, gaveReward: rewardCheckbox.checked })
+        }
+        const dataForServer = {
+            habits: habitData,
+            date: new Date(this.event_date) 
+        }
+     })
     // this 'newDate' converts the string version of date into a real date for storing in mongodb
-
 }
 
 //dataForServer contains habit name, reward name, date, and didHabit
-//to do: 
 function setBackground(dataForServer) {
-    console.log('dataForServer.date' + dataForServer.date.getDate())
-
+    let streakDate
     let div = document.querySelectorAll('.calendarDate')
-    let streakDate = Array.from(div).reduce((diva, divb) => {
-        if (diva.innerText == dataForServer.date.getDate()) {
+
+    //chaning it from a string to the date type that .date needs
+    let dateSelected = new Date(dataForServer.date)
+    streakDate = Array.from(div).reduce((diva, divb) => {
+        if (diva.innerText == dateSelected.getDate()) {
             return diva
         }
         else {
@@ -278,7 +289,36 @@ function setBackground(dataForServer) {
         }
     })
     streakDate.style.background = `rgb(0,0, 255, 0.${Math.floor(finalShadeNum)})`
+
+    let streakData = dataForServer.date
+    console.log('streakData', streakData)
+    // fetch('/streaks', {
+    //     method: "post",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({
+    //         streakData: streakData,
+    //         dataForServer: dataForServer
+    //     }),
+    // })
+    //     .then((response) => {
+    //         if (response.ok) return response.text();
+    //     }) 
+    //     .then((text) => {
+    //         // window.location.reload(true);
+    //     });
 }
+function initializePage() {
+    let streakDiv = document.getElementsByClassName('dataDiv')[0].innerText
+    let streakJSON = JSON.parse(streakDiv)
+    streakJSON.forEach(streak => {
+        if (streak.dataForServer) {
+            setBackground(streak.dataForServer)
+        }
+    })
+}
+
+setTimeout(initializePage, 100)
+
 //changing innertext of the main box
 document.getElementById('other').addEventListener('click', showResources)
 function showResources() {

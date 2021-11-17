@@ -52,7 +52,7 @@
     box-shadow: var(--shadow-size) var(--shadow-size) 2px var(--paper-dark);
     margin: auto;
     margin-top: 9%;
-    border:7px solid black;
+    border:7px solid rgba(0, 0, 0, 0.856);
     box-shadow: 10px 10px 3px rgba(0, 0, 0, 0.507);
     background-color:rgba(255, 255, 255, 0.973);
 
@@ -140,8 +140,10 @@
   }
 
   h1{
-      padding:2%;
+      padding:1%;
       width:95%;
+      padding-top:0;
+      margin-top:-15px;
       margin:auto;
       text-align: center;
       margin-bottom:2%;
@@ -166,7 +168,7 @@
   }
 
   .insides{
-      margin-top:-5%;
+      margin-top:-4%;
       text-align: center;
 
   }
@@ -249,7 +251,7 @@
   }
 
   form{
-      margin-top:3.5%;
+      margin-top:3%;
       
   }
 
@@ -314,3 +316,15 @@
     padding-top:5px;
     /* margin:0; */
   }
+
+  .phone{
+    background-image: url('phone.gif');
+    height:100px;
+    width:100px;
+    background-size:80%;
+    background-repeat: no-repeat;
+    margin:auto;
+    margin-top:-5%;
+    /* margin-bottom:-4%; */
+  }
+  

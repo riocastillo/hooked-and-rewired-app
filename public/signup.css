@@ -132,7 +132,7 @@ body {
   border-radius: 5px;
 	transform-origin: top;
 	letter-spacing: 1px;
-
+    box-shadow: 4px 5px 20px rgba(33,33,33,.7);
 }
 
 .form-login {
@@ -299,6 +299,11 @@ body {
 	background-color:white;
 }
 
+form .btn-login:active,
+form .btn-signup:active{
+	transform: scale(.6);
+}
+
 .btn-signup {
 	background-color: #e7e3e3;
 	background-image: url('logIn.png');
@@ -377,3 +382,5 @@ svg {
 
 	/* margin:0; */
   }
+
+  

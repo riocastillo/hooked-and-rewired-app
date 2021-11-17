@@ -10,6 +10,10 @@
     rel="stylesheet">    
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <link href="https://unpkg.com/tailwindcss@1.2.0/dist/tailwind.min.css" rel="stylesheet">
+<title>Dashboard</title>
+    <link rel="shortcut icon" 
+    type="image/x-icon" 
+    href="favicon.ico"/>
 </head>
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
@@ -128,7 +132,7 @@
                                 </div>
                                 <div class="card pb-2  flex-1 text-right md:text-center">
                                     <h5 class="font-bold uppercase text-white text-xl">Total habits</h5>
-                                    <h3 class="font-bold text-3xl text-black"> this is a number</h3>
+                                    <h3 class="font-bold text-3xl text-black"><%= habits.length %></h3>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +181,7 @@
                                             class="fas fa-cookie-bite fa-2x fa-fw fa-inverse"></i></div>
                                 </div>
                                 <div class="card pb-2 flex-1 text-right md:text-center">
-                                    <h5 class="font-bold uppercase text-white text-xl">Total Rewards</h5>
+                                    <h5 class="font-bold uppercase text-white text-xl">Total Rewards Given</h5>
                                     <h3 class="font-bold text-3xl text-black">also a number </h3>
                                 </div>
                             </div>
@@ -495,7 +499,7 @@
             }
 
         </script>
-        <!-- <script src="dashboard.js"></script> -->
+        <script src="dashboard.js"></script>
 
     </body>
 

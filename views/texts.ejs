@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Texts</title>
+    <title>Texts</title>
+    
     <link rel="stylesheet" href="../texts.css">
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@800&family=Frijole&family=Tourney:ital,wght@1,400&family=Londrina+Solid:wght@900&family=Rock+Salt&display=swap"
     rel="stylesheet">    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
+    <link rel="shortcut icon" 
+    type="image/x-icon" 
+    href="flower.ico"/>
 
 </head>
 
@@ -35,10 +37,12 @@
         <div class="paper pink">
           <div class="tape-section"></div>
           <section class="insides">
-              <!-- <section id="pic"></section> -->
-            <h1>GET UPDATES</h1>
+            <section class="phone"></section>
+
+              <h1>GET UPDATES</h1>
+
             <form action="/getTexts" method="post">
-            <input type="tel" id="phone" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+              <input type="tel" id="phone" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
             <button type="submit" value ="Get Texts" class="button-cover" role="button"><span class="text">Submit</span><span>Thanks!</span>
             </button>
           </form>
