@@ -328,7 +328,7 @@
                                 from each habit</h5>
                         </div>
                         <div class="p-5">
-                            <canvas id="chartjs-0"  class="chartjs" width="name of habit"
+                            <canvas id="chartjs-0" class="chartjs" width="name of habit"
                                 height="days refrained from"></canvas>
                             <script>
                                 var daysRefrainedFromHabit = `<%- JSON.stringify(daysRefrainedFromHabit) %>`
@@ -340,26 +340,33 @@
                                     habitCountArray.push(habit.count)
                                 })
 
-                                new Chart(document.getElementById("chartjs-0"), {
-                                    "type": "line",
-                                    "data": {
-                                        "labels": habitNamesArray,
-                                        "datasets": [{
-                                            "label": "Habits",
-                                            "data": habitCountArray,
-                                            "fill": true,
-                                            "borderColor": "rgb(75, 192, 192)",
-                                            "lineTension": 0.6,
-                                            "font-weight": "bolder",
+                                var yValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
 
-                                        }]
-                                    },
-                                    "options": {
-                                        "ticks": {
-                                                    "beginAtZero": true
-                                                }
-                                    }
-                                });
+                                new Chart(document.getElementById("chartjs-0"),
+                                    {
+                                        "type": "line",
+                                        "data": {
+                                            "labels": habitNamesArray,
+                                            "datasets": [{
+                                                "label": "Habits",
+                                                "data": habitCountArray,
+                                                
+                                                "fill": true,
+                                                "borderColor": "rgb(75, 162, 192)",
+                                                "lineTension": 0.6,
+                                                "font-weight": "bolder",
+                                            }]
+
+                                        },
+
+                                        "options": {
+
+                                            "ticks": {
+                                                "beginAtZero": true
+                                            }
+                                        }
+                                    });
+
                             </script>
                         </div>
                     </div><br>
@@ -371,19 +378,21 @@
                     <div class="bg-blue-600 border border-white rounded shadow">
                         <div class="border-b border-white p-3">
                             <h5 class="font-bold uppercase text-white text-2xl font-londrina">Weekly data of habit
-                                disengagement
                             </h5>
                         </div>
                         <div class="p-5">
                             <canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
                             <script>
+
+                                var yValues = [0, 1, 2, 3, 4, 5, 6, 7];
                                 new Chart(document.getElementById("chartjs-1"), {
-                                    "type": "bar",
+                                    "type": "horizontalBar",
                                     "data": {
                                         "labels": habitNamesArray,
                                         "datasets": [{
-                                            "label": "habits",
-                                            "data": [65, 59, 80, 81, 56, 55, 40],
+                                            "label": "habits refrained from",
+                                            "data": [1, 3, 2, 5],
+                                            "data": yValues,
                                             "fill": true,
                                             "backgroundColor": ["rgba(255, 90, 132)", "rgba(255, 129, 64)", "rgb(255, 237, 71)", "rgba(60, 167, 255)", "rgb(4, 142, 255)", "rgba(153, 102, 255)", "rgba(201, 203, 207)"],
                                             "borderColor": ["rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)"],

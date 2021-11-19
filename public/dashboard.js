@@ -15,7 +15,7 @@ zingchart.render({
       fontColor: "white"
     },
     tooltip: {
-      fontColor: "#333"
+      fontColor: "white"
     },
     plot: {
       margin: "dynamic",
@@ -97,7 +97,7 @@ zingchart.render({
         fontSize: "20px"
       },
       tooltip: {
-        fontColor: "#333",
+        fontColor: "white",
         rules: [{
           rule: "%i == 0",
           text: "%v Created",
@@ -147,13 +147,13 @@ zingchart.render({
       textAlign: "left",
       marginLeft: "10px",
       adjustLayout: true,
-      fontColor: "#ffffff"
+      fontColor: "white"
     },
     subtitle: {
       text: "Utilization across nodes",
       textAlign: "left",
       marginLeft: "10px",
-      fontColor: "#ffffff"
+      fontColor: "white"
     },
     plot: {
       barsSpaceLeft: 0,
@@ -162,7 +162,7 @@ zingchart.render({
       }
     },
     tooltip: {
-      fontColor: "#333"
+      fontColor: "white"
 
     },
     plotarea: {
@@ -178,7 +178,7 @@ zingchart.render({
         lineColor: "#ffffff"
       },
       item: {
-        fontColor: "#ffffff"
+        fontColor: "white"
       },
       lineColor: "#ffffff"
     },
@@ -186,13 +186,13 @@ zingchart.render({
       guide: {
         visible: false
       },
-      lineWidth: "1px",
+      lineWidth: "2px",
       tick: {
-        lineWidth: "1px",
+        lineWidth: "2px",
         lineColor: "#ffffff"
       },
       item: {
-        fontColor: "#ffffff"
+        fontColor: "white"
       },
       lineColor: "#ffffff"
     },
@@ -221,7 +221,7 @@ zingchart.render({
     title: {
       text: "Status Count",
       textAlign: "left",
-      fontColor: "#fff"
+      fontColor: "white"
     },
     legend: {
       verticalAlign: 'bottom',
@@ -237,7 +237,7 @@ zingchart.render({
       },
       item: {
         markerStyle: "rpoly6",
-        fontColor: "#ffffff",
+        fontColor: "white",
 
       }
     },
@@ -297,7 +297,7 @@ zingchart.render({
         lineWidth: "1px"
       },
       item: {
-        fontColor: "#ffffff"
+        fontColor: "white"
       },
       refLine: {
         lineColor: "#ffffff"
@@ -314,7 +314,7 @@ zingchart.render({
         lineWidth: "1px",
       },
       item: {
-        fontColor: "#ffffff"
+        fontColor: "white"
       },
       refLine: {
         lineColor: "#ffffff"
@@ -342,7 +342,7 @@ zingchart.render({
       margin: "dynamic"
     },
     tooltip: {
-      fontColor: "#333"
+      fontColor: "white"
 
     },
     scaleX: {
@@ -439,7 +439,7 @@ zingchart.render({
       x: "5%",
       y: "2%",
       fontSize: "24px",
-      fontColor: "#FFF"
+      fontColor: "white"
     }, {
       text: "70bpm",
       x: "40%",
@@ -455,8 +455,8 @@ zingchart.render({
     }],
     series: [{
       values: [6, 7, 8, 7, 8, 7, 8, 9, 10, 6, 7, 8, 9, 5, 8],
-      backgroundColor: "#fff",
-      lineColor: "#fff"
+      backgroundColor: "#ffffff",
+      lineColor: "#ffffff"
     }, {
       values: [3, 3, 4, 5, 5, 6, 7, 5, 6, 5, 4, 3, 4, 4, 5],
       backgroundColor: "#f690a6",
@@ -525,7 +525,7 @@ zingchart.render({
     },
     series: [{
       values: [2, 3, 5, 6, 8, 10, 12],
-      backgroundColor: "#fff"
+      backgroundColor: "#ffffff"
     }]
   }
 })
@@ -545,4 +545,4 @@ setInterval(function() {
     plotindex: 0,
     values: generateSeriesData(150)
   });
-}, 500);
+}, 800);
