@@ -55,14 +55,15 @@
             <a href="/profile/texts" class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="texts">
               Get text alerts
             </a>
-            <a href="/profile/<%= userId %>" class="block bg-black py-3 px-6 text-lg text-white font-semibold border-b border-white" id="other" onclick="copyURI(event)">
+            <a href="/profile/<%= userId %>" class="block bg-black py-3 px-6 text-lg text-white font-semibold border-b border-white" id="other">
               Share your calendar
             </a>
           </div>
           <img src="hooked.png" class="p-3 pt-10">
         </div>
-        <div class="flex-grow">
+        <div class="flex-grow"> 
           <br>
+          <h2 class="welcomeTo font-londrina pb-8 font-semibold text-yellow text-4xl px-10">Welcome, <%= email %>!</h2>
 
           <div class="replace flex flex-col mx-40 mt-15">
 
@@ -142,7 +143,8 @@ excersized (in distance) by day  -->
         margin-left: -3%;
       }
     </style>
-
+<!-- <input value="<%= email %>" id="userEmail" class="hideThis"/> -->
+   
 <!-- structure of calendar  -->
 
 <div style="display:none" class="dataDiv">
