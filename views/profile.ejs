@@ -157,7 +157,7 @@ excersized (in distance) by day  -->
 
           <div class="bg-white rounded-lg shadow overflow-hidden">
 
-            <div class="flex items-center mt-5 justify-between  px-6">
+            <div class="flex items-center mt-5 justify-between px-6">
               <div>
                 <span x-text="MONTH_NAMES[month]" class="text-6xl font-londrina font-bold text-gray-800"></span>
                 <span x-text="year" class="ml-1 text-5xl font-londrina text-gray-600 font-normal"></span>
@@ -249,7 +249,7 @@ excersized (in distance) by day  -->
                 <ul>
                   <% for (let habit of habits) { %>
                     <li for="<%= habit.habit %>">
-                      <input class="habit_checkbox m-2 form-checkbox h-5 w-5 text-yellow-600 r-45" id="habit" id="test2" name="habit" type="checkbox" checked data-reward="<%= habit.reward %>" value="<%= habit.habit %>">
+                      <input class="habit_checkbox m-2 form-checkbox h-5 w-5 text-yellow-600 r-45" id="habit" id="test2" name="habit" type="checkbox" checked data-reward="<%= habit.reward %>" data-cost="<%= habit.cost %>"value="<%= habit.habit %>">
                       <label for="habit" class="text-xl">Refained from: <%= habit.habit %></label>
                     </li>
                       <% } %>

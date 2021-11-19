@@ -1,19 +1,3 @@
-// window.addEventListener("DOMContentLoaded", function() {
-//     const userEmail = document.getElementById('userEmail').value
-//     fetch(`/getHabits/${userEmail}`).then(res => {
-//         return res.json()
-//     }).then(res => {
-//         console.log(res)
-//         res.forEach(data => {
-//             //res is an array that contains our habits object
-//             //the loop is going thru the arrays 
-//             //we're passing the DataForServer thats inside data to the setBackground function
-//             setBackground(data.dataForServer)
-//         })
-//     })
-//     console.log(userEmail)
-// }, false);
-
 function toggle() {
     let links = document.getElementById("links");
     let blob = document.getElementById("blob");
@@ -106,10 +90,10 @@ function app() {
             for (let i = 0; i < habitCheckboxes.length; i++) {
                 // below is a variable for the current checkbox
                 const habitCheckbox = habitCheckboxes[i];
-                console.log(habitCheckbox)
                 // adds the data for each checkbox
-                habitData.push({ habit: habitCheckbox.value, didHabit: habitCheckbox.checked, reward: habitCheckbox.dataset.reward })
+                habitData.push({ habit: habitCheckbox.value, didHabit: habitCheckbox.checked, reward: habitCheckbox.dataset.reward, cost: habitCheckbox.dataset.cost })
             }
+            console.log(habitData.cost, 'test', Number(habitData.cost))
             const dataForServer = {
                 habits: habitData,
                 date: new Date(this.event_date)
@@ -117,24 +101,8 @@ function app() {
             }
             console.log("addEvent: should send this data to the server in a fetch", dataForServer);
             setBackground(dataForServer)
-            displayRewards(habitData)
-            const userEmail = document.getElementById('userEmail').value
-            fetch("calendar", {
-                method: "post",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    dataForServer: dataForServer,
-                    email: userEmail
-                }),
-            })
-                .then((response) => {
-                    console.log('response=' + response)
-                    if (response.ok) return response.text();
-                })
-                .then((text) => {
-                    console.log('text=' + text)
-                    window.location.reload(true);
-                });
+            displayRewards(dataForServer)
+
             if (this.event_title == '') {
                 return;
             }
@@ -175,15 +143,15 @@ function app() {
 }
 
 // dynamically generating html that is the congrats and rewards page
-function displayRewards(habitData) {
+function displayRewards(dataForServer) {
     let habitList = document.querySelector('.habitList')
     let habitButtons = document.querySelector('.habitButtons')
     habitButtons.classList.add('hideThis')
     habitList.classList.add('hideThis')
     let congrats = false
     //this is going to filter and put the didHabits into a new array
-    let didHabits = habitData.filter(habit => habit.didHabit === true)
-    let ratio = Math.floor((didHabits.length / habitData.length) * 100)
+    let didHabits = dataForServer.habits.filter(habit => habit.didHabit === true)
+    let ratio = Math.floor((didHabits.length / dataForServer.habits.length) * 100)
     if (ratio > 75) {
         document.querySelector('.congrats').innerText = `Look at you! This is your race at your pace. Because you refrained from ${ratio}% of all your habits, you have more options to reward yourself.`
     }
@@ -199,13 +167,9 @@ function displayRewards(habitData) {
     else if (ratio === 100) {
         document.querySelector('.congrats').innerText = 'Congratulations! This is your race at your pace. Because you refrained from all of your habits, you have the option to reward yourself plenty today.'
     }
-    //consider doing a ratio for the whole week too! bar chart where you create that ratio for each day*******
-    //whats your progress looking like page
-    //if you failed on a day - you can ask them "what is your trigger today"
-    // create a graph of their triggers
 
     //create a for loop that is running conditional tests on the habitData array
-    habitData.forEach(habit => {
+    dataForServer.habits.forEach(habit => {
         if (habit.didHabit === true) {
             let rewardItem = document.createElement('li')
             // rewardItem.classList.add('')
@@ -214,7 +178,9 @@ function displayRewards(habitData) {
             document.querySelector('.rewardList').appendChild(rewardItem)
             let rewardCheckbox = document.createElement('input')
             rewardCheckbox.classList.add('m-2', 'form-checkbox', 'h-5', 'w-5', 'text-yellow-600', 'r-45')
+            rewardCheckbox.classList.add('rewardCheckbox')
             rewardCheckbox.setAttribute('type', 'checkbox')
+            rewardCheckbox.setAttribute('name', habit.reward)
             rewardLabel.innerText = habit.reward + ' ' + 'for refraining from:' + ' ' + habit.habit
             rewardItem.appendChild(rewardCheckbox)
             rewardItem.appendChild(rewardLabel)
@@ -243,20 +209,38 @@ function displayRewards(habitData) {
 
     // next we are grabbing the data of which reward checkboxes were checked and store that in the db
 
-    const rewardCheckboxes = document.getElementsByClassName('form-checkbox')
+    const rewardCheckboxes = document.getElementsByClassName('rewardCheckbox')
 
      document.querySelector(".sendRewardButton").addEventListener('click', () => {
         const rewardData = [];
-        // loop through all the checkboxes
-        for (let i = 0; i < habitData.length; i++) {
+        // loop through all the checkboxes, for each reward checkbox we want to push reward info into the data array
+        for (let i = 0; i < rewardCheckboxes.length; i++) {
             const rewardCheckbox = rewardCheckboxes[i];
             // adds the data for each checkbox
-            habitData.push({ habit: habitCheckbox.name, didHabit: habitCheckbox.checked, gaveReward: rewardCheckbox.checked })
+            rewardData.push({ reward: rewardCheckbox.getAttribute('name'),gaveReward: rewardCheckbox.checked })
         }
-        const dataForServer = {
-            habits: habitData,
-            date: new Date(this.event_date) 
-        }
+        //taking the object dataforserver and adding a key called rewarddata and then setting the value to reward data
+        dataForServer.rewardData = rewardData
+
+        const userEmail = document.getElementById('userEmail').value
+        fetch("calendar", {
+            method: "post",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                dataForServer: dataForServer,
+                email: userEmail
+            }),
+        })
+            .then((response) => {
+                console.log('response=' + response)
+                if (response.ok) return response.text();
+            })
+            //to do: figure out why the window is not reloading, and what the server is sending back as a response
+            .then((text) => {
+                console.log('text=' + text)
+                window.location.reload(true);
+            });
+
      })
     // this 'newDate' converts the string version of date into a real date for storing in mongodb
 }
@@ -291,21 +275,7 @@ function setBackground(dataForServer) {
     streakDate.style.background = `rgb(0,0, 255, 0.${Math.floor(finalShadeNum)})`
 
     let streakData = dataForServer.date
-    console.log('streakData', streakData)
-    // fetch('/streaks', {
-    //     method: "post",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //         streakData: streakData,
-    //         dataForServer: dataForServer
-    //     }),
-    // })
-    //     .then((response) => {
-    //         if (response.ok) return response.text();
-    //     }) 
-    //     .then((text) => {
-    //         // window.location.reload(true);
-    //     });
+
 }
 function initializePage() {
     let streakDiv = document.getElementsByClassName('dataDiv')[0].innerText

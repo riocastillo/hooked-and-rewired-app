@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { sendSMS } = require('./services/twilio.js')
-const { signUpMsg } = require('./services/smsTemplates/template.js')
+const { signUpMsg } = require('./services/smsTemplates/template.js');
+const { constant } = require("lodash");
 module.exports = function (app, passport, db) {
 
   // normal routes  ===============================================================
@@ -34,13 +35,7 @@ module.exports = function (app, passport, db) {
 
   // habit profile routes ===============================================================
 
-  //   app.post('/messages', (req, res) => {
-  //     db.collection('messages').save({ name: req.body.name, msg: req.body.msg, thumbUp: 0 }, (err, result) => {
-  //       if (err) return console.log(err)
-  //       console.log('saved to database')
-  //       res.redirect('/profile')
-  //     })
-  //   })
+
 
   //   // Promises Example - Then / Catch
   //   // app.post('/budget', (req, res) => {
@@ -62,39 +57,29 @@ module.exports = function (app, passport, db) {
     console.log(req.params)
     db.collection('calendar').find({ email: userEmail }).toArray((err, habits) => {
       if (err) return console.log(err)
-      console.log(habits)
-      console.log(req.user)
       return res.send(habits)
     })
   })
   app.post("/calendar", (req, res) => {
     db.collection("calendar").insertOne(
       { dataForServer: req.body.dataForServer, email: req.body.email },
-      {
-        $set: {
-          // completed: true,
-        },
-      },
-      {
-        sort: { _id: -1 },
-        upsert: false,
-      },
       (err, result) => {
         if (err) return res.send(500, err);
-        res.send("sent!");
+        res.send(200, "sent!");
       }
     );
   });
 
   app.post("/intakeHabit", isLoggedIn, (req, res) => {
-    console.log(req.user)
     // object destructuring
     const { habit, cost, reward, extraNotes } = req.body
+    let dailyCost = (Number(cost))/7
+    console.log(dailyCost, 'dailycost')
     db.collection("habits").insertOne(
       //we can omit the colon 'ex. habit: habit' because when properties
       // and the value are the same, the computer knows they are the same
       // this only works if the value is a variable***
-      { habit, cost, reward, extraNotes, email: req.user.local.email }
+      { habit, cost, dailyCost, reward, extraNotes, email: req.user.local.email }
     )
     //add error handling
     res.redirect("/profile")
@@ -102,7 +87,6 @@ module.exports = function (app, passport, db) {
 
   app.post("/getTexts", isLoggedIn, (req, res) => {
     const phoneNumber = req.body.phone
-    console.log(phoneNumber)
     sendSMS(signUpMsg, phoneNumber)
     //add error handling
     res.redirect("/profile/texts")
@@ -112,9 +96,6 @@ module.exports = function (app, passport, db) {
     const streakData = req.body.streakData
     const email = req.user.local.email
     const dataForServer = req.body.dataForServer
-    console.log('streakData', streakData)
-    console.log('email', email)
-    console.log('dataForServer', dataForServer)
 
     db.collection("streaks").insertOne(
       { streakData, email: req.user.local.email, dataForServer }
@@ -122,17 +103,6 @@ module.exports = function (app, passport, db) {
     //add error handling
     res.redirect("/profile")
   });
-
-  //   app.delete("/deleteOne", (req, res) => {
-  //     db.collection("budget").findOneAndDelete(
-  //       { _id: new mongoose.mongo.ObjectID(req.body.id) },
-  //       (err, result) => {
-  //         if (err) return res.send(500, err);
-  //         res.send("deleted!");
-  //         // console.log(result);
-  //       }
-  //     );
-  //   });
 
   //   app.delete('/clear', (req, res) => {
   //     db.collection('budget').deleteMany({ userEmail: req.user.local.email }, (err, result) => {
@@ -148,11 +118,6 @@ module.exports = function (app, passport, db) {
 
   // locally --------------------------------
   // LOGIN ===============================
-
-  //   // show the login form
-  //   app.get('/login', function (req, res) {
-  //     res.render('login.ejs', { message: req.flash('loginMessage') });
-  //   });
 
   // process the login form
   app.post('/login', passport.authenticate('local-login', {
@@ -171,7 +136,77 @@ module.exports = function (app, passport, db) {
   app.get('/profile/dashboard', function (req, res) {
     db.collection('habits').find({ email: req.user.local.email }).toArray((err, habits) => {
       if (err) return console.log(err)
-      res.render('dashboard.ejs', { habits, message: req.flash('dashboard entered') });
+      db.collection('calendar').find({ email: req.user.local.email }).toArray((err2, calendar) => {
+        if (err) return console.log(err)
+
+        let totalRewards = 0
+        let habitsAvoided = 0
+        let habitsNotAvoided = 0
+        let cost = 0
+
+        let daysRefrainedFromHabit = []
+        habits.forEach((habit) => {
+          let habits = {
+            name: habit.habit, count: 0,
+          }
+          daysRefrainedFromHabit.push(habits)
+        })
+
+        calendar.forEach((day) => {
+          if (day.dataForServer.rewardData) {
+            day.dataForServer.rewardData.forEach((reward) => {
+              if (reward.gaveReward === true) {
+                totalRewards += 1
+                //add new array here
+              }
+            })
+          }
+          
+          if (day.dataForServer.habits) {
+            day.dataForServer.habits.forEach((habit) => {
+              if (habit.didHabit === true) {
+                habitsAvoided += 1
+                //going thru each element of the array and increments count for daysRefrainedFromHabit tracker
+                daysRefrainedFromHabit = 
+                daysRefrainedFromHabit.map((habitCount) => {
+                  if (habitCount.name === habit.habit) {
+                    habitCount.count += 1
+                    // if(parseInt(habit.cost) >= 0){
+                    //   let dailyNum = Number(parseInt(habit.cost) / 7)
+                    //   dailyCostNum = dailyNum * habitCount.count
+                    //   return dailyCostNum
+                    // }
+                  }
+                  return habitCount
+                })
+                if (!isNaN(parseInt(habit.cost))) {
+                  let result = (((parseInt(habit.cost)) / 7).toFixed(2))
+                  console.log(result)
+                  cost += Number(result)
+                }
+              }
+              if (habit.didHabit === false) {
+                habitsNotAvoided += 1
+              }
+            })
+          }
+        })
+        console.log(calendar, 'data')
+
+        let totalHabits = habitsAvoided + habitsNotAvoided
+        let habitsAvoidedPercentage = Math.floor((habitsAvoided / totalHabits) * 100)
+        let habitsNotAvoidedPercentage = Math.floor((habitsNotAvoided / totalHabits) * 100)
+        res.render('dashboard.ejs', {
+          daysRefrainedFromHabit,
+          habits,
+          calendar,
+          cost,
+          totalRewards,
+          habitsAvoidedPercentage,
+          habitsNotAvoidedPercentage,
+          email: req.user.local.email
+        })
+      })
     })
   });
 
