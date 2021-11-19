@@ -251,6 +251,8 @@
                         <div class="p-5">
                             <canvas id="chartjs-7" class="chartjs" width="undefined" height="undefined"></canvas>
                             <script>
+                                Chart.defaults.global.defaultFontColor = 'white'
+                                Chart.defaults.global.defaultFontSize = 15
                                 var totalRewards = `<%- JSON.stringify(totalRewards) %>`
                                 totalRewards = JSON.parse(totalRewards)
 
@@ -261,27 +263,20 @@
 
                                 rewardData.forEach((dataSet) => {
                                     let eachReward = dataSet.dataForServer
-                                    console.log('eachreward', eachReward)
                                     let rewardSet = eachReward.rewardData
-                                    console.log('test', rewardSet)
                                     rewardSet.forEach((reward) => {
-                                        //setting count to 0 and creates a key for that object 
-                                        rewardNamesObject[reward.reward] = 0
-                                        console.log(reward, 'reward')
-                                        console.log(reward.gaveReward, 'gaveReward')
+                                        //if the object and its key exist, dont do anything, otherwise assign it the value of 0 if it doesnt exist
+                                        rewardNamesObject[reward.reward] = rewardNamesObject[reward.reward] ? rewardNamesObject[reward.reward] : 0
                                         if (reward.gaveReward === true) {
                                             rewardNamesObject[reward.reward] += 1
                                         }
                                     })
-
                                 })
 
-                                console.log(rewardNamesObject, 'obj')
                                 //keys is  a method for objects to get the keys and then put them into arrays
                                 let rewardNamesArray = Object.keys(rewardNamesObject)
                                 let rewardCountArray = Object.values(rewardNamesObject)
 
-                                console.log('array', rewardNamesArray)
 
                                 // its figuring out the rewardCount for the day but we want it for the entire calendar
                                 // to do: figure it out
@@ -331,6 +326,7 @@
                             <canvas id="chartjs-0" class="chartjs" width="name of habit"
                                 height="days refrained from"></canvas>
                             <script>
+                            
                                 var daysRefrainedFromHabit = `<%- JSON.stringify(daysRefrainedFromHabit) %>`
                                 daysRefrainedFromHabit = JSON.parse(daysRefrainedFromHabit)
                                 let habitNamesArray = []
@@ -340,29 +336,34 @@
                                     habitCountArray.push(habit.count)
                                 })
 
-                                var yValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
-
                                 new Chart(document.getElementById("chartjs-0"),
                                     {
                                         "type": "line",
                                         "data": {
                                             "labels": habitNamesArray,
                                             "datasets": [{
-                                                "label": "Habits",
+                                                "label": "days",
                                                 "data": habitCountArray,
-                                                
+
                                                 "fill": true,
                                                 "borderColor": "rgb(75, 162, 192)",
                                                 "lineTension": 0.6,
                                                 "font-weight": "bolder",
                                             }]
-
                                         },
-
                                         "options": {
-
-                                            "ticks": {
-                                                "beginAtZero": true
+                                            "legend": {
+                                                "labels": {
+                                                    // This more specific font property overrides the global property
+                                                    "fontColor": 'white'
+                                                }
+                                            },
+                                            "scales": {
+                                                "yAxes": [{
+                                                    "ticks": {
+                                                        "beginAtZero": true
+                                                    }
+                                                }]
                                             }
                                         }
                                     });
@@ -384,15 +385,42 @@
                             <canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
                             <script>
 
-                                var yValues = [0, 1, 2, 3, 4, 5, 6, 7];
+                                let habitCountObject = {}
+
+                                let today = new Date()
+                                console.log('today', today)
+
+                                rewardData.forEach((day) => {
+                                    console.log(day.dataForServer.date, 'date')
+
+                                    let todaysTime = today.getTime()
+                                    let comparisonTime = new Date(day.dataForServer.date).getTime()
+                                    let difference = (todaysTime - comparisonTime) / (1000 * 60 * 60 * 24)
+
+                                    if (difference <= 6 && difference >= 0) {
+                                        day.dataForServer.habits.forEach((habit) => {
+                                            //checking to see if the habit has been definied
+                                            habitCountObject[habit.habit] = habitCountObject[habit.habit] ? habitCountObject[habit.habit] : 0
+                                            //checking to see if they did the habit that exists
+                                            habitCountObject[habit.habit] = habit.didHabit ? habitCountObject[habit.habit] + 1 : habitCountObject[habit.habit]
+
+                                        })
+                                    }
+                                    console.log(habitCountObject, 'countobj')
+                                })
+
+                                let weekHabitCountArray = Object.values(habitCountObject)
+                                let weekHabitCountNames = Object.keys(habitCountObject)
+
+                                // var yValues = [0, 1, 2, 3, 4, 5, 6, 7];
                                 new Chart(document.getElementById("chartjs-1"), {
                                     "type": "horizontalBar",
                                     "data": {
-                                        "labels": habitNamesArray,
+                                        "labels": weekHabitCountNames,
                                         "datasets": [{
-                                            "label": "habits refrained from",
-                                            "data": [1, 3, 2, 5],
-                                            "data": yValues,
+                                            "label": "days",
+                                            "data": weekHabitCountArray,
+                                            // "data": yValues,
                                             "fill": true,
                                             "backgroundColor": ["rgba(255, 90, 132)", "rgba(255, 129, 64)", "rgb(255, 237, 71)", "rgba(60, 167, 255)", "rgb(4, 142, 255)", "rgba(153, 102, 255)", "rgba(201, 203, 207)"],
                                             "borderColor": ["rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)"],
@@ -403,6 +431,11 @@
                                     "options": {
                                         "scales": {
                                             "yAxes": [{
+                                                "ticks": {
+                                                    "beginAtZero": true
+                                                }
+                                            }],
+                                            "xAxes": [{
                                                 "ticks": {
                                                     "beginAtZero": true
                                                 }

@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const { sendSMS } = require('./services/twilio.js')
+const ObjectId = require("mongodb").ObjectId;
+
 const { signUpMsg } = require('./services/smsTemplates/template.js');
 const { constant } = require("lodash");
 module.exports = function (app, passport, db) {
@@ -21,7 +23,8 @@ module.exports = function (app, passport, db) {
         res.render('profile.ejs', {
           habits,
           calendar,
-          email: req.user.local.email
+          email: req.user.local.email,
+          userId: req.user._id
         })
       })
     })
@@ -50,7 +53,9 @@ module.exports = function (app, passport, db) {
   //   //   .then(result => { res.send(result) })
   //   //   .catch(err => { res.send(err) })
   //   // })
-  //   
+  //  
+  
+  
 
   app.get("/getHabits/:email", isLoggedIn, (req, res) => {
     const userEmail = req.params.email
@@ -60,6 +65,9 @@ module.exports = function (app, passport, db) {
       return res.send(habits)
     })
   })
+
+
+
   app.post("/calendar", (req, res) => {
     db.collection("calendar").insertOne(
       { dataForServer: req.body.dataForServer, email: req.body.email },
@@ -131,7 +139,29 @@ module.exports = function (app, passport, db) {
   app.get('/signup', function (req, res) {
     res.render('signup.ejs', { message: req.flash('signupMessage') });
   });
+  
+  //create a route that doesnt require you to be logged in and displays the calednar for that user - we would get that users info through the user id - it would look something like a 'profile/:userid' in the url - similar to the zebra thing in the ig app
+  // render the calendar, but in that mode, nobody can interact with the calendar or add data
 
+
+  app.get("/profile/:userid", function (req, res) {
+    let calendarId = ObjectId(req.params.userid);
+    console.log(calendarId);
+    db.collection("users")
+    .find({ _id: calendarId })
+    .toArray((err, user) => {
+      console.log('user', user)
+      db.collection("calendar")
+      .find({ email: user[0].local.email })
+      .toArray((err, calendar) => {
+        if (err) return console.log(err);
+        res.render("shareCalendar.ejs", {
+          // habits,
+          calendar
+        });
+      });
+    })
+  });
 
   app.get('/profile/dashboard', function (req, res) {
     db.collection('habits').find({ email: req.user.local.email }).toArray((err, habits) => {

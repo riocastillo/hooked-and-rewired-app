@@ -211,13 +211,13 @@ function displayRewards(dataForServer) {
 
     const rewardCheckboxes = document.getElementsByClassName('rewardCheckbox')
 
-     document.querySelector(".sendRewardButton").addEventListener('click', () => {
+    document.querySelector(".sendRewardButton").addEventListener('click', () => {
         const rewardData = [];
         // loop through all the checkboxes, for each reward checkbox we want to push reward info into the data array
         for (let i = 0; i < rewardCheckboxes.length; i++) {
             const rewardCheckbox = rewardCheckboxes[i];
             // adds the data for each checkbox
-            rewardData.push({ reward: rewardCheckbox.getAttribute('name'),gaveReward: rewardCheckbox.checked })
+            rewardData.push({ reward: rewardCheckbox.getAttribute('name'), gaveReward: rewardCheckbox.checked })
         }
         //taking the object dataforserver and adding a key called rewarddata and then setting the value to reward data
         dataForServer.rewardData = rewardData
@@ -241,7 +241,7 @@ function displayRewards(dataForServer) {
                 window.location.reload(true);
             });
 
-     })
+    })
     // this 'newDate' converts the string version of date into a real date for storing in mongodb
 }
 
@@ -304,4 +304,14 @@ function showMission() {
     document.querySelector('.welcomeTo').classList.add('text-xl')
     let form = document.querySelector('.replace')
     form.innerText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+}
+
+
+function copyURI(evt) {
+    evt.preventDefault();
+    navigator.clipboard.writeText(window.location.origin + evt.target.getAttribute('href')).then(() => {
+        alert('url copied!')
+    }, () => {
+        /* clipboard write failed */
+    });
 }
