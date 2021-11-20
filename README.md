@@ -12,11 +12,11 @@ Users will be able to log in and sign up for a free account. When they create an
 
 The app has four main functions: 
 
-1. `The Habit Tracker`  A streak calendar to track one or multiple vices and to visually see the amount of days they have not engaged with these vices - the streaks can also be broken, 
+1. `The Habit Tracker`  A streak calendar to track one or multiple vices and to visually see the amount of days they have not engaged with these vices, 
 
 2. `A Rewards tool`  Where people can customize what kind of reward they'd like to give themselves. The system gives them the option to reward themselves after every streak is created, 
 
-3. `A Reinforcement tool`  If users are substituting a vice for exercise, the app will use a maps API to track/log the distance. In addition to seeing how much money the user has theoretically saved up during their streaks, they'll also figuratively and literally see how far they've gone too (this is where the maps API will come in and spit its data back out).
+3. `A Reinforcement tool`  If users are substituting a vice for exercise, the app will use a maps API to track/log the distance. In addition to seeing how much money the user has theoretically saved up during their streaks, they'll also literally see how far they've gone too,
 
 4. `Enhanced Accountability`  Where users can share their habit tracker calendar with friends, thus adding pressure, accountability, and access to the progress of each habit. ___They also have the option to sign up for text message alerts.**___
 
