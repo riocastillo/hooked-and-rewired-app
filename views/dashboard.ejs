@@ -286,17 +286,11 @@
                                         "labels": rewardNamesArray,
 
                                         "datasets": [{
-                                            "label": "amount of times rewarded",
+                                            "label": "times rewarded",
                                             "data": rewardCountArray,
-                                            "backgroundColor": "rgba(23, 255, 178, 0.7)",
-                                            "borderColor": "rgb(255, 255, 255,.7)",
-                                        }, {
-                                            "label": "reward activity",
-                                            "data": [],
-                                            "type": "line",
-                                            "fill": true,
-                                            "backgroundColor": "rgba(54, 162, 235, 0.4)",
-                                            "borderColor": "rgb(255, 255, 255,.4)"
+                                            "backgroundColor": ["rgba(255, 90, 132)", "rgba(255, 129, 64)", "rgb(255, 237, 71)", "rgba(60, 167, 255)", "rgb(4, 142, 255)", "rgba(153, 102, 255)", "rgba(201, 203, 207)"],
+                                            "borderColor": ["rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)"],
+                                            "borderWidth": 2
                                         }]
                                     },
                                     "options": {
@@ -418,7 +412,7 @@
                                     "data": {
                                         "labels": weekHabitCountNames,
                                         "datasets": [{
-                                            "label": "days",
+                                            "label": "days avoided",
                                             "data": weekHabitCountArray,
                                             // "data": yValues,
                                             "fill": true,
@@ -453,7 +447,7 @@
                     <!--Graph Card-->
                     <div class="bg-indigo-900 border border-white rounded shadow-4xl">
                         <div class="border-b border-white p-3">
-                            <h5 class="font-bold uppercase text-white text-2xl font-londrina">Percent Frequency of
+                            <h5 class="font-bold uppercase text-white text-2xl font-londrina"> Frequency of
                                 avoiding
                                 habit
                             </h5>
@@ -476,10 +470,11 @@
                                         "labels": habitNamesArray,
                                         "datasets": [{
                                             "label": "percentage",
+                                            "render": 'percentage',
                                             "data": habitCountPercentage,
                                             "backgroundColor": ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"],
                                             "borderColor": ["rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)"],
-
+                                            "borderWidth": 2
                                         }]
                                     }
                                 });

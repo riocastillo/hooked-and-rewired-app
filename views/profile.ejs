@@ -43,7 +43,7 @@
           </div>
           <div class="mt-8 border-t border-white">
             <a href="#" class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="mission">
-              Mission of H&R
+              Introduction
             </a>
             <a href="/profile" class="block py-3 text-lg px-6 bg-gray-800 text-white font-semibold border-b border-white"
               id="form">
@@ -55,9 +55,9 @@
             <a href="/profile/texts" class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="texts">
               Get text alerts
             </a>
-            <a href="/profile/<%= userId %>" class="block bg-black py-3 px-6 text-lg text-white font-semibold border-b border-white" id="other">
+            <button href="/profile/<%= userId %>" class="block bg-black py-3 px-6 text-lg text-white font-semibold border-b border-white" class="share" onclick="openWindow(event)">
               Share your calendar
-            </a>
+            </button>
           </div>
           <img src="hooked.png" class="p-3 pt-10">
         </div>
@@ -97,24 +97,23 @@
         </div>
       </div>
     </div>
+
+    <!-- The Modal -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span><br>
+    <h2 class="copied">Url copied!</h2><br>
+   <p class="note"><span style="color:rgb(119, 63, 223)">
+     Note:</span> you are entitled to privacy, so when you send this link to your friends or accountability circle, be assured that we removed the ability for your friends to check on your daily activity. With this feature, they will just see your entire calendar activity.</p><br>
+     <button><a href="/profile/<%= userId %>" class="preview">preview what they see >> </a></button> 
+  
+</div>
+</div>
+ <!-- End of Modal -->
+
   </body>
   <!-- end of intake style form box -->
-
-  <!-- to do for reinforcer:
-- if there is a streak, then the dom should display how 
-much money they have theoretically saved (take survey question 3, 
-divide that number by 7 and then keep multiplying that amount by 
-the amount of days in the streak)
-- using google maps api, the user should be able to plug in their 
-location and once they begin their excersize the computer should be
-tracking the route and once the user presses the "done exerceising"
-button then the computer will stop tracking the route
-    - an alternative is to ask the user how far they ran/walked
-    - or connect their info to another gps tracker app
-- if there is a streak and the user has opted to track an excersize
-during that streak, then the dom should display how far they have 
-excersized (in distance) by day  -->
-
 
   <!-- extra style of calendar  -->
 
@@ -143,7 +142,7 @@ excersized (in distance) by day  -->
         margin-left: -3%;
       }
     </style>
-<!-- <input value="<%= email %>" id="userEmail" class="hideThis"/> -->
+<input value="<%= email %>" id="userEmail" class="hideThis"/>
    
 <!-- structure of calendar  -->
 

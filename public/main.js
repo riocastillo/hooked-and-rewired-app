@@ -93,7 +93,6 @@ function app() {
                 // adds the data for each checkbox
                 habitData.push({ habit: habitCheckbox.value, didHabit: habitCheckbox.checked, reward: habitCheckbox.dataset.reward, cost: habitCheckbox.dataset.cost })
             }
-            console.log(habitData.cost, 'test', Number(habitData.cost))
             const dataForServer = {
                 habits: habitData,
                 date: new Date(this.event_date)
@@ -153,19 +152,19 @@ function displayRewards(dataForServer) {
     let didHabits = dataForServer.habits.filter(habit => habit.didHabit === true)
     let ratio = Math.floor((didHabits.length / dataForServer.habits.length) * 100)
     if (ratio > 75) {
-        document.querySelector('.congrats').innerText = `Look at you! This is your race at your pace. Because you refrained from ${ratio}% of all your habits, you have more options to reward yourself.`
+        document.querySelector('.congrats').innerText = `Look at you! This is your race at your pace. Because you refrained from ${ratio}% of all your habits, you have more options to reward yourself. Note: if you don't want rewards, leave the checkboxes empty.`
     }
     else if (ratio > 50) {
-        document.querySelector('.congrats').innerText = `Good work! This is your race at your pace. Because you still refrained from ${ratio}% of all your habits, you still have some options for rewards today.`
+        document.querySelector('.congrats').innerText = `Good work! This is your race at your pace. Because you still refrained from ${ratio}% of all your habits, you still have some options for rewards today. Note: if you don't want rewards, leave the checkboxes empty.`
     }
     else if (ratio > 25) {
-        document.querySelector('.congrats').innerText = `You're doing okay. This is your race at your pace. Because you still refrained from ${ratio}% of all your habits, you don't have as many options for rewards today.`
+        document.querySelector('.congrats').innerText = `You're doing okay. This is your race at your pace. Because you still refrained from ${ratio}% of all your habits, you don't have as many options for rewards today. Note: if you don't want rewards, leave the checkboxes empty.`
     }
     else if (ratio === 0) {
-        document.querySelector('.congrats').innerText = 'Unfortunately, you did not refrain from any of your habits... Tommorrow is another day.'
+        document.querySelector('.congrats').innerText = "Unfortunately, you did not refrain from any of your habits... Tommorrow is another day. Note: if you don't want rewards, leave the checkboxes empty."
     }
     else if (ratio === 100) {
-        document.querySelector('.congrats').innerText = 'Congratulations! This is your race at your pace. Because you refrained from all of your habits, you have the option to reward yourself plenty today.'
+        document.querySelector('.congrats').innerText = "Congratulations! This is your race at your pace. Because you refrained from all of your habits, you have the option to reward yourself plenty today. Note: if you don't want rewards, leave the checkboxes empty."
     }
 
     //create a for loop that is running conditional tests on the habitData array
@@ -187,10 +186,6 @@ function displayRewards(dataForServer) {
             //move these so they arent in the li
         }
         else { }
-
-        // to do: 
-        // - document the rewards in the database
-        // - get the color boxes to stay up \  send info to the database
     })
 
     let sendReward = document.createElement('button')
@@ -198,18 +193,21 @@ function displayRewards(dataForServer) {
     sendReward.innerText = "reward myself"
     sendReward.classList.add('bg-gray-800', 'hover:bg-gray-700', 'text-white', 'font-semibold', 'py-2', 'px-4', 'border', 'border-gray-700', 'rounded-lg', 'shadow-sm')
 
-    let noReward = document.createElement('button')
-    noReward.innerText = "no reward today"
-    noReward.classList.add('NoSendRewardButton')
-    noReward.classList.add('bg-white', 'hover:bg-gray-100', 'text-gray-700', 'font-semibold', 'py-2', 'px-4', 'border', 'border-gray-300', 'rounded-lg', 'shadow-sm', 'mr-2')
+    // let noReward = document.createElement('button')
+    // noReward.innerText = "no reward today"
+    // noReward.classList.add('bg-white', 'hover:bg-gray-100', 'text-gray-700', 'font-semibold', 'py-2', 'px-4', 'border', 'border-gray-300', 'rounded-lg', 'shadow-sm', 'mr-2')
 
     document.getElementById('rewards').appendChild(sendReward)
-    document.getElementById('rewards').appendChild(noReward)
+    // document.getElementById('rewards').appendChild(noReward)
 
 
     // next we are grabbing the data of which reward checkboxes were checked and store that in the db
 
     const rewardCheckboxes = document.getElementsByClassName('rewardCheckbox')
+
+    // document.querySelector(".NoSendRewardButton").addEventListener('click', () => {
+    //     window.location.reload(true);
+    //     })
 
     document.querySelector(".sendRewardButton").addEventListener('click', () => {
         const rewardData = [];
@@ -235,7 +233,6 @@ function displayRewards(dataForServer) {
                 console.log('response=' + response)
                 if (response.ok) return response.text();
             })
-            //to do: figure out why the window is not reloading, and what the server is sending back as a response
             .then((text) => {
                 console.log('text=' + text)
                 window.location.reload(true);
@@ -243,7 +240,11 @@ function displayRewards(dataForServer) {
 
     })
     // this 'newDate' converts the string version of date into a real date for storing in mongodb
+
+    
 }
+
+
 
 //dataForServer contains habit name, reward name, date, and didHabit
 function setBackground(dataForServer) {
@@ -299,11 +300,44 @@ function showMission() {
 }
 
 
-function copyURI(evt) {
+// function copyURI(evt) {
+//     evt.preventDefault();
+//     navigator.clipboard.writeText(window.location.origin + evt.target.getAttribute('href')).then(() => {
+//         alert('url copied!')
+//     }, () => {
+//         /* clipboard write failed */
+//     });
+// }
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.querySelector('.share')
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+
+function openWindow (evt) {
+    var preview = document.querySelector('.preview')
+    modal.style.display = "block";
+    console.log('please work')
     evt.preventDefault();
     navigator.clipboard.writeText(window.location.origin + evt.target.getAttribute('href')).then(() => {
-        alert('url copied!')
     }, () => {
         /* clipboard write failed */
     });
 }
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function () {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }}

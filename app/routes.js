@@ -59,7 +59,6 @@ module.exports = function (app, passport, db) {
 
   app.get("/getHabits/:email", isLoggedIn, (req, res) => {
     const userEmail = req.params.email
-    console.log(req.params)
     db.collection('calendar').find({ email: userEmail }).toArray((err, habits) => {
       if (err) return console.log(err)
       return res.send(habits)
@@ -191,7 +190,6 @@ module.exports = function (app, passport, db) {
                 })
                 if (!isNaN(parseInt(habit.cost))) {
                   let result = (((parseInt(habit.cost)) / 7).toFixed(2))
-                  console.log(result)
                   cost += Number(result)
                 }
               }
@@ -201,7 +199,6 @@ module.exports = function (app, passport, db) {
             })
           }
         })
-        console.log(calendar, 'data')
 
         let totalHabits = habitsAvoided + habitsNotAvoided
         let habitsAvoidedPercentage = Math.floor((habitsAvoided / totalHabits) * 100)
@@ -233,11 +230,9 @@ module.exports = function (app, passport, db) {
 
   app.get("/profile/:userid", function (req, res) {
     let calendarId = ObjectId(req.params.userid);
-    console.log(calendarId);
     db.collection("users")
     .find({ _id: calendarId })
     .toArray((err, user) => {
-      console.log('user', user)
       db.collection("calendar")
       .find({ email: user[0].local.email })
       .toArray((err, calendar) => {
