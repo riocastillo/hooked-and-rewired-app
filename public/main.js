@@ -291,15 +291,6 @@ function initializePage() {
 setTimeout(initializePage, 100)
 
 
-document.getElementById('mission').addEventListener('click', showMission)
-function showMission() {
-    document.querySelector('.welcomeTo').innerText = 'What Is Hooked & Rewired?'
-    document.querySelector('.welcomeTo').classList.add('text-xl')
-    let form = document.querySelector('.replace')
-    form.innerText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-}
-
-
 // function copyURI(evt) {
 //     evt.preventDefault();
 //     navigator.clipboard.writeText(window.location.origin + evt.target.getAttribute('href')).then(() => {
@@ -309,18 +300,16 @@ function showMission() {
 //     });
 // }
 
-// Get the modal
-var modal = document.getElementById("myModal");
-
 // Get the button that opens the modal
-var btn = document.querySelector('.share')
+let btn = document.querySelector('.share')
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+let span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal
 
 function openWindow (evt) {
+    let modal = document.getElementById("myModal");
     var preview = document.querySelector('.preview')
     modal.style.display = "block";
     console.log('please work')
@@ -333,11 +322,41 @@ function openWindow (evt) {
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function () {
+    let modal = document.getElementById("myModal");
     modal.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
+    let modal = document.getElementById("myModal");
     if (event.target == modal) {
         modal.style.display = "none";
+    }}
+
+
+// Get the button that opens the modal
+let introButton = document.querySelector('#intro')
+
+// Get the <span> element that closes the modal
+let closeModal = document.getElementsByClassName("exit")[0];
+
+// When the user clicks on the button, open the modal
+
+function openIntro (evt) {
+    let intro = document.getElementById("introModal");
+    intro.style.display = "block";
+    console.log('please work')
+}
+
+// When the user clicks on <span> (x), close the modal
+closeModal.onclick = function () {
+    let intro = document.getElementById("introModal");
+    intro.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    let intro = document.getElementById("introModal");
+    if (event.target == intro) {
+        intro.style.display = "none";
     }}

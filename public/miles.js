@@ -7,10 +7,9 @@ let timerId
 
 function startTracking() {
     const status = document.querySelector('#status');
-    const mapLink = document.querySelector('#map-link');
-    console.log('map-link:', mapLink, 'status:', mapLink)
-    mapLink.href = '';
-    mapLink.textContent = '';
+    // const mapLink = document.querySelector('#map-link');
+    // mapLink.href = '';
+    // mapLink.textContent = '';
 
     function success(position) {
         const latitude = position.coords.latitude;
@@ -18,9 +17,9 @@ function startTracking() {
 
         console.log('lat:', latitude, 'long:', longitude)
 
-        status.textContent = '';
-        mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
-        mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+        status.textContent = `Found you! current latitude: ${latitude}°, current longitude: ${longitude}°`;
+        // mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+        // mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
         //pushing the lat+long object into the distance arr
         distanceArray.push({ latitude: latitude, longitude: longitude })
     }

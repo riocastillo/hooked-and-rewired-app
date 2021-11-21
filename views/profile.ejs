@@ -41,8 +41,8 @@
             class="flex justify-center items-center h-32 text-black-700 bg-black text-center font-semibold text-3xl italic">
             <img src="greenCat.png" width=125px class="pt-8">
           </div>
-          <div class="mt-8 border-t border-white">
-            <a href="#" class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="mission">
+          <div class="mt-8 border-t border-white" >
+            <a href="#" onclick="openIntro(event)" class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="mission" >
               Introduction
             </a>
             <a href="/profile" class="block py-3 text-lg px-6 bg-gray-800 text-white font-semibold border-b border-white"
@@ -101,7 +101,7 @@
       </div>
     </div>
 
-    <!-- The Modal -->
+    <!-- The Share Cal Modal -->
 <div id="myModal" class="modal">
   <!-- Modal content -->
   <div class="modal-content">
@@ -113,7 +113,21 @@
   
 </div>
 </div>
- <!-- End of Modal -->
+ <!-- End of Share Cal Modal -->
+
+ <!-- The Intro Modal -->
+<div id="introModal" class="modal">
+  <!-- Modal content -->
+  <div class="intro-content">
+    <span class="exit">&times;</span><br>
+    <h2 class="what-is-this">What is this app?</h2><br>
+   <p class="note"><span style="color:rgb(119, 63, 223)">
+     Hey, <%= email %>!</span> Great question. This app was created for those who need support to strengthen their skills in breaking what they consider to be bad habits. Oftentimes we talk about people who engage with bad habits as 'lazy' or indulgent. When really, refraining from your bad habits is one of the most challenging, hardest work a person can commit to. Because not everyone's experience is the same, this app has a lot of optional features! If your journey includes exercise, we have a feature to help you see your progress. For users who need an accountability boost, you can sign up for reminder texts, and you can share your calendar with friends. For the visual people, we have a dashboard of data we tracked for you. This app isn't designed to make your journey perfect, but it is designed to help you get stronger. <span style="color:rgb(119, 63, 223)">Thanks!</span></p><br>
+  
+</div>
+</div>
+ <!-- End of Intro Modal -->
+ 
 
   </body>
   <!-- end of intake style form box -->

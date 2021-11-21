@@ -347,10 +347,13 @@
     color:white;
   }
 
-  .result, #intro{
+  .result, .intro, #status{
       font: 20px 'Inconsolata', monospace;
   }
 
+  .intro{
+    padding-top:2%;
+  }
   .history{
       width:70%;
       margin:auto;

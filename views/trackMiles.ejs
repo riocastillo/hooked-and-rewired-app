@@ -36,7 +36,7 @@
     <section class="main">
         <section class="welcome">
         <p class="name">Hey, <%= trackedEvents[0].email %>! </p>
-        <p id="intro">If a part of your journey involves exercise, we want to help you see how far you literally go! </p>
+        <p class="intro" id="status">Lets see how far you literally go.</p>
     </section>
         <section class="startButton">
             <button class="start"><a href="#" class="round green">Start<span class="round"><br>Have a good
@@ -56,17 +56,15 @@
                 <% for(let i=0; i < trackedEvents.length; i++){ %>
                     <li id="events">
                         <p id="date">Date:
-                            <%= trackedEvents[i].date %>
+                            <%= trackedEvents[i].date.substring(0,10)%>
                         </p>
                         <p id="miles">Total distance:
-                            <%= trackedEvents[i].miles %> miles
+                            <%= trackedEvents[i].miles.toFixed(4) %> miles
                         </p>
                         <% } %>
                     </li>
             </ul>
         </section>
-        <p id="status" display="none"></p>
-        <p id="map-link" display="none"></p>
     </section>
 
 
