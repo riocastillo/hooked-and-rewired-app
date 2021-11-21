@@ -54,8 +54,8 @@ module.exports = function (app, passport, db) {
   //   //   .catch(err => { res.send(err) })
   //   // })
   //  
-  
-  
+
+
 
   app.get("/getHabits/:email", isLoggedIn, (req, res) => {
     const userEmail = req.params.email
@@ -80,7 +80,7 @@ module.exports = function (app, passport, db) {
   app.post("/intakeHabit", isLoggedIn, (req, res) => {
     // object destructuring
     const { habit, cost, reward, extraNotes } = req.body
-    let dailyCost = (Number(cost))/7
+    let dailyCost = (Number(cost)) / 7
     console.log(dailyCost, 'dailycost')
     db.collection("habits").insertOne(
       //we can omit the colon 'ex. habit: habit' because when properties
@@ -138,87 +138,130 @@ module.exports = function (app, passport, db) {
   app.get('/signup', function (req, res) {
     res.render('signup.ejs', { message: req.flash('signupMessage') });
   });
-  
-  //create a route that doesnt require you to be logged in and displays the calednar for that user - we would get that users info through the user id - it would look something like a 'profile/:userid' in the url - similar to the zebra thing in the ig app
-  // render the calendar, but in that mode, nobody can interact with the calendar or add data
+
+  app.get('/profile/texts', function (req, res) {
+    res.render('texts.ejs', { message: req.flash('texts page accessed') });
+  });
 
   app.get('/profile/dashboard', function (req, res) {
     db.collection('habits').find({ email: req.user.local.email }).toArray((err, habits) => {
       if (err) return console.log(err)
       db.collection('calendar').find({ email: req.user.local.email }).toArray((err2, calendar) => {
         if (err) return console.log(err)
-
-        let totalRewards = 0
-        let habitsAvoided = 0
-        let habitsNotAvoided = 0
-        let cost = 0
-
-        let daysRefrainedFromHabit = []
-        habits.forEach((habit) => {
-          let habits = {
-            name: habit.habit, count: 0,
-          }
-          daysRefrainedFromHabit.push(habits)
-        })
-
-        calendar.forEach((day) => {
-          if (day.dataForServer.rewardData) {
-            day.dataForServer.rewardData.forEach((reward) => {
-              if (reward.gaveReward === true) {
-                totalRewards += 1
-                //add new array here
-              }
+        db.collection('miles')
+          .find({ email: req.user.local.email })
+          .toArray((err, trackedEvents) => {
+            let milesObj = trackedEvents.reduce((totalWorkouts, currentEntry) => {
+              return totalWorkouts + currentEntry.miles
             })
-          }
-          
-          if (day.dataForServer.habits) {
-            day.dataForServer.habits.forEach((habit) => {
-              if (habit.didHabit === true) {
-                habitsAvoided += 1
-                //going thru each element of the array and increments count for daysRefrainedFromHabit tracker
-                daysRefrainedFromHabit = 
-                daysRefrainedFromHabit.map((habitCount) => {
-                  if (habitCount.name === habit.habit) {
-                    habitCount.count += 1
-                    // if(parseInt(habit.cost) >= 0){
-                    //   let dailyNum = Number(parseInt(habit.cost) / 7)
-                    //   dailyCostNum = dailyNum * habitCount.count
-                    //   return dailyCostNum
-                    // }
+
+            let totalRewards = 0
+            let habitsAvoided = 0
+            let habitsNotAvoided = 0
+            let cost = 0
+            let milesArray = []
+            trackedEvents.forEach((workout) => {
+              milesArray.push(workout.miles)
+            })
+            console.log('milesArray', milesArray, typeof(milesArray))
+            
+            const reducer = (previousWorkout,currentWorkout) => previousWorkout+currentWorkout
+            console.log('total miles expected:0.005144619637, what we got:', milesArray.reduce(reducer))
+            let miles = milesArray.reduce(reducer)
+            let feetConversion = (miles * 5280).toFixed(2) + ' ft'
+
+            if (miles < 0.01){
+              console.log('conversion toft expected:27.16ft and what we got:', feetConversion)
+              feetConversion
+            }
+            else {return miles}
+
+            console.log(feetConversion, 'feet')
+            let daysRefrainedFromHabit = []
+            habits.forEach((habit) => {
+              let habits = {
+                name: habit.habit, count: 0,
+              }
+              daysRefrainedFromHabit.push(habits)
+            })
+
+            calendar.forEach((day) => {
+              if (day.dataForServer.rewardData) {
+                day.dataForServer.rewardData.forEach((reward) => {
+                  if (reward.gaveReward === true) {
+                    totalRewards += 1
                   }
-                  return habitCount
                 })
-                if (!isNaN(parseInt(habit.cost))) {
-                  let result = (((parseInt(habit.cost)) / 7).toFixed(2))
-                  cost += Number(result)
-                }
               }
-              if (habit.didHabit === false) {
-                habitsNotAvoided += 1
+
+              if (day.dataForServer.habits) {
+                day.dataForServer.habits.forEach((habit) => {
+                  if (habit.didHabit === true) {
+                    habitsAvoided += 1
+                    //going thru each element of the array and increments count for daysRefrainedFromHabit tracker
+                    daysRefrainedFromHabit =
+                      daysRefrainedFromHabit.map((habitCount) => {
+                        if (habitCount.name === habit.habit) {
+                          habitCount.count += 1
+                          // if(parseInt(habit.cost) >= 0){
+                          //   let dailyNum = Number(parseInt(habit.cost) / 7)
+                          //   dailyCostNum = dailyNum * habitCount.count
+                          //   return dailyCostNum
+                          // }
+                        }
+                        return habitCount
+                      })
+                    if (!isNaN(parseInt(habit.cost))) {
+                      let result = (((parseInt(habit.cost)) / 7).toFixed(2))
+                      cost += Number(result)
+                    }
+                  }
+                  if (habit.didHabit === false) {
+                    habitsNotAvoided += 1
+                  }
+                })
               }
             })
-          }
-        })
 
-        let totalHabits = habitsAvoided + habitsNotAvoided
-        let habitsAvoidedPercentage = Math.floor((habitsAvoided / totalHabits) * 100)
-        let habitsNotAvoidedPercentage = Math.floor((habitsNotAvoided / totalHabits) * 100)
-        res.render('dashboard.ejs', {
-          daysRefrainedFromHabit,
-          habits,
-          calendar,
-          cost,
-          totalRewards,
-          habitsAvoidedPercentage,
-          habitsNotAvoidedPercentage,
-          email: req.user.local.email
-        })
+            let totalHabits = habitsAvoided + habitsNotAvoided
+            let habitsAvoidedPercentage = Math.floor((habitsAvoided / totalHabits) * 100)
+            let habitsNotAvoidedPercentage = Math.floor((habitsNotAvoided / totalHabits) * 100)
+            res.render('dashboard.ejs', {
+              daysRefrainedFromHabit,
+              habits,
+              calendar,
+              cost,
+              totalRewards,
+              habitsAvoidedPercentage,
+              habitsNotAvoidedPercentage,
+              email: req.user.local.email,
+              milesObj,
+              miles,
+              milesArray,
+              feetConversion,
+            })
+          })
       })
     })
   });
 
-  app.get('/profile/texts', function (req, res) {
-    res.render('texts.ejs', { message: req.flash('texts entered') });
+  //create a new collection that stores data of the miles tracked
+  app.get('/trackMiles', function (req, res) {
+    db.collection('miles')
+      .find({ email: req.user.local.email })
+      .toArray((err, trackedEvents) => {
+        res.render('trackMiles.ejs', { message: req.flash('trackMiles doc accessed'), trackedEvents });
+      })
+  });
+
+  app.post("/miles", (req, res) => {
+    db.collection("miles").insertOne(
+      { email: req.user.local.email, miles: req.body.miles, date: req.body.date },
+      (err, result) => {
+        if (err) return res.send(500, err);
+        res.send(200, "sent!");
+      }
+    );
   });
 
   // process the signup form
@@ -228,20 +271,20 @@ module.exports = function (app, passport, db) {
     failureFlash: true // allow flash messages
   }));
 
-  app.get("/profile/:userid", function (req, res) {
+  app.get("/shareCalendar/:userid", function (req, res) {
     let calendarId = ObjectId(req.params.userid);
     db.collection("users")
-    .find({ _id: calendarId })
-    .toArray((err, user) => {
-      db.collection("calendar")
-      .find({ email: user[0].local.email })
-      .toArray((err, calendar) => {
-        if (err) return console.log(err);
-        res.render("shareCalendar.ejs", {
-          calendar
-        });
-      });
-    })
+      .find({ _id: calendarId })
+      .toArray((err, user) => {
+        db.collection("calendar")
+          .find({ email: user[0].local.email })
+          .toArray((err, calendar) => {
+            if (err) return console.log(err);
+            res.render("shareCalendar.ejs", {
+              calendar
+            });
+          });
+      })
   });
 
   // =============================================================================

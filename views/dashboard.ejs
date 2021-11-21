@@ -208,7 +208,7 @@
                             </div>
                             <div class="card pb-2 flex-1 text-right md:text-center">
                                 <h5 class="font-bold uppercase text-white text-xl">How Far you've gone</h5>
-                                <h3 class="font-bold text-3xl text-black">info from maps api</h3>
+                                <h3 class="font-bold text-3xl text-black"><%= miles.toFixed(4) < 0.01 ? feetConversion : miles.toFixed(4) + ' miles' %> </h3>
                             </div>
                         </div>
                     </div>
@@ -320,7 +320,7 @@
                             <canvas id="chartjs-0" class="chartjs" width="name of habit"
                                 height="days refrained from"></canvas>
                             <script>
-                            
+
                                 var daysRefrainedFromHabit = `<%- JSON.stringify(daysRefrainedFromHabit) %>`
                                 daysRefrainedFromHabit = JSON.parse(daysRefrainedFromHabit)
                                 let habitNamesArray = []
@@ -385,7 +385,6 @@
                                 console.log('today', today)
 
                                 rewardData.forEach((day) => {
-                                    console.log(day.dataForServer.date, 'date')
 
                                     let todaysTime = today.getTime()
                                     let comparisonTime = new Date(day.dataForServer.date).getTime()
@@ -400,7 +399,6 @@
 
                                         })
                                     }
-                                    console.log(habitCountObject, 'countobj')
                                 })
 
                                 let weekHabitCountArray = Object.values(habitCountObject)
@@ -488,7 +486,7 @@
                     <!--Template Card-->
                     <div class="bg-gray-900 border border-white rounded shadow">
                         <div class="border-b border-white p-3">
-                            <h5 class="font-bold uppercase text-white text-2xl font-londrina">And more data here</h5>
+                            <h5 class="font-bold uppercase text-white text-2xl font-londrina">Your workouts</h5>
                         </div>
                         <div class="p-5">
 
@@ -496,9 +494,9 @@
                     </div>
                     <!--/Template Card-->
                 </div>
-
-                <div class="w-full p-3">
-                    <!--Table Card--><br><br>
+                <!--Table Card w Triggers, add feature if you have extra time-->
+                <!-- <div class="w-full p-3">
+                    <br><br>
                     <div class="bg-green-900 border border-white rounded shadow">
                         <div class="border-b border-white p-3">
                             <h5 class="font-bold uppercase text-yellow-500 text-3xl font-londrina">Your Triggers</h5>
@@ -532,9 +530,9 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div> -->
                     <!--/table Card-->
-                </div>
+                <!-- </div> -->
 
 
             </div>

@@ -55,7 +55,10 @@
             <a href="/profile/texts" class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="texts">
               Get text alerts
             </a>
-            <button href="/profile/<%= userId %>" class="block bg-black py-3 px-6 text-lg text-white font-semibold border-b border-white" class="share" onclick="openWindow(event)">
+            <a href="/trackMiles" class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="track">
+              Track your miles
+            </a>
+            <button href="/shareCalendar/<%= userId %>" class="block bg-black py-3 px-6 text-lg text-white font-semibold border-b border-white" class="share" onclick="openWindow(event)">
               Share your calendar
             </button>
           </div>
@@ -106,7 +109,7 @@
     <h2 class="copied">Url copied!</h2><br>
    <p class="note"><span style="color:rgb(119, 63, 223)">
      Note:</span> you are entitled to privacy, so when you send this link to your friends or accountability circle, be assured that we removed the ability for your friends to check on your daily activity. With this feature, they will just see your entire calendar activity.</p><br>
-     <button><a href="/profile/<%= userId %>" class="preview">preview what they see >> </a></button> 
+     <button><a href="/shareCalendar/<%= userId %>" class="preview">preview what they see >> </a></button> 
   
 </div>
 </div>
