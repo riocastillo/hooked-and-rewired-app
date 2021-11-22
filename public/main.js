@@ -241,7 +241,7 @@ function displayRewards(dataForServer) {
     })
     // this 'newDate' converts the string version of date into a real date for storing in mongodb
 
-    
+
 }
 
 
@@ -250,15 +250,16 @@ function displayRewards(dataForServer) {
 function setBackground(dataForServer) {
     let streakDate
     let div = document.querySelectorAll('.calendarDate')
+    let calendarMonth = document.querySelector('.calendarMonth')
+
 
     //chaning it from a string to the date type that .date needs
     let dateSelected = new Date(dataForServer.date)
-    streakDate = Array.from(div).reduce((diva, divb) => {
-        if (diva.innerText == dateSelected.getDate()) {
-            return diva
-        }
-        else {
-            return divb
+    streakDate = Array.from(div).filter((diva) => {
+        if (calendarMonth.innerText == MONTH_NAMES[dateSelected.getMonth()]) {
+            if (diva.innerText == dateSelected.getDate()) {
+                return diva
+            }
         }
     })
 
@@ -273,9 +274,45 @@ function setBackground(dataForServer) {
             finalShadeNum -= scale
         }
     })
-    streakDate.style.background = `rgb(0,0, 255, 0.${Math.floor(finalShadeNum)})`
+    streakDate[0].style.background = `rgb(0,0, 255, 0.${Math.floor(finalShadeNum)})`
+
+    console.log('streakdate', streakDate)
 
     let streakData = dataForServer.date
+
+}
+
+function updateBackground(month) {
+    let div = document.querySelectorAll('.calendarDate')
+    let streakDiv = document.getElementsByClassName('dataDiv')[0].innerText
+    Array.from(div).forEach((date) => {
+        date.style.background = `rgb(255,255,255)`
+    })
+    let streakJSON = JSON.parse(streakDiv)
+    streakJSON.forEach(streak => {
+        if (streak.dataForServer) {
+            Array.from(div).forEach((date) => {
+                let dateSelected = new Date(streak.dataForServer.date)
+                if (month === dateSelected.getMonth()) {
+                    if (date.innerText == dateSelected.getDate()) {
+                        //grab the number of true results within didHabit
+                        let didHabitCounter = 0
+                        let habitCounter = streak.dataForServer.habits.length
+                        let scale = 255 / habitCounter
+                        let finalShadeNum = 300
+                        streak.dataForServer.habits.forEach((habit) => {
+                            if (habit.didHabit === true) {
+                                didHabitCounter += 1
+                                finalShadeNum -= scale
+                            }
+                        })
+                        date.style.background = `rgb(0,0, 255, 0.${Math.floor(finalShadeNum)})`
+                    }
+                }
+            })
+
+        }
+    })
 
 }
 function initializePage() {
@@ -308,7 +345,7 @@ let span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal
 
-function openWindow (evt) {
+function openWindow(evt) {
     let modal = document.getElementById("myModal");
     var preview = document.querySelector('.preview')
     modal.style.display = "block";
@@ -331,7 +368,8 @@ window.onclick = function (event) {
     let modal = document.getElementById("myModal");
     if (event.target == modal) {
         modal.style.display = "none";
-    }}
+    }
+}
 
 
 // Get the button that opens the modal
@@ -342,7 +380,7 @@ let closeModal = document.getElementsByClassName("exit")[0];
 
 // When the user clicks on the button, open the modal
 
-function openIntro (evt) {
+function openIntro(evt) {
     let intro = document.getElementById("introModal");
     intro.style.display = "block";
     console.log('please work')
@@ -359,4 +397,5 @@ window.onclick = function (event) {
     let intro = document.getElementById("introModal");
     if (event.target == intro) {
         intro.style.display = "none";
-    }}
+    }
+}

@@ -144,13 +144,19 @@ module.exports = function (app, passport, db) {
   });
 
   app.get('/profile/dashboard', function (req, res) {
+    console.log('about to enter habits')
     db.collection('habits').find({ email: req.user.local.email }).toArray((err, habits) => {
       if (err) return console.log(err)
+      console.log('about to enter calendar')
+
       db.collection('calendar').find({ email: req.user.local.email }).toArray((err2, calendar) => {
         if (err) return console.log(err)
+        console.log('about to enter miles')
+
         db.collection('miles')
           .find({ email: req.user.local.email })
           .toArray((err, trackedEvents) => {
+            console.log('made it here')
             let milesObj = trackedEvents.reduce((totalWorkouts, currentEntry) => {
               return totalWorkouts + currentEntry.miles
             })
@@ -163,18 +169,18 @@ module.exports = function (app, passport, db) {
             trackedEvents.forEach((workout) => {
               milesArray.push(workout.miles)
             })
-            console.log('milesArray', milesArray, typeof(milesArray))
-            
-            const reducer = (previousWorkout,currentWorkout) => previousWorkout+currentWorkout
+            console.log('milesArray', milesArray, typeof (milesArray))
+
+            const reducer = (previousWorkout, currentWorkout) => previousWorkout + currentWorkout
             console.log('total miles expected:0.005144619637, what we got:', milesArray.reduce(reducer))
             let miles = milesArray.reduce(reducer)
             let feetConversion = (miles * 5280).toFixed(2) + ' ft'
+            console.log(miles, 'miles')
 
-            if (miles < 0.01){
-              console.log('conversion toft expected:27.16ft and what we got:', feetConversion)
+            if (miles < 0.01) {
+              console.log('conversion to ft expected:27.16ft and what we got:', feetConversion)
               feetConversion
             }
-            else {return miles}
 
             console.log(feetConversion, 'feet')
             let daysRefrainedFromHabit = []
@@ -226,6 +232,8 @@ module.exports = function (app, passport, db) {
             let totalHabits = habitsAvoided + habitsNotAvoided
             let habitsAvoidedPercentage = Math.floor((habitsAvoided / totalHabits) * 100)
             let habitsNotAvoidedPercentage = Math.floor((habitsNotAvoided / totalHabits) * 100)
+            console.log('trackedevnts', trackedEvents, typeof(trackedEvents))
+
             res.render('dashboard.ejs', {
               daysRefrainedFromHabit,
               habits,
@@ -237,8 +245,10 @@ module.exports = function (app, passport, db) {
               email: req.user.local.email,
               milesObj,
               miles,
+              trackedEvents,
               milesArray,
               feetConversion,
+  
             })
           })
       })
@@ -249,6 +259,7 @@ module.exports = function (app, passport, db) {
   app.get('/trackMiles', function (req, res) {
     db.collection('miles')
       .find({ email: req.user.local.email })
+      .sort({_id: -1})
       .toArray((err, trackedEvents) => {
         res.render('trackMiles.ejs', { message: req.flash('trackMiles doc accessed'), trackedEvents });
       })

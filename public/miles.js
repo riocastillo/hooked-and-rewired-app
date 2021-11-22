@@ -120,7 +120,7 @@ document.querySelector('.button_base').addEventListener('click', () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             miles: totalDistance,
-            date: today,
+            date: today.toUTCString(),
         }),
     })
     .then((response) => {
