@@ -1,5 +1,11 @@
-const accountSid = 'AC34b8303beb897bab0c345c5c9142ef33';
-const authToken = '2100f5a26c9b2b57977f6fdd966ef73f';
+console.log('accessing lines before consts...')
+
+const accountSid = process.env.ACCOUNT_SID; 
+console.log( 'SID:', accountSid ); 
+
+const authToken = process.env.AUTH_TOKEN;  
+console.log( 'TOKEN:', authToken );
+
 const client = require('twilio')(accountSid, authToken);
 
 //sending whatever msg we want to whatever phone number we want

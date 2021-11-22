@@ -28,6 +28,6 @@
     "passport-local": "^1.0.0",
     "request": "^2.88.2",
     "sass": "^1.43.4",
-    "twilio": "^3.71.1"
+    "twilio": "^3.71.2"
   }
 }
