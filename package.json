@@ -16,18 +16,20 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
+    "index": "^0.4.0",
     "lodash": "^4.17.21",
     "method-override": "^3.0.0",
     "mongodb": "^4.1.4",
     "mongoose": "^6.0.12",
     "morgan": "^1.10.0",
     "mpath": "^0.8.4",
-    "node": "^17.0.1",
-    "nodemon": "^2.0.14",
+    "node": "^17.1.0",
+    "nodemon": "^2.0.15",
     "passport": "^0.5.0",
     "passport-local": "^1.0.0",
     "request": "^2.88.2",
     "sass": "^1.43.4",
+    "start": "^5.1.0",
     "twilio": "^3.71.2"
   }
 }
