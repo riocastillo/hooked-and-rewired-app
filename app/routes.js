@@ -34,7 +34,7 @@ module.exports = function (app, passport, db) {
           res.render('profile.ejs', {
             habits,
             calendar,
-            triggers,
+            triggers: triggers ? triggers : {triggers: []},
             email: req.user.local.email,
             userId: req.user._id
           })
@@ -111,6 +111,13 @@ module.exports = function (app, passport, db) {
     //add error handling
     res.redirect("/profile/texts")
   });
+
+
+  app.put("/triggers", isLoggedIn, (req, res) => {
+    db.collection("triggers").findOneAndUpdate({ userId: req.user._id }, {
+      $push: { triggers:req.body.trigger }
+    })
+  })
 
   app.post("/streaks", isLoggedIn, (req, res) => {
     const streakData = req.body.streakData

@@ -88,6 +88,19 @@ function app() {
             const triggerSelects = document.getElementsByClassName('triggerSelect');
             console.log(triggerSelects)
 
+            Array.from(document.querySelectorAll('.newtriggerinput')).forEach((trigger) => {
+                if (trigger.value !== "") {
+
+                    fetch("triggers", {
+                        //need object id to put on the specific document
+                        method: "put",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            trigger: trigger.value
+                        })
+                    })
+                }
+            })
 
             const habitData = [];
 
@@ -96,8 +109,15 @@ function app() {
                 // below is a variable for the current checkbox
                 const habitCheckbox = habitCheckboxes[i];
                 // adds the data for each checkbox
-                habitData.push({ habit: habitCheckbox.value, didHabit: habitCheckbox.checked, reward: habitCheckbox.dataset.reward, cost: habitCheckbox.dataset.cost })
+                habitData.push({ habit: habitCheckbox.value, didHabit: habitCheckbox.checked, reward: habitCheckbox.dataset.reward, cost: habitCheckbox.dataset.cost, trigger: null})
             }
+
+            //in the trigger we'll pass the value of ther trigger
+            //either it will be: the drop down value or a new inputed value
+            //the the object the same way we found the status of the checkboxes
+            // if the status of that checkbox
+            //figure out what triggers them the most 
+
             const dataForServer = {
                 habits: habitData,
                 date: new Date(this.event_date)
@@ -404,19 +424,27 @@ window.onclick = function (event) {
 }
 
 function check(event) {
-    // use one of possible conditions
-    // if (elem.value == 'Other')
     console.log('functioned accessed')
     console.log('target-e:', event.target)
-    console.log('selected-item:', event.target.selectedItem)
+    console.log('value', event.target.dataset.habitid)
+    console.log(event.target.selectedIndex, 'event.target.selectedIndex')
+    let targetId = `trigger_popup_${event.target.dataset.habitid}`
 
-    if (event.target.selectedIndex == 2) {
-        console.log("showing");
-        document.getElementById("popup-div").style.display = 'block';
+    if (event.target.selectedIndex == 1) {
+        document.getElementById(targetId).style.display = 'block';
     } else {
-        console.log("hiding");
-        document.getElementById("popup-div").style.display = 'none';
+        console.log("hiding!");
+        document.getElementById(targetId).style.display = 'none';
     }
+    let triggerId = `trigger_input_${event.target.dataset.habitId}`
+    let newTrigger = document.getElementById(triggerId).value
+
+    fetch("triggers", {
+        method: "put",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            trigger: newTrigger
+        })
+    })
 }
 
-  

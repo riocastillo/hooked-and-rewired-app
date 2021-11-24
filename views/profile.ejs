@@ -287,19 +287,23 @@
                   <li for="<%= habit.habit %>">
                     <input class="habit_checkbox m-2 form-checkbox h-5 w-5 text-yellow-600 r-45" id="habit" id="test2"
                       name="habit" type="checkbox" checked data-reward="<%= habit.reward %>"
-                      data-cost="<%= habit.cost %>" value="<%= habit.habit%>" onChange="console.log('hello'); document.getElementById('trigger_<%= habit._id %>').style = 'display:block'">
+                      data-cost="<%= habit.cost %>" value="<%= habit.habit%>"
+                      onChange="document.getElementById('trigger_<%= habit._id %>').style = this.checked ? 'display:none' : 'display:block'">
                     <label for="habit" class="text-xl">Refained from: <%= habit.habit %></label>
                   </li>
                   <div style="display:none" id="trigger_<%= habit._id %>">
-                    <select class="triggerSelect" data-habit= "<%= habit.habit %>" onChange="check(event);">
-                    <option>oh no! want to document a trigger?</option>
-                    <% for (let trigger of triggers.triggers){%>
-                      <option value="<%= trigger %>"><%= trigger %> </option>
-                    <%} %>
+                    <select class="triggerSelect" data-habit="<%= habit.habit %>" data-habitId ="<%= habit._id %>" onChange="check(event);">
+                      <option>oh no! want to document a trigger?</option>
                       <option>add a new one...</option>
+
+                      <% for (let trigger of triggers.triggers){%>
+                        <option value="<%= trigger %>">
+                          <%= trigger %>
+                        </option>
+                        <%} %>
                     </select>
-                    <div id="popup-div" style="display:none;">
-                        <input id="other-input" placeholder="enter here"></input>
+                    <div id="trigger_popup_<%= habit._id %>" style="display:none;">
+                      <input id = "trigger_input_<%=habit._id %>" class = "newtriggerinput" placeholder="enter trigger here"></input>
                       </label>
                     </div>
                   </div>
