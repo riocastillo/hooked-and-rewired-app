@@ -123,25 +123,49 @@ document.querySelector('.button_base').addEventListener('click', () => {
             date: today.toUTCString(),
         }),
     })
-    .then((response) => {
-        console.log('response=' + response)
-        if (response.ok) return response.text();
-    })
-    .then((text) => {
-        console.log('text=' + text)
-        window.location.reload(true);
-    });
+        .then((response) => {
+            console.log('response=' + response)
+            if (response.ok) return response.text();
+        })
+        .then((text) => {
+            console.log('text=' + text)
+            window.location.reload(true);
+        });
 })
 
 
-function toggle () {
+function toggle() {
     let links = document.getElementById("links");
     let blob = document.getElementById("blob");
     blob.classList.toggle("open");
-    if(links.style.display == "block") {
-      links.style.display = "none";
+    if (links.style.display == "block") {
+        links.style.display = "none";
     } else {
-      links.style.display = "block";
+        links.style.display = "block";
     }
-  };
+};
 
+//array of coordinates - lat and long and the map zoom level, the higher you go the closer you get, 18 is usally the max num 
+var mymap = L.map('map').setView([51.505, -0.09], 3);
+var Esri_WorldStreetMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
+});
+mymap.addLayer(Esri_WorldStreetMap)
+
+//array of coordinates 
+//get the locations that the user sends as points 
+//record those in your coordinates and then create an array of those coordinates
+// create a red polyline from an array of LatLng points
+//we would keep a running track to the coordinates, and append the most recent set of coordinates to the line 
+var latlngs = [
+    [45.51, -122.68],
+    [37.77, -122.43],
+    [34.04, -118.2]
+];
+
+var polyline = L.polyline(latlngs, { color: 'red' }).addTo(mymap);
+
+// zoom the map to the polyline
+mymap.fitBounds(polyline.getBounds());
+
+setTimeout(() => {mymap.invalidateSize()}, 1000)

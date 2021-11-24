@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../dashboard.css">
+    <link rel="stylesheet" href="../dashboard.scss">
     <link
         href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@800&family=Frijole&family=Tourney:ital,wght@1,400&family=Londrina+Solid:wght@900&family=Rock+Salt&display=swap"
         rel="stylesheet">
@@ -100,10 +101,10 @@
                             </a>
                         </li>
                         <li class="mr-6 my-2 md:my-0">
-                            <a href="#graphs"
+                            <a href="/edit-habits"
                                 class="block py-1 md:py-3 pl-1 align-middle text-black no-underline hover:text-white border-b-2 border-black hover:border-white">
                                 <i class="fas fa-chart-area fa-fw mr-3"></i><span
-                                    class="pb-1 md:pb-0 text-xl">Habits</span>
+                                    class="pb-1 md:pb-0 text-xl">Edit habits</span>
                             </a>
                         </li>
 
@@ -247,7 +248,7 @@
                     <!--Graph Card-->
                     <div class="bg-blue-800 border border-blue-800 rounded shadow">
                         <div class="border-b border-gray-100 p-3">
-                            <h5 class="font-bold uppercase text-white text-2xl font-londrina">Amount of times you've
+                            <h5 class="font-bold uppercase text-white text-2xl font-londrina">Times you've
                                 rewarded yourself</h5>
                         </div>
                         <div class="p-5">
@@ -315,8 +316,8 @@
                     <!--Graph Card-->
                     <div class="bg-blue-800 border border-blue-900 rounded shadow">
                         <div class="border-b border-white p-3">
-                            <h5 class="font-bold uppercase text-white text-2xl font-londrina">Amount of days refrained
-                                from each habit</h5>
+                            <h5 class="font-bold uppercase text-white text-2xl font-londrina">Days refrained
+                                from habit</h5>
                         </div>
                         <div class="p-5">
                             <canvas id="chartjs-0" class="chartjs" width="name of habit"
@@ -503,10 +504,10 @@
                                     let day = new Date(workout.date)
                                     console.log('day', day)
 
-                                    let dayString = day.getFullYear() + "-" + (day.getMonth()+1) + "-" + day.getDate()
+                                    let dayString = day.getFullYear() + "-" + (day.getMonth() + 1) + "-" + day.getDate()
 
                                     console.log('daystrng', dayString)
-                                    dateObj[dayString] = dateObj[dayString] ? dateObj[dayString]+ workout.miles : workout.miles
+                                    dateObj[dayString] = dateObj[dayString] ? dateObj[dayString] + workout.miles : workout.miles
                                 })
                                 console.log('obj', dateObj)
 
@@ -561,36 +562,37 @@
                             <h5 class="font-bold uppercase text-yellow-500 text-3xl font-londrina">Your Triggers</h5>
                         </div>
                         <div class="p-5">
-                            <table class="w-full p-5 text-gray-200">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left text-gray-400 text-2xl">Name</th>
-                                        <th class="text-left text-gray-400 text-2xl">Amounts triggered</th>
-                                        <th class="text-left text-gray-400 text-2xl">Dates Triggered</th>
-                                    </tr>
-                                </thead>
 
-                                <tbody class="text-xl">
-                                    <tr>
-                                        <td>trigger1</td>
-                                        <td>number</td>
-                                        <td>date/s</td>
-                                    </tr>
-                                    <tr>
-                                        <td>trigger2</td>
-                                        <td>number</td>
-                                        <td>date/s</td>
-                                    </tr>
-                                    <tr>
-                                        <td>trigger3</td>
-                                        <td>number</td>
-                                        <td>date/s</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <section class="x-out expanded">
+                                <dt class="open">YOUR TRIGGERS</dt>
+                                <dd>Trigger 1</dd>
+                                <dd>Trigger 2</dd>
+                                <dd>Trigger 3</dd>
+                                <dd>Trigger 4</dd>
+                                <dd>Trigger 5</dd>
+                            </section>
+
+                            <section class="x-out">
+                                <dt>Affirmations</dt>
+                                <dd>Affirmation 1</dd>
+                                <dd>Affirmation 2</dd>
+                                <dd>Affirmation 3</dd>
+                                <dd>Affirmation 4</dd>
+                                <dd>Affirmation 5</dd>
+                            </section>
+
+                            <section class="x-out">
+                                <dt>Resources</dt>
+                                <dd>Resources 1</dd>
+                                <dd>Resources 2</dd>
+                                <dd>Resources 3</dd>
+                                <dd>Resources 4</dd>
+                                <dd>Resources 5</dd>
+                            </section>
+
                         </div>
                     </div> -->
-                <!--/table Card-->
+                    <!--/table Card-->
                 <!-- </div> -->
 
 
@@ -606,7 +608,11 @@
 
     <script>
 
-
+        var $dts = $('dt');
+        $dts.on('click', function () {
+            $(this).toggleClass('open');
+            $(this).parent('section').toggleClass('expanded');
+        });
         /*Toggle dropdown list*/
         /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
 

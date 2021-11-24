@@ -8,6 +8,7 @@
     "bcrypt": "^5.0.1",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.19.0",
+    "bourbon": "^7.0.0",
     "chart.js": "^3.6.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.5",
@@ -29,6 +30,7 @@
     "passport-local": "^1.0.0",
     "request": "^2.88.2",
     "sass": "^1.43.4",
+    "scss": "^0.2.4",
     "start": "^5.1.0",
     "twilio": "^3.71.2"
   }

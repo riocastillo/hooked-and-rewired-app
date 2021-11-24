@@ -403,3 +403,10 @@
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: rgb(255, 255, 255);
   }
+
+  #map { 
+    height: 500px; 
+    width:70%;
+    margin:auto;
+    padding-top:5%;
+  }

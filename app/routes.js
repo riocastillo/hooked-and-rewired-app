@@ -13,18 +13,31 @@ module.exports = function (app, passport, db) {
     res.render('index.ejs'); // spits out the html and respond
   });
 
+  app.get('/edit-habits', function (req, res) {
+    db.collection('habits').find({ email: req.user.local.email }).toArray((err, habits) => {
+      res.render('edit-habits.ejs', {
+        habits
+      });
+    })
+  });
+
   // PROFILE SECTION =========================
   //isloggedin is a function all the way at the bottom to see if theyre logged in
   app.get('/profile', isLoggedIn, function (req, res) {
     db.collection('habits').find({ email: req.user.local.email }).toArray((err, habits) => {
       if (err) return console.log(err)
-      db.collection('calendar').find({ email: req.user.local.email }).toArray((err2, calendar) => {
+      db.collection('triggers').findOne({ userId: req.user._id }, (err, triggers) => {
+        console.log('triggers', triggers)
         if (err) return console.log(err)
-        res.render('profile.ejs', {
-          habits,
-          calendar,
-          email: req.user.local.email,
-          userId: req.user._id
+        db.collection('calendar').find({ email: req.user.local.email }).toArray((err2, calendar) => {
+          if (err) return console.log(err)
+          res.render('profile.ejs', {
+            habits,
+            calendar,
+            triggers,
+            email: req.user.local.email,
+            userId: req.user._id
+          })
         })
       })
     })
@@ -111,13 +124,14 @@ module.exports = function (app, passport, db) {
     res.redirect("/profile")
   });
 
-  //   app.delete('/clear', (req, res) => {
-  //     db.collection('budget').deleteMany({ userEmail: req.user.local.email }, (err, result) => {
-  //       if (err) return res.send(500, err)
-  //       res.send('Spreadsheet deleted!')
-  //       console.log(result)
-  //     })
-  //   })
+  app.delete('/deleteHabit', (req, res) => {
+    console.log(req.body, 'body')
+    db.collection('habits').deleteOne({ _id: ObjectId(req.body.habitId) }, (err, result) => {
+      if (err) return res.send(500, err)
+      res.send('habit deleted!')
+      console.log(result)
+    })
+  })
 
   // =============================================================================
   // AUTHENTICATE (FIRST LOGIN) ==================================================
@@ -232,7 +246,7 @@ module.exports = function (app, passport, db) {
             let totalHabits = habitsAvoided + habitsNotAvoided
             let habitsAvoidedPercentage = Math.floor((habitsAvoided / totalHabits) * 100)
             let habitsNotAvoidedPercentage = Math.floor((habitsNotAvoided / totalHabits) * 100)
-            console.log('trackedevnts', trackedEvents, typeof(trackedEvents))
+            console.log('trackedevnts', trackedEvents, typeof (trackedEvents))
 
             res.render('dashboard.ejs', {
               daysRefrainedFromHabit,
@@ -248,7 +262,7 @@ module.exports = function (app, passport, db) {
               trackedEvents,
               milesArray,
               feetConversion,
-  
+
             })
           })
       })
@@ -259,7 +273,7 @@ module.exports = function (app, passport, db) {
   app.get('/trackMiles', function (req, res) {
     db.collection('miles')
       .find({ email: req.user.local.email })
-      .sort({_id: -1})
+      .sort({ _id: -1 })
       .toArray((err, trackedEvents) => {
         res.render('trackMiles.ejs', { message: req.flash('trackMiles doc accessed'), trackedEvents });
       })

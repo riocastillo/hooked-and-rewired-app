@@ -8,296 +8,331 @@
   <title>Home</title>
   <link rel="dns-prefetch" href="//unpkg.com" />
   <link rel="stylesheet" href="profile.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@800&family=Tourney:ital,wght@1,400&family=Londrina+Solid:wght@900&family=Rock+Salt&display=swap"
-  rel="stylesheet">    
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@800&family=Tourney:ital,wght@1,400&family=Londrina+Solid:wght@900&family=Rock+Salt&display=swap"
+    rel="stylesheet">
   <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
   <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">
   <link href="https://unpkg.com/tailwindcss@1.3.4/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
 
-  <link rel="shortcut icon" 
-  type="image/x-icon" 
-  href="favicon.ico"/>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 </head>
 
 <!-- <body> -->
 
-  <!-- extra style of intake box  -->
+<!-- extra style of intake box  -->
 
-  <style>
-    .mt-12 {
-      margin-top: -8%;
-    }
-  </style>
+<style>
+  .mt-12 {
+    margin-top: -8%;
+  }
+</style>
 
-  <!-- intake style form box -->
+<!-- intake style form box -->
 
-  <body class="h-screen overflow-hidden font-Inconsolata flex items-center justify-center" style="background: #edf2f7;">
+<body class="h-screen overflow-hidden font-Inconsolata flex items-center justify-center" style="background: #edf2f7;">
 
-    <div class="w-full max-w-6xl min-w-0 mx-auto px-6 pt-10">
-      <div class="flex mt-12 bg-white rounded-md shadow">
-        <div class="w-64 bg-black rounded-l-md border-r border-dashed border-white">
-          <div
-            class="flex justify-center items-center h-32 text-black-700 bg-black text-center font-semibold text-3xl italic">
-            <img src="greenCat.png" width=125px class="pt-8">
-          </div>
-          <div class="mt-8 border-t border-white" >
-            <a href="#" onclick="openIntro(event)" class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="mission" >
-              Introduction
-            </a>
-            <a href="/profile" class="block py-3 text-lg px-6 bg-gray-800 text-white font-semibold border-b border-white"
-              id="form">
-              Submit a habit
-            </a>
-            <a href="/profile/dashboard" class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="results">
-              Go to dashboard
-            </a>
-            <a href="/profile/texts" class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="texts">
-              Get text alerts
-            </a>
-            <a href="/trackMiles" class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="track">
-              Track your miles
-            </a>
-            <button href="/shareCalendar/<%= userId %>" class="block bg-black py-3 px-6 text-lg text-white font-semibold border-b border-white" class="share" onclick="openWindow(event)">
-              Share your calendar
-            </button>
-          </div>
-          <img src="hooked.png" class="p-3 pt-10">
+  <div class="w-full max-w-6xl min-w-0 mx-auto px-6 pt-10">
+    <div class="flex mt-12 bg-white rounded-md shadow">
+      <div class="w-64 bg-black rounded-l-md border-r border-dashed border-white">
+        <div
+          class="flex justify-center items-center h-32 text-black-700 bg-black text-center font-semibold text-3xl italic">
+          <img src="greenCat.png" width=125px class="pt-8">
         </div>
-        <div class="flex-grow"> 
-          <br>
-          <h2 class="welcomeTo font-londrina pb-8 font-semibold text-yellow text-4xl px-10">Welcome, <%= email %>!</h2>
+        <div class="mt-8 border-t border-white">
+          <a href="#" onclick="openIntro(event)"
+            class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="mission">
+            Introduction
+          </a>
+          <a href="/profile" class="block py-3 text-lg px-6 bg-gray-800 text-white font-semibold border-b border-white"
+            id="form">
+            Submit a habit
+          </a>
+          <a href="/profile/dashboard"
+            class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="results">
+            Go to dashboard
+          </a>
+          <a href="/profile/texts"
+            class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="texts">
+            Get text alerts
+          </a>
+          <a href="/trackMiles" class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white"
+            id="track">
+            Track your miles
+          </a>
+          <button href="/shareCalendar/<%= userId %>"
+            class="block bg-black py-3 px-6 text-lg text-white font-semibold border-b border-white" class="share"
+            onclick="openWindow(event)">
+            Share your calendar
+          </button>
+        </div>
+        <img src="hooked.png" class="p-3 pt-10">
+      </div>
+      <div class="flex-grow">
+        <br>
+        <h2 class="welcomeTo font-londrina pb-8 font-semibold text-yellow text-4xl px-10">Welcome, <%= email %>!</h2>
 
-          <div class="replace flex flex-col mx-40 mt-15">
+        <div class="replace flex flex-col mx-40 mt-15">
 
-            <div class="flex items-center mb-4">
-              <form method="post" action="/intakeHabit">
-                <label for="habit" class="w-24 font-semibold text-black-700 pr-12">Habit</label>
-                <input type="text" name="habit" class="border-double border-4 border-black rounded py-1 px-3"
-                  placeholder="name of first habit" />
-            </div>
-            <div class="flex items-center mb-4">
-              <label for="cost" class="w-24 font-semibold text-black-700">Weekly spending <br>on habit</label>
-              <input type="number" name="cost" class="border-double border-4 border-black rounded py-1 px-3"
-                placeholder="if applicable" />
-            </div>
-            <div class="flex items-center mb-4">
-              <label for="reward" class="w-24 font-semibold text-black-700">Personal Reward</label>
-              <input type="text" name="reward" class="border-double border-4 border-black rounded py-1 px-3"
-                placeholder="one reward per habit" />
-            </div>
-            <div class="flex items-center mb-4">
-              <textarea name="extraNotes" placeholder="(optional) add an affirmation you want to give to future you"
-                class=" mt-4  flex-grow border double-border border-black rounded py-1 px-4" id="description"
-                rows="8"></textarea>
-            </div>
-            <div class="flex items-center mb-4">
-              <button
-                class="submit py-1 px-4 bg-black text-white text-xl font-semibold hover:bg-black-900 hover:shadow border border-black-200 rounded mr-2 mb-3">Submit</button>
-              </form>
-            </div>
+          <div class="flex items-center mb-4">
+            <form method="post" action="/intakeHabit">
+              <label for="habit" class="w-24 font-semibold text-black-700 pr-12">Habit</label>
+              <input type="text" name="habit" class="border-double border-4 border-black rounded py-1 px-3"
+                placeholder="name of first habit" />
+          </div>
+          <div class="flex items-center mb-4">
+            <label for="cost" class="w-24 font-semibold text-black-700">Weekly spending <br>on habit</label>
+            <input type="number" name="cost" class="border-double border-4 border-black rounded py-1 px-3"
+              placeholder="if applicable" />
+          </div>
+          <div class="flex items-center mb-4">
+            <label for="reward" class="w-24 font-semibold text-black-700">Personal Reward</label>
+            <input type="text" name="reward" class="border-double border-4 border-black rounded py-1 px-3"
+              placeholder="one reward per habit" />
+          </div>
+          <div class="flex items-center mb-4">
+            <textarea name="extraNotes" placeholder="(optional) add an affirmation you want to give to future you"
+              class=" mt-4  flex-grow border double-border border-black rounded py-1 px-4" id="description"
+              rows="8"></textarea>
+          </div>
+          <div class="flex items-center mb-4">
+            <button
+              class="submit py-1 px-4 bg-black text-white text-xl font-semibold hover:bg-black-900 hover:shadow border border-black-200 rounded mr-2 mb-3">Submit</button>
+            </form>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- The Share Cal Modal -->
-<div id="myModal" class="modal">
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span><br>
-    <h2 class="copied">Url copied!</h2><br>
-   <p class="note"><span style="color:rgb(119, 63, 223)">
-     Note:</span> you are entitled to privacy, so when you send this link to your friends or accountability circle, be assured that we removed the ability for your friends to check on your daily activity. With this feature, they will just see your entire calendar activity.</p><br>
-     <button><a href="/shareCalendar/<%= userId %>" class="preview">preview what they see >> </a></button> 
-  
-</div>
-</div>
- <!-- End of Share Cal Modal -->
+  <!-- The Share Cal Modal -->
+  <div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span><br>
+      <h2 class="copied">Url copied!</h2><br>
+      <p class="note"><span style="color:rgb(119, 63, 223)">
+          Note:</span> you are entitled to privacy, so when you send this link to your friends or accountability circle,
+        be assured that we removed the ability for your friends to check on your daily activity. With this feature, they
+        will just see your entire calendar activity.</p><br>
+      <button><a href="/shareCalendar/<%= userId %>" class="preview">preview what they see >> </a></button>
 
- <!-- The Intro Modal -->
-<div id="introModal" class="modal">
-  <!-- Modal content -->
-  <div class="intro-content">
-    <span class="exit">&times;</span><br>
-    <h2 class="what-is-this">What is this app?</h2><br>
-   <p class="note"><span style="color:rgb(119, 63, 223)">
-     Hey, <%= email %>!</span> Great question. This app was created for those who need support to strengthen their skills in breaking what they consider to be bad habits. Oftentimes we talk about people who engage with bad habits as 'lazy' or indulgent. When really, refraining from your bad habits is one of the most challenging, hardest work a person can commit to. Because not everyone's experience is the same, this app has a lot of optional features! If your journey includes exercise, we have a feature to help you see your progress. For users who need an accountability boost, you can sign up for reminder texts, and you can share your calendar with friends. For the visual people, we have a dashboard of data we tracked for you. This app isn't designed to make your journey perfect, but it is designed to help you get stronger. <span style="color:rgb(119, 63, 223)">Thanks!</span></p><br>
-  
-</div>
-</div>
- <!-- End of Intro Modal -->
- 
+    </div>
+  </div>
+  <!-- End of Share Cal Modal -->
 
-  </body>
-  <!-- end of intake style form box -->
+  <!-- The Intro Modal -->
+  <div id="introModal" class="modal">
+    <!-- Modal content -->
+    <div class="intro-content">
+      <span class="exit">&times;</span><br>
+      <h2 class="what-is-this">What is this app?</h2><br>
+      <p class="note"><span style="color:rgb(119, 63, 223)">
+          Hey, <%= email %>!</span> Great question. This app was created for those who need support to strengthen their
+        skills in breaking what they consider to be bad habits. Oftentimes we talk about people who engage with bad
+        habits as 'lazy' or indulgent. When really, refraining from your bad habits is one of the most challenging,
+        hardest work a person can commit to. Because not everyone's experience is the same, this app has a lot of
+        optional features! If your journey includes exercise, we have a feature to help you see your progress. For users
+        who need an accountability boost, you can sign up for reminder texts, and you can share your calendar with
+        friends. For the visual people, we have a dashboard of data we tracked for you. This app isn't designed to make
+        your journey perfect, but it is designed to help you get stronger. <span
+          style="color:rgb(119, 63, 223)">Thanks!</span></p><br>
 
-  <!-- extra style of calendar  -->
+    </div>
+  </div>
+  <!-- End of Intro Modal -->
 
-  <div>
-    <style>
-      .antialiased {
-        background-color: rgb(0, 0, 0);
-        width: 110%;
-        font-size: 1rem;
-      }
 
-      *,
-      ::after,
-      ::before {
-        box-sizing: border-box;
-        border-width: 0;
-        border-style: solid;
-        border-color: #969696;
-      }
+</body>
+<!-- end of intake style form box -->
 
-      div .antialiased .container {
-        height: 800px;
-        width: 100%;
-        transform: scale(0.8);
-        padding-top: 0;
-        margin-left: -3%;
-      }
-    </style>
-<input value="<%= email %>" id="userEmail" class="hideThis"/>
-   
-<!-- structure of calendar  -->
+<!-- extra style of calendar  -->
 
-<div style="display:none" class="dataDiv">
-<%= JSON.stringify(calendar) %>
-</div>
+<div>
+  <style>
+    .antialiased {
+      background-color: rgb(0, 0, 0);
+      width: 110%;
+      font-size: 1rem;
+    }
 
-    <div class="background antialiased sans-serif bg-gray-400 h-screen pt-6">
-      <div x-data="app()" x-init="[initDate(), getNoOfDays()]" x-cloak>
-        <div class="container mx-auto px-4 py-2 md:py-24">
+    *,
+    ::after,
+    ::before {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+      border-color: #969696;
+    }
 
-          <div class="bg-white rounded-lg shadow overflow-hidden">
+    div .antialiased .container {
+      height: 800px;
+      width: 100%;
+      transform: scale(0.8);
+      padding-top: 0;
+      margin-left: -3%;
+    }
+  </style>
+  <input value="<%= email %>" id="userEmail" class="hideThis" />
 
-            <div class="flex items-center mt-5 justify-between px-6">
-              <div>
-                <span x-text="MONTH_NAMES[month]" class="calendarMonth text-6xl font-londrina font-bold text-gray-800"></span>
-                <span x-text="year" class="ml-1 text-5xl font-londrina text-gray-600 font-normal"></span>
-              </div>
-              <div class="border rounded-lg px-1" style="padding-top: 2px;">
-                <button type="button"
-                  class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 items-center"
-                  :class="{'cursor-not-allowed opacity-25': month == 0 }" :disabled="month == 0 ? true : false"
-                  @click="month--; updateBackground(month); getNoOfDays()">
-                  <svg class="h-6 w-6 text-gray-500 inline-flex leading-none" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-                <div class="border-r inline-flex h-6"></div>
-                <button type="button"
-                  class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-gray-200 p-1"
-                  :class="{'cursor-not-allowed opacity-25': month == 11 }" :disabled="month == 11 ? true : false"
-                  @click="month++; updateBackground(month); getNoOfDays()">
-                  <svg class="h-6 w-6 text-gray-500 inline-flex leading-none" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </div>
+  <!-- structure of calendar  -->
+
+  <div style="display:none" class="dataDiv">
+    <%= JSON.stringify(calendar) %>
+  </div>
+
+  <div class="background antialiased sans-serif bg-gray-400 h-screen pt-6">
+    <div x-data="app()" x-init="[initDate(), getNoOfDays()]" x-cloak>
+      <div class="container mx-auto px-4 py-2 md:py-24">
+
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+
+          <div class="flex items-center mt-5 justify-between px-6">
+            <div>
+              <span x-text="MONTH_NAMES[month]"
+                class="calendarMonth text-6xl font-londrina font-bold text-gray-800"></span>
+              <span x-text="year" class="ml-1 text-5xl font-londrina text-gray-600 font-normal"></span>
+            </div>
+            <div class="border rounded-lg px-1" style="padding-top: 2px;">
+              <button type="button"
+                class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 items-center"
+                :class="{'cursor-not-allowed opacity-25': month == 0 }" :disabled="month == 0 ? true : false"
+                @click="month--; updateBackground(month); getNoOfDays()">
+                <svg class="h-6 w-6 text-gray-500 inline-flex leading-none" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div class="border-r inline-flex h-6"></div>
+              <button type="button"
+                class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-gray-200 p-1"
+                :class="{'cursor-not-allowed opacity-25': month == 11 }" :disabled="month == 11 ? true : false"
+                @click="month++; updateBackground(month); getNoOfDays()">
+                <svg class="h-6 w-6 text-gray-500 inline-flex leading-none" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="-mx-1 -mb-1">
+            <div class="flex flex-wrap" style="margin-bottom: -40px;">
+              <template x-for="(day, index) in DAYS" :key="index">
+                <div style="width: 14.26%" class="px-2 py-2">
+                  <div x-text="day"
+                    class=" float-right pr-2 text-yellow-700 text-xl uppercase tracking-wide font-bold text-center">
+                  </div>
+                </div>
+              </template>
             </div>
 
-            <div class="-mx-1 -mb-1">
-              <div class="flex flex-wrap" style="margin-bottom: -40px;">
-                <template x-for="(day, index) in DAYS" :key="index">
-                  <div style="width: 14.26%" class="px-2 py-2">
-                    <div x-text="day" class=" float-right pr-2 text-yellow-700 text-xl uppercase tracking-wide font-bold text-center"></div>
+            <div class="flex flex-wrap border-t border-l">
+              <template x-for="blankday in blankdays">
+                <div style="width: 14.28%; height: 120px" class="text-center border-r border-b px-4 pt-2"></div>
+              </template>
+              <template x-for="(date, dateIndex) in no_of_days" :key="dateIndex">
+                <div style="width: 14.28%; height: 120px"
+                  class="px-4 cal-londrina text-3xl pt-2 border-r border-b relative calendarDate">
+                  <div @click="showEventModal(date)" x-text="date"
+                    class="inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100"
+                    :class="{'bg-yellow-700 p-6 text-white': isToday(date) == true, 'text-gray-700 hover:bg-blue-200': isToday(date) == false }">
                   </div>
-                </template>
-              </div>
+                  <div style="height: 80px;" class="overflow-y-auto mt-1">
 
-              <div class="flex flex-wrap border-t border-l">
-                <template x-for="blankday in blankdays">
-                  <div style="width: 14.28%; height: 120px" class="text-center border-r border-b px-4 pt-2"></div>
-                </template>
-                <template x-for="(date, dateIndex) in no_of_days" :key="dateIndex">
-                  <div style="width: 14.28%; height: 120px" class="px-4 cal-londrina text-3xl pt-2 border-r border-b relative calendarDate">
-                    <div @click="showEventModal(date)" x-text="date"
-                      class="inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100"
-                      :class="{'bg-yellow-700 p-6 text-white': isToday(date) == true, 'text-gray-700 hover:bg-blue-200': isToday(date) == false }">
-                    </div>
-                    <div style="height: 80px;" class="overflow-y-auto mt-1">
-
-                      <template
-                        x-for="event in events.filter(e => new Date(e.event_date).toDateString() ===  new Date(year, month, date).toDateString() )">
-                        <div class="px-2 py-1 rounded-xl mt-1 overflow-hidden border" :class="{
+                    <template
+                      x-for="event in events.filter(e => new Date(e.event_date).toDateString() ===  new Date(year, month, date).toDateString() )">
+                      <div class="px-2 py-1 rounded-xl mt-1 overflow-hidden border" :class="{
 												'border-blue-200 text-blue-800 bg-blue-100': event.event_theme === 'blue',
 												'border-red-200 text-red-800 bg-red-100': event.event_theme === 'red',
 												'border-yellow-200 text-yellow-800 bg-yellow-100': event.event_theme === 'yellow',
 												'border-green-200 text-green-800 bg-green-100': event.event_theme === 'green',
 												'border-purple-200 text-purple-800 bg-purple-100': event.event_theme === 'purple'
 											}">
-                          <p x-text="event.event_title" class="text-sm truncate leading-tight"></p>
-                        </div>
-                      </template>
-                    </div>
+                        <p x-text="event.event_title" class="text-sm truncate leading-tight"></p>
+                      </div>
+                    </template>
                   </div>
-                </template>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- end of calendar structure -->
-
-        <!-- calendar pop up box -->
-
-        <div style=" background-color: rgba(0, 0, 0, 0.8)"
-          class="fixed z-40 top-0 right-0 left-0 bottom-0 h-full w-full" x-show.transition.opacity="openEventModal">
-          <div class="p-4 max-w-xl mx-auto relative absolute left-0 right-0 overflow-hidden mt-24">
-            <div
-              class="shadow absolute right-0 top-0 w-10 h-10 rounded-full bg-white text-gray-500 hover:text-gray-800 inline-flex items-center justify-center cursor-pointer"
-              x-on:click="openEventModal = !openEventModal">
-              <svg class="fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path
-                  d="M16.192 6.344L11.949 10.586 7.707 6.344 6.293 7.758 10.535 12 6.293 16.242 7.707 17.656 11.949 13.414 16.192 17.656 17.606 16.242 13.364 12 17.606 7.758z" />
-              </svg>
-            </div>
-
-            <div class="shadow w-full rounded-lg bg-white overflow-hidden w-full block p-8" id="rewards">
-
-              <h2 class="font-bold text-3xl text-black below-are mb-6 text-gray-800 border-b pb-2 congrats" >Below are the list of your habits. Please check which ones you didn't engage with.</h2>
-
-              <div class="mb-4 habitList">
-                <ul>
-                  <% for (let habit of habits) { %>
-                    <li for="<%= habit.habit %>">
-                      <input class="habit_checkbox m-2 form-checkbox h-5 w-5 text-yellow-600 r-45" id="habit" id="test2" name="habit" type="checkbox" checked data-reward="<%= habit.reward %>" data-cost="<%= habit.cost %>"value="<%= habit.habit %>">
-                      <label for="habit" class="text-xl">Refained from: <%= habit.habit %></label>
-                    </li>
-                      <% } %>
-                   
-                </ul>
-              </div>
-
-              <div class="mt-8 text-right habitButtons">
-                <button type="button"
-                  class="bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 border border-gray-300 rounded-lg shadow-sm mr-2"
-                  @click="openEventModal = !openEventModal">
-                  Cancel
-                </button>
-                <button type="button"
-                  class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-4 border border-gray-700 rounded-lg shadow-sm"
-                  @click="addEvent()">
-                  Add day
-                </button>
-              </div>
-              <br><br>
-              <!-- rewards box -->
-              <ul class="rewardList"></ul>
-              <div class="mt-8 text-right" id= "rewardButs"></div>
+                </div>
+              </template>
             </div>
           </div>
         </div>
       </div>
+      <!-- end of calendar structure -->
+
+      <!-- calendar pop up box -->
+
+      <div style=" background-color: rgba(0, 0, 0, 0.8)" class="fixed z-40 top-0 right-0 left-0 bottom-0 h-full w-full"
+        x-show.transition.opacity="openEventModal">
+        <div class="p-4 max-w-xl mx-auto relative absolute left-0 right-0 overflow-hidden mt-24">
+          <div
+            class="shadow absolute right-0 top-0 w-10 h-10 rounded-full bg-white text-gray-500 hover:text-gray-800 inline-flex items-center justify-center cursor-pointer"
+            x-on:click="openEventModal = !openEventModal">
+            <svg class="fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M16.192 6.344L11.949 10.586 7.707 6.344 6.293 7.758 10.535 12 6.293 16.242 7.707 17.656 11.949 13.414 16.192 17.656 17.606 16.242 13.364 12 17.606 7.758z" />
+            </svg>
+          </div>
+
+          <div class="shadow w-full rounded-lg bg-white overflow-hidden w-full block p-8" id="rewards">
+
+            <h2 class="font-bold text-3xl text-black below-are mb-6 text-gray-800 border-b pb-2 congrats">Below are the
+              list of your habits. Please check which ones you didn't engage with.</h2>
+
+            <div class="mb-4 habitList">
+              <ul>
+                <% for (let habit of habits) { %>
+                  <li for="<%= habit.habit %>">
+                    <input class="habit_checkbox m-2 form-checkbox h-5 w-5 text-yellow-600 r-45" id="habit" id="test2"
+                      name="habit" type="checkbox" checked data-reward="<%= habit.reward %>"
+                      data-cost="<%= habit.cost %>" value="<%= habit.habit%>" onChange="console.log('hello'); document.getElementById('trigger_<%= habit._id %>').style = 'display:block'">
+                    <label for="habit" class="text-xl">Refained from: <%= habit.habit %></label>
+                  </li>
+                  <div style="display:none" id="trigger_<%= habit._id %>">
+                    <select class="triggerSelect" data-habit= "<%= habit.habit %>" onChange="check(event);">
+                    <option>oh no! want to document a trigger?</option>
+                    <% for (let trigger of triggers.triggers){%>
+                      <option value="<%= trigger %>"><%= trigger %> </option>
+                    <%} %>
+                      <option>add a new one...</option>
+                    </select>
+                    <div id="popup-div" style="display:none;">
+                        <input id="other-input" placeholder="enter here"></input>
+                      </label>
+                    </div>
+                  </div>
+                  <% } %>
+
+              </ul>
+            </div>
+
+            <div class="mt-8 text-right habitButtons">
+              <button type="button"
+                class="bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 border border-gray-300 rounded-lg shadow-sm mr-2"
+                @click="openEventModal = !openEventModal">
+                Cancel
+              </button>
+              <button type="button"
+                class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-4 border border-gray-700 rounded-lg shadow-sm"
+                @click="addEvent()">
+                Add day
+              </button>
+            </div>
+            <br><br>
+            <!-- rewards box -->
+            <ul class="rewardList"></ul>
+            <div class="mt-8 text-right" id="rewardButs"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
 
-      <script src="/main.js"></script>
+    <script src="/main.js"></script>
 
-<!-- </body> -->
+    <!-- </body> -->
 
 </html>

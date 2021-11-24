@@ -85,7 +85,12 @@ function app() {
 
             // get all the habit checkboxes from the modal popup on the calendar
             const habitCheckboxes = document.getElementsByClassName("habit_checkbox");
+            const triggerSelects = document.getElementsByClassName('triggerSelect');
+            console.log(triggerSelects)
+
+
             const habitData = [];
+
             // loop through all the checkboxes
             for (let i = 0; i < habitCheckboxes.length; i++) {
                 // below is a variable for the current checkbox
@@ -276,8 +281,6 @@ function setBackground(dataForServer) {
     })
     streakDate[0].style.background = `rgb(0,0, 255, 0.${Math.floor(finalShadeNum)})`
 
-    console.log('streakdate', streakDate)
-
     let streakData = dataForServer.date
 
 }
@@ -399,3 +402,21 @@ window.onclick = function (event) {
         intro.style.display = "none";
     }
 }
+
+function check(event) {
+    // use one of possible conditions
+    // if (elem.value == 'Other')
+    console.log('functioned accessed')
+    console.log('target-e:', event.target)
+    console.log('selected-item:', event.target.selectedItem)
+
+    if (event.target.selectedIndex == 2) {
+        console.log("showing");
+        document.getElementById("popup-div").style.display = 'block';
+    } else {
+        console.log("hiding");
+        document.getElementById("popup-div").style.display = 'none';
+    }
+}
+
+  
