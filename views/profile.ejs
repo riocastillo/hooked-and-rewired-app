@@ -40,7 +40,7 @@
           class="flex justify-center items-center h-32 text-black-700 bg-black text-center font-semibold text-3xl italic">
           <img src="greenCat.png" width=125px class="pt-8">
         </div>
-        <div class="mt-8 border-t border-white">
+        <div class="mt-8 border-t border-white" onclick="playTabSound()">
           <a href="#" onclick="openIntro(event)"
             class="block text-lg bg-black py-3 px-6 text-white font-semibold border-b border-white" id="mission">
             Introduction
@@ -98,7 +98,7 @@
           </div>
           <div class="flex items-center mb-4">
             <button
-              class="submit py-1 px-4 bg-black text-white text-xl font-semibold hover:bg-black-900 hover:shadow border border-black-200 rounded mr-2 mb-3">Submit</button>
+              class="submit py-1 px-4 bg-black text-white text-xl font-semibold hover:bg-black-900 hover:shadow border border-black-200 rounded mr-2 mb-3" onclick="playSubmitSound()">Submit</button>
             </form>
           </div>
         </div>
@@ -292,7 +292,8 @@
                     <label for="habit" class="text-xl">Refained from: <%= habit.habit %></label>
                   </li>
                   <div style="display:none" id="trigger_<%= habit._id %>">
-                    <select class="triggerSelect" data-habit="<%= habit.habit %>" data-habitId ="<%= habit._id %>" onChange="check(event);">
+                    <select class="triggerSelect" data-habit="<%= habit.habit %>" data-habitId="<%= habit._id %>"
+                      onChange="check(event);">
                       <option>oh no! want to document a trigger?</option>
                       <option>add a new one...</option>
 
@@ -303,7 +304,8 @@
                         <%} %>
                     </select>
                     <div id="trigger_popup_<%= habit._id %>" style="display:none;">
-                      <input id = "trigger_input_<%=habit._id %>" class = "newtriggerinput" placeholder="enter trigger here"></input>
+                      <input id="trigger_input_<%=habit._id %>" class="newtriggerinput"
+                        placeholder="enter trigger here"></input>
                       </label>
                     </div>
                   </div>
@@ -320,7 +322,7 @@
               </button>
               <button type="button"
                 class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-4 border border-gray-700 rounded-lg shadow-sm"
-                @click="addEvent()">
+                @click="addEvent()" onclick="playCalendarSound()">
                 Add day
               </button>
             </div>
@@ -334,7 +336,16 @@
     </div>
 
 
+    <audio id="habitSound" loop="false" volume="100">
+      <source src="submitHabit.mp3" type="audio/mpeg">
+    </audio>
 
+    <audio id="tabSound" loop="false" volume="100">
+      <source src="tabs.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="calendarSound" loop="false" volume="100">
+      <source src="calendar.mp3" type="audio/mpeg">
+    </audio>
     <script src="/main.js"></script>
 
     <!-- </body> -->

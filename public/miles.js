@@ -5,7 +5,13 @@ document.querySelector('.start').addEventListener('click', startTracking)
 let distanceArray = []
 let timerId
 
+const runSound = document.getElementById('runSound')
+runSound.loop = false
+const StopRunSound = document.getElementById('StopRunSound')
+StopRunSound.loop = false
+
 function startTracking() {
+    runSound.play()
     const status = document.querySelector('#status');
     // const mapLink = document.querySelector('#map-link');
     // mapLink.href = '';
@@ -77,6 +83,7 @@ function distance(lat1, lat2, lon1, lon2) {
 }
 
 document.querySelector('.button_base').addEventListener('click', () => {
+    StopRunSound.play()
     //distanceArr has all of the coordinates as objects, in pairs as lat and long
     //we're passing the current pair and grabbing the lat
     // then we're telling it to referecne the distanceArr and use the currentidex that we're all, and then add one to it

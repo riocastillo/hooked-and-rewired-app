@@ -43,13 +43,16 @@
 
             <form action="/getTexts" method="post">
               <input type="tel" id="phone" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
-            <button type="submit" value ="Get Texts" class="button-cover" role="button"><span class="text">Submit</span><span>Thanks!</span>
+            <button type="submit" value ="Get Texts" class="button-cover" role="button" onclick="ding(event)"><span class="text" onclick="ding()">Submit</span><span>Thanks!</span>
             </button>
           </form>
           </section>
          
           <div class="tape-section"></div>
         </div>
+        <audio id="textSound" loop="false" volume="100">
+          <source src="../texts.mp3" type="audio/mpeg">
+      </audio>  
 </body>
 <script src="../texts.js"></script>
 

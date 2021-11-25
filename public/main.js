@@ -80,9 +80,6 @@ function app() {
         },
 
         addEvent() {
-            // if (this.event_title == '') {
-            // 	return;
-
             // get all the habit checkboxes from the modal popup on the calendar
             const habitCheckboxes = document.getElementsByClassName("habit_checkbox");
             const triggerSelects = document.getElementsByClassName('triggerSelect');
@@ -109,7 +106,7 @@ function app() {
                 // below is a variable for the current checkbox
                 const habitCheckbox = habitCheckboxes[i];
                 // adds the data for each checkbox
-                habitData.push({ habit: habitCheckbox.value, didHabit: habitCheckbox.checked, reward: habitCheckbox.dataset.reward, cost: habitCheckbox.dataset.cost, trigger: null})
+                habitData.push({ habit: habitCheckbox.value, didHabit: habitCheckbox.checked, reward: habitCheckbox.dataset.reward, cost: habitCheckbox.dataset.cost, trigger: null })
             }
 
             //in the trigger we'll pass the value of ther trigger
@@ -168,6 +165,7 @@ function app() {
 
 // dynamically generating html that is the congrats and rewards page
 function displayRewards(dataForServer) {
+    
     let habitList = document.querySelector('.habitList')
     let habitButtons = document.querySelector('.habitButtons')
     habitButtons.classList.add('hideThis')
@@ -369,6 +367,7 @@ let span = document.getElementsByClassName("close")[0];
 // When the user clicks on the button, open the modal
 
 function openWindow(evt) {
+    tabSound.play()
     let modal = document.getElementById("myModal");
     var preview = document.querySelector('.preview')
     modal.style.display = "block";
@@ -404,6 +403,7 @@ let closeModal = document.getElementsByClassName("exit")[0];
 // When the user clicks on the button, open the modal
 
 function openIntro(evt) {
+    tabSound.play()
     let intro = document.getElementById("introModal");
     intro.style.display = "block";
     console.log('please work')
@@ -446,5 +446,23 @@ function check(event) {
             trigger: newTrigger
         })
     })
+}
+
+var habitSound = document.getElementById("habitSound");
+habitSound.loop = false
+var tabSound = document.getElementById("tabSound");
+tabSound.loop = false
+var calendarSound = document.getElementById("calendarSound");
+calendarSound.loop = false
+
+function playTabSound(){
+    tabSound.play()
+}
+
+function playSubmitSound(){
+    habitSound.play()
+}
+function playCalendarSound(){
+    calendarSound.play()
 }
 
