@@ -290,9 +290,9 @@
                       data-cost="<%= habit.cost %>" value="<%= habit.habit%>"
                       onChange="document.getElementById('trigger_<%= habit._id %>').style = this.checked ? 'display:none' : 'display:block'">
                     <label for="habit" class="text-xl">Refained from: <%= habit.habit %></label>
-                  </li>
+                  
                   <div style="display:none" id="trigger_<%= habit._id %>">
-                    <select class="triggerSelect" data-habit="<%= habit.habit %>" data-habitId="<%= habit._id %>"
+                    <select class="triggerSelect" data-habit="<%= habit.habit %>" data-habitid="<%= habit._id %>"
                       onChange="check(event);">
                       <option>oh no! want to document a trigger?</option>
                       <option>add a new one...</option>
@@ -307,8 +307,9 @@
                       <input id="trigger_input_<%=habit._id %>" class="newtriggerinput"
                         placeholder="enter trigger here"></input>
                       </label>
-                    </div>
                   </div>
+                </div>
+                </li>
                   <% } %>
 
               </ul>

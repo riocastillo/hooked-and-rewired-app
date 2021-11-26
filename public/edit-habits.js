@@ -1,8 +1,11 @@
 console.log('hi')
-
-document.querySelector('.delete').addEventListener('click', deleteHabit)
+let deleteButts = document.querySelectorAll('.delete')
+deleteButts.forEach(button => {
+    button.addEventListener('click', deleteHabit)
+})
 
 function deleteHabit(e) {
+    console.log('accessed')
     let habitId = e.currentTarget.dataset.name
 
     fetch('deleteHabit', {
@@ -22,3 +25,22 @@ function deleteHabit(e) {
         });
 
 }
+
+
+function toggle() {
+    let links = document.getElementById("links");
+    let blob = document.getElementById("blob");
+    blob.classList.toggle("open");
+    if (links.style.display == "block") {
+      links.style.display = "none";
+    } else {
+      links.style.display = "block";
+    }
+  };
+  
+  function ding(e) {
+    var textSound = document.getElementById("textSound");
+    textSound.loop = false
+  
+    textSound.play()
+  }

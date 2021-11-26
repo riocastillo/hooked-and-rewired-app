@@ -6,18 +6,62 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit</title>
+    <link rel="stylesheet" href="edit.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@800&family=Frijole&family=Tourney:ital,wght@1,400&family=Londrina+Solid:wght@900&family=Rock+Salt&display=swap"
+        rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body>
-    <ul>
-        <% for (let habit of habits){ %>
-            <l1>
-                <%= habit.habit %>
-                <button class="delete" data-reward="<%= habit.reward%>" data-name="<%= habit._id %>">delete</button>
-            </l1>
-            <% } %>
 
-    </ul>
+    <svg id="blob" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#ffd700"
+            d="M43.2,-68.1C51.4,-61.9,50.4,-42.2,51.5,-27.2C52.7,-12.2,55.9,-1.8,57.9,10.7C59.8,23.3,60.4,38.1,54.4,49.6C48.3,61.1,35.5,69.2,23,68.4C10.4,67.6,-1.8,57.8,-13.7,51.9C-25.6,46.1,-37.2,44.1,-45,37.6C-52.7,31.1,-56.7,19.9,-56.6,9.2C-56.5,-1.5,-52.3,-11.8,-49.3,-24.2C-46.2,-36.6,-44.3,-51.3,-36.3,-57.6C-28.3,-63.8,-14.1,-61.7,1.7,-64.3C17.5,-66.9,35,-74.2,43.2,-68.1Z"
+            transform="translate(100 100)" />
+    </svg>
+
+    <div class="nav">
+        <a  class="icon" onClick="toggle()">
+            <i class="fa fa-bars"></i>
+        </a>
+        <div id="links">
+            <a href="/profile/dashboard">Back to <br> dashboard</a>
+            <a href="/profile">Profile</a>
+            <a href="/" style="color:rgba(8, 8, 8, 0.568)">Logout</a>
+
+        </div>
+    </div>
+    <section class="everything">
+    <% for (let habit of habits){ %>
+        <div class="habitBox" id="habitBox">
+            <div class="topbar ">
+                <div class="colors"><span class="red"></span><span class="orange"></span><span
+                        class="yellow"></span><span class="green"></span> your habits</div>
+                <div class="maxbtn"><span></span></div>
+                <div class="little-x">x</div>
+            </div>
+
+            <div class="content">
+                <p id="name">
+                    <%= habit.habit %>
+                </p>
+                <p id="reward">
+                    reward: <%= habit.reward %>
+                </p>
+                <section class="delete" class="deleteButton"  data-reward="<%= habit.reward%>" data-name="<%= habit._id %>">
+                    <section class="back">
+                        <section class="button_base b06_3d_swap">
+                            <div>Delete</div>
+                            <div>You sure?</div>
+                        </section>
+                    </section>
+                </section>
+            </div>
+        </div>
+        <% } %>
+    </section>
 
 </body>
 <script src="edit-habits.js"></script>

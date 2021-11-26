@@ -83,7 +83,6 @@ function app() {
             // get all the habit checkboxes from the modal popup on the calendar
             const habitCheckboxes = document.getElementsByClassName("habit_checkbox");
             const triggerSelects = document.getElementsByClassName('triggerSelect');
-            console.log(triggerSelects)
 
             Array.from(document.querySelectorAll('.newtriggerinput')).forEach((trigger) => {
                 if (trigger.value !== "") {
@@ -108,12 +107,6 @@ function app() {
                 // adds the data for each checkbox
                 habitData.push({ habit: habitCheckbox.value, didHabit: habitCheckbox.checked, reward: habitCheckbox.dataset.reward, cost: habitCheckbox.dataset.cost, trigger: null })
             }
-
-            //in the trigger we'll pass the value of ther trigger
-            //either it will be: the drop down value or a new inputed value
-            //the the object the same way we found the status of the checkboxes
-            // if the status of that checkbox
-            //figure out what triggers them the most 
 
             const dataForServer = {
                 habits: habitData,
@@ -165,7 +158,7 @@ function app() {
 
 // dynamically generating html that is the congrats and rewards page
 function displayRewards(dataForServer) {
-    
+
     let habitList = document.querySelector('.habitList')
     let habitButtons = document.querySelector('.habitButtons')
     habitButtons.classList.add('hideThis')
@@ -371,7 +364,6 @@ function openWindow(evt) {
     let modal = document.getElementById("myModal");
     var preview = document.querySelector('.preview')
     modal.style.display = "block";
-    console.log('please work')
     evt.preventDefault();
     navigator.clipboard.writeText(window.location.origin + evt.target.getAttribute('href')).then(() => {
     }, () => {
@@ -406,7 +398,6 @@ function openIntro(evt) {
     tabSound.play()
     let intro = document.getElementById("introModal");
     intro.style.display = "block";
-    console.log('please work')
 }
 
 // When the user clicks on <span> (x), close the modal
@@ -424,28 +415,30 @@ window.onclick = function (event) {
 }
 
 function check(event) {
-    console.log('functioned accessed')
-    console.log('target-e:', event.target)
-    console.log('value', event.target.dataset.habitid)
-    console.log(event.target.selectedIndex, 'event.target.selectedIndex')
+
+    console.log(new Date(this.event_date), ':date?')
+    console.log('event.target', event.target)
     let targetId = `trigger_popup_${event.target.dataset.habitid}`
 
     if (event.target.selectedIndex == 1) {
         document.getElementById(targetId).style.display = 'block';
+        let triggerId = `trigger_input_${event.target.dataset.habitid}`
+        console.log(triggerId, 'triggerId')
+        let newTrigger = document.getElementById(triggerId).value
+        console.log(newTrigger, ':newtrigger')
+
+        fetch("triggers", {
+            method: "put",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                trigger: newTrigger,
+            })
+        })
+
     } else {
-        console.log("hiding!");
         document.getElementById(targetId).style.display = 'none';
     }
-    let triggerId = `trigger_input_${event.target.dataset.habitId}`
-    let newTrigger = document.getElementById(triggerId).value
 
-    fetch("triggers", {
-        method: "put",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            trigger: newTrigger
-        })
-    })
 }
 
 var habitSound = document.getElementById("habitSound");
@@ -455,14 +448,14 @@ tabSound.loop = false
 var calendarSound = document.getElementById("calendarSound");
 calendarSound.loop = false
 
-function playTabSound(){
+function playTabSound() {
     tabSound.play()
 }
 
-function playSubmitSound(){
+function playSubmitSound() {
     habitSound.play()
 }
-function playCalendarSound(){
+function playCalendarSound() {
     calendarSound.play()
 }
 
