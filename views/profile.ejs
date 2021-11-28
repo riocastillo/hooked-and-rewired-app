@@ -293,9 +293,9 @@
                   
                   <div style="display:none" id="trigger_<%= habit._id %>">
                     <select class="triggerSelect" data-habit="<%= habit.habit %>" data-habitid="<%= habit._id %>"
-                      onChange="check(event);">
-                      <option>oh no! want to document a trigger?</option>
-                      <option>add a new one...</option>
+                      @change="check(event);">
+                      <option value="">oh no! want to document a trigger?</option>
+                      <option value="">add a new one...</option>
 
                       <% for (let trigger of triggers.triggers){%>
                         <option value="<%= trigger %>">

@@ -2,605 +2,658 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../dashboard.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@800&family=Frijole&family=Tourney:ital,wght@1,400&family=Londrina+Solid:wght@900&family=Rock+Salt&display=swap"
-        rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <link href="https://unpkg.com/tailwindcss@1.2.0/dist/tailwind.min.css" rel="stylesheet">
-    <title>Dashboard</title>
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../dashboard.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@800&family=Frijole&family=Tourney:ital,wght@1,400&family=Londrina+Solid:wght@900&family=Rock+Salt&display=swap"
+    rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <link href="https://unpkg.com/tailwindcss@1.2.0/dist/tailwind.min.css" rel="stylesheet">
+  <title>Dashboard</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 </head>
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-    integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"
-    integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>
+  integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>
 </head>
 
 <body class="bg-gray-900 font-Inconsolata">
 
-    <nav id="header" class="bg-blue-900 fixed w-full z-10 top-0 shadow-lg">
-        <section class="homescreen h-5vh text-gray-100 ">
-            <div class="w-full container mx-auto flex flex-wrap items-center mt-0 pt-3 pb-3 md:pb-0">
+  <nav id="header" class="bg-blue-900 fixed w-full z-10 top-0 shadow-lg">
+    <section class="homescreen h-5vh text-gray-100 ">
+      <div class="w-full container mx-auto flex flex-wrap items-center mt-0 pt-3 pb-3 md:pb-0">
 
-                <div class="w-1/2 pl-2 md:pl-0 mt-5">
-                    <a class="text-gray-100 text-base xl:text-5xl no-underline hover:no-underline font-bold font-londrina"
-                        href="../profile">
-                        <i class="fas fa-moon text-white-400  pr-3"></i> Hooked & Rewired
-                    </a>
-                </div>
-                <div class="w-1/2 pr-0">
-                    <div class="flex relative inline-block float-right">
+        <div class="w-1/2 pl-2 md:pl-0 mt-5">
+          <a class="text-gray-100 text-base xl:text-5xl no-underline hover:no-underline font-bold font-londrina"
+            href="../profile">
+            <i class="fas fa-moon text-white-400  pr-3"></i> Hooked & Rewired
+          </a>
+        </div>
+        <div class="w-1/2 pr-0">
+          <div class="flex relative inline-block float-right">
 
-                        <div class="relative text-sm text-gray-100">
-                            <button id="userButton" class="flex items-center focus:outline-none mr-3">
-                                <span class="hidden md:inline-block text-blue-200 mt-5 text-4xl mr-3 font-londrina">Hi,
-                                    <%= email %>!
-                                </span>
-                                <svg class="pl-2 h-2 fill-current text-gray-100" version="1.1"
-                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129">
-                                    <g>
-                                        <path
-                                            d="m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z" />
-                                    </g>
-                                </svg>
-                            </button>
-                            <div id="userMenu"
-                                class="bg-blue-700 rounded shadow-md mt-2 absolute mt-12 top-0 right-0 min-w-full overflow-auto z-30 invisible">
-                                <ul class="list-reset">
-                                    <li><a href="../profile"
-                                            class="px-4 py-2 pt-8 block text-gray-100 hover:bg-gray-800 no-underline hover:no-underline">My
-                                            calendar</a></li>
-                                    </li>
-                                    <li>
-                                        <hr class="border-t mx-2 border-gray-400">
-                                    </li>
-                                    <li><a href="/"
-                                            class="px-4 py-2 block text-gray-100 hover:bg-gray-800 no-underline hover:no-underline">Logout</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="block lg:hidden pr-4">
-                            <button id="nav-toggle"
-                                class="flex items-center px-3 py-2 border rounded text-gray-100 border-gray-100 hover:text-gray-100 hover:border-teal-500 appearance-none focus:outline-none">
-                                <svg class="fill-current h-3 w-3" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <title>Menu</title>
-                                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-blue-900 z-20"
-                    id="nav-content">
-                    <ul class="list-reset lg:flex flex-1 items-center px-4 md:px-0">
-                        <li class="mr-6 my-2 md:my-0">
-                            <a href="#"
-                                class="block py-1 md:py-3 pl-1 align-middle text-white no-underline  border-b-2 border-white ">
-                                <i class="fas fa-home fa-fw mr-3 text-white"></i><span
-                                    class="pb-1 md:pb-0 text-xl">Home</span>
-                            </a>
-                        </li>
-                        <li class="mr-6 my-2 md:my-0">
-                            <a href="../profile"
-                                class="block py-1 md:py-3 pl-1 align-middle text-black no-underline hover:text-white border-b-2 border-black  hover:border-white">
-                                <i class="fas fa-calendar-alt fa-fw mr-3"></i><span
-                                    class="pb-1 md:pb-0 text-xl">Calendar</span>
-                            </a>
-                        </li>
-                        <li class="mr-6 my-2 md:my-0">
-                            <a href="/edit-habits"
-                                class="block py-1 md:py-3 pl-1 align-middle text-black no-underline hover:text-white border-b-2 border-black hover:border-white">
-                                <i class="fas fa-chart-area fa-fw mr-3"></i><span
-                                    class="pb-1 md:pb-0 text-xl">Edit habits</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-
-
-                </div>
-
-            </div>
-    </nav>
-    </section>
-
-    <!--Container-->
-    <div class="container w-full mx-auto pt-20 ">
-
-        <div class="w-full px-4 md:px-0 md:mt-8 mb-16 text-gray-100 leading-normal">
-
-            <!--Console Content-->
-            <br><br><br><br>
-            <div class="flex flex-wrap">
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Metric Card-->
-                    <div class=" bg-blue-600 border border-blue-600 rounded shadow-2xl p-2">
-                        <div class="flex flex-row items-center">
-                            <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-yellow-500"><i
-                                        class="fas fa-cubes fa-2x fa-fw fa-inverse"></i></div>
-                            </div>
-                            <div class="card pb-2  flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-white text-xl">Total habits</h5>
-                                <h3 class="font-bold text-3xl text-black">
-                                    <%= habits.length %>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/Metric Card-->
-                </div>
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Metric Card-->
-                    <div class="bg-blue-500 border border-blue-500 rounded shadow p-2">
-                        <div class="flex flex-row items-center">
-                            <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-green-500"><i
-                                        class="fas fa-comment-dollar fa-2x fa-fw fa-inverse"></i></div>
-                            </div>
-                            <div class="card pb-2 flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-white text-xl">Total Money Saved So Far</h5>
-                                <h3 class="font-bold text-3xl text-black">
-                                    $<%= cost.toFixed(2) %><span class="text-pink-500"><i class="fa fa-money"
-                                                aria-hidden="true"></i></span></h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/Metric Card-->
-                </div>
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Metric Card-->
-                    <div class="bg-blue-400 border border-blue-400 rounded shadow p-2">
-                        <div class="flex flex-row items-center">
-                            <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-red-500"><i
-                                        class="fas fas fa-check-double fa-2x fa-fw fa-inverse"></i></div>
-                            </div>
-                            <div class="card pb-2 flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-white text-xl">Habits Avoided</h5>
-                                <h3 class="font-bold text-3xl text-black">
-                                    <%= habitsAvoidedPercentage %>% <span class="text-yellow-400"><i
-                                                class="fas fa-caret-up"></i></span>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/Metric Card-->
-                </div>
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Metric Card-->
-                    <div class="card bg-blue-600 border border-blue-600 rounded shadow p-2">
-                        <div class="flex flex-row items-center">
-                            <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-yellow-500"><i
-                                        class="fas fa-cookie-bite fa-2x fa-fw fa-inverse"></i></div>
-                            </div>
-                            <div class="card pb-2 flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-white text-xl">Total Rewards Given</h5>
-                                <h3 class="font-bold text-3xl text-black">
-                                    <%= totalRewards %>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/Metric Card-->
-                </div>
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Metric Card-->
-                    <div class="card bg-blue-500 border border-blue-500 rounded shadow p-2">
-                        <div class="flex flex-row items-center">
-                            <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-green-500"><i
-                                        class="fas fa-bicycle fa-2x fa-fw fa-inverse"></i></div>
-                            </div>
-                            <div class="card pb-2 flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-white text-xl">How Far you've gone</h5>
-                                <h3 class="font-bold text-3xl text-black">
-                                    <%= miles.toFixed(4) < 0.01 ? feetConversion : miles.toFixed(4) + ' miles' %>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/Metric Card-->
-                </div>
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Metric Card-->
-                    <div class="bg-blue-400 border border-blue-400 rounded shadow p-2">
-                        <div class="flex flex-row items-center">
-                            <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-red-600"><i
-                                        class="fas fa-exclamation-circle fa-2x fa-fw fa-inverse"></i></div>
-                            </div>
-                            <div class="card pb-2 flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-white text-xl">Habits engaged with</h5>
-                                <h3 class="font-bold text-3xl text-black">
-                                    <%= habitsNotAvoidedPercentage %>% <span class="text-red-500"><i
-                                                class="fas fa-caret-up"></i></span>
-                                </h3>
-                            </div>
-                        </div>
-                    </div><br>
-                    <!--/Metric Card-->
-                </div>
+            <div class="relative text-sm text-gray-100">
+              <button id="userButton" class="flex items-center focus:outline-none mr-3">
+                <span class="hidden md:inline-block text-blue-200 mt-5 text-4xl mr-3 font-londrina">Hi,
+                  <%= email %>!
+                </span>
+                <svg class="pl-2 h-2 fill-current text-gray-100" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129">
+                  <g>
+                    <path
+                      d="m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z" />
+                  </g>
+                </svg>
+              </button>
+              <div id="userMenu"
+                class="bg-blue-700 rounded shadow-md mt-2 absolute mt-12 top-0 right-0 min-w-full overflow-auto z-30 invisible">
+                <ul class="list-reset">
+                  <li><a href="../profile"
+                      class="px-4 py-2 pt-8 block text-gray-100 hover:bg-gray-800 no-underline hover:no-underline">My
+                      calendar</a></li>
+                  </li>
+                  <li>
+                    <hr class="border-t mx-2 border-gray-400">
+                  </li>
+                  <li><a href="/"
+                      class="px-4 py-2 block text-gray-100 hover:bg-gray-800 no-underline hover:no-underline">Logout</a>
+                  </li>
+                </ul>
+              </div>
             </div>
 
-            <!--Divider-->
-            <br>
-            <hr class="hr border-b-10 border-blue-700 my-8 mx-4"><br><br>
-
-            <div class="flex flex-row graphs flex-wrap flex-grow mt-2" id="graphs">
-
-                <div class="w-full md:w-1/2 p-3">
-                    <!--Graph Card-->
-                    <div class="bg-blue-800 border border-blue-800 rounded shadow">
-                        <div class="border-b border-gray-100 p-3">
-                            <h5 class="font-bold uppercase text-white text-2xl font-londrina">Times you've
-                                rewarded yourself</h5>
-                        </div>
-                        <div class="p-5">
-                            <canvas id="chartjs-7" class="chartjs" width="undefined" height="undefined"></canvas>
-                            <script>
-                                 Chart.defaults.global.defaultFontColor = 'white'
-                                Chart.defaults.global.defaultFontFamily = 'Inconsolata'
-                                Chart.defaults.global.defaultFontSize = 16
-                                var totalRewards = `<%- JSON.stringify(totalRewards) %>`
-                                totalRewards = JSON.parse(totalRewards)
-
-                                var rewardData = `<%- JSON.stringify(calendar) %>`
-                                rewardData = JSON.parse(rewardData)
-
-                                let rewardNamesObject = {}
-
-                                rewardData.forEach((dataSet) => {
-                                    let eachReward = dataSet.dataForServer
-                                    let rewardSet = eachReward.rewardData
-                                    rewardSet.forEach((reward) => {
-                                        //if the object and its key exist, dont do anything, otherwise assign it the value of 0 if it doesnt exist
-                                        rewardNamesObject[reward.reward] = rewardNamesObject[reward.reward] ? rewardNamesObject[reward.reward] : 0
-                                        if (reward.gaveReward === true) {
-                                            rewardNamesObject[reward.reward] += 1
-                                        }
-                                    })
-                                })
-
-                                //keys is  a method for objects to get the keys and then put them into arrays
-                                let rewardNamesArray = Object.keys(rewardNamesObject)
-                                let rewardCountArray = Object.values(rewardNamesObject)
-
-
-                                // its figuring out the rewardCount for the day but we want it for the entire calendar
-                                // to do: figure it out
-                                new Chart(document.getElementById("chartjs-7"), {
-                                    "type": "bar",
-                                    "data": {
-                                        "labels": rewardNamesArray,
-
-                                        "datasets": [{
-                                            "label": "times rewarded",
-                                            "data": rewardCountArray,
-                                            "backgroundColor": ["rgba(255, 90, 132)", "rgba(255, 129, 64)", "rgb(255, 237, 71)", "rgba(60, 167, 255)", "rgb(4, 142, 255)", "rgba(153, 102, 255)", "rgba(201, 203, 207)"],
-                                            "borderColor": ["rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)"],
-                                            "borderWidth": 2
-                                        }]
-                                    },
-                                    "options": {
-                                        "scales": {
-                                            "yAxes": [{
-                                                "ticks": {
-                                                    "beginAtZero": true
-                                                }
-                                            }]
-                                        }
-                                    }
-                                });
-                            </script>
-                        </div>
-                    </div>
-                    <!--/Graph Card-->
-                </div>
-
-                <div class="w-full md:w-1/2 p-3">
-                    <!--Graph Card-->
-                    <div class="bg-blue-800 border border-blue-900 rounded shadow">
-                        <div class="border-b border-white p-3">
-                            <h5 class="font-bold uppercase text-white text-2xl font-londrina">Days refrained
-                                from habit</h5>
-                        </div>
-                        <div class="p-5">
-                            <canvas id="chartjs-0" class="chartjs" width="name of habit"
-                                height="days refrained from"></canvas>
-                            <script>
-
-                                var daysRefrainedFromHabit = `<%- JSON.stringify(daysRefrainedFromHabit) %>`
-                                daysRefrainedFromHabit = JSON.parse(daysRefrainedFromHabit)
-                                let habitNamesArray = []
-                                let habitCountArray = []
-                                daysRefrainedFromHabit.forEach((habit) => {
-                                    habitNamesArray.push(habit.name)
-                                    habitCountArray.push(habit.count)
-                                })
-
-                                new Chart(document.getElementById("chartjs-0"),
-                                    {
-                                        "type": "line",
-                                        "data": {
-                                            "labels": habitNamesArray,
-                                            "datasets": [{
-                                                "label": "days",
-                                                "data": habitCountArray,
-
-                                                "fill": true,
-                                                "borderColor": "rgb(75, 162, 192)",
-                                                "lineTension": 0.6,
-                                                "font-weight": "bolder",
-                                            }]
-                                        },
-                                        "options": {
-                                            "legend": {
-                                                "labels": {
-                                                    // This more specific font property overrides the global property
-                                                    "fontColor": 'white'
-                                                }
-                                            },
-                                            "scales": {
-                                                "yAxes": [{
-                                                    "ticks": {
-                                                        "beginAtZero": true
-                                                    }
-                                                }]
-                                            }
-                                        }
-                                    });
-
-                            </script>
-                        </div>
-                    </div><br>
-                    <!--/Graph Card-->
-                </div>
-
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Graph Card-->
-                    <div class="bg-blue-600 border border-white rounded shadow">
-                        <div class="border-b border-white p-3">
-                            <h5 class="font-bold uppercase text-white text-2xl font-londrina">Weekly data of habit
-                            </h5>
-                        </div>
-                        <div class="p-5">
-                            <canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
-                            <script>
-
-                                let habitCountObject = {}
-
-                                let today = new Date()
-                                console.log('today', today)
-
-                                rewardData.forEach((day) => {
-
-                                    let todaysTime = today.getTime()
-                                    let comparisonTime = new Date(day.dataForServer.date).getTime()
-                                    let difference = (todaysTime - comparisonTime) / (1000 * 60 * 60 * 24)
-
-                                    if (difference <= 6 && difference >= 0) {
-                                        day.dataForServer.habits.forEach((habit) => {
-                                            //checking to see if the habit has been definied
-                                            habitCountObject[habit.habit] = habitCountObject[habit.habit] ? habitCountObject[habit.habit] : 0
-                                            //checking to see if they did the habit that exists
-                                            habitCountObject[habit.habit] = habit.didHabit ? habitCountObject[habit.habit] + 1 : habitCountObject[habit.habit]
-
-                                        })
-                                    }
-                                })
-
-                                let weekHabitCountArray = Object.values(habitCountObject)
-                                let weekHabitCountNames = Object.keys(habitCountObject)
-
-                                // var yValues = [0, 1, 2, 3, 4, 5, 6, 7];
-                                new Chart(document.getElementById("chartjs-1"), {
-                                    "type": "horizontalBar",
-                                    "data": {
-                                        "labels": weekHabitCountNames,
-                                        "datasets": [{
-                                            "label": "days avoided",
-                                            "data": weekHabitCountArray,
-                                            // "data": yValues,
-                                            "fill": true,
-                                            "backgroundColor": ["rgba(255, 90, 132)", "rgba(255, 129, 64)", "rgb(255, 237, 71)", "rgba(60, 167, 255)", "rgb(4, 142, 255)", "rgba(153, 102, 255)", "rgba(201, 203, 207)"],
-                                            "borderColor": ["rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)"],
-
-                                            "borderWidth": 2
-                                        }]
-                                    },
-                                    "options": {
-                                        "scales": {
-                                            "yAxes": [{
-                                                "ticks": {
-                                                    "beginAtZero": true
-                                                }
-                                            }],
-                                            "xAxes": [{
-                                                "ticks": {
-                                                    "beginAtZero": true
-                                                }
-                                            }]
-                                        }
-                                    }
-                                });
-                            </script>
-                        </div>
-                    </div>
-                    <!--/Graph Card-->
-                </div>
-
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Graph Card-->
-                    <div class="bg-indigo-900 border border-white rounded shadow-4xl">
-                        <div class="border-b border-white p-3">
-                            <h5 class="font-bold uppercase text-white text-2xl font-londrina"> Frequency of
-                                avoiding
-                                habit
-                            </h5>
-                        </div>
-                        <div class="p-5"><canvas id="chartjs-4" class="chartjs" width="undefined"
-                                height="undefined"></canvas>
-                            <script>
-                                let totalCount = 0
-                                let habitCountPercentage = []
-                                habitCountArray.forEach((count) => {
-                                    totalCount += count
-                                })
-                                habitCountArray.forEach((count) => {
-                                    habitCountPercentage.push(((count / totalCount) * 100).toFixed(2))
-                                })
-
-                                new Chart(document.getElementById("chartjs-4"), {
-                                    "type": "doughnut",
-                                    "data": {
-                                        "labels": habitNamesArray,
-                                        "datasets": [{
-                                            "label": "percentage",
-                                            "render": 'percentage',
-                                            "data": habitCountPercentage,
-                                            "backgroundColor": ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"],
-                                            "borderColor": ["rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)"],
-                                            "borderWidth": 2
-                                        }]
-                                    }
-                                });
-                            </script>
-                        </div>
-                    </div>
-                    <!--/Graph Card-->
-                </div>
-
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Template Card-->
-                    <div class="bg-blue-800 border border-blue-900 rounded shadow">
-                        <div class="border-b border-white p-3">
-                            <h5 class="font-bold uppercase text-white text-2xl font-londrina">Total workouts</h5>
-                        </div>
-                        <div class="p-5">
-                            <canvas id="chartjs-10" class="chartjs" width="name of habit"
-                                height="days refrained from"></canvas>
-                            <script>
-                                var trackedEvents = `<%- JSON.stringify(trackedEvents) %>`
-                                trackedEvents = JSON.parse(trackedEvents)
-
-                                let dateObj = {}
-
-                                trackedEvents.forEach((workout) => {
-                                    let day = new Date(workout.date)
-                                    console.log('day', day)
-
-                                    let dayString = day.getFullYear() + "-" + (day.getMonth() + 1) + "-" + day.getDate()
-
-                                    console.log('daystrng', dayString)
-                                    dateObj[dayString] = dateObj[dayString] ? dateObj[dayString] + workout.miles : workout.miles
-                                })
-                                console.log('obj', dateObj)
-
-                                let dates = Object.keys(dateObj)
-                                let milesCount = Object.values(dateObj)
-                                console.log('dates:', dates)
-                                console.log('miles:', milesCount)
-
-                                new Chart(document.getElementById("chartjs-10"),
-                                    {
-                                        "type": "line",
-                                        "data": {
-                                            "labels": dates,
-                                            "datasets": [{
-                                                "label": "miles",
-                                                "data": milesCount,
-
-                                                "fill": true,
-                                                "borderColor": "rgb(75, 162, 192)",
-                                                "lineTension": 0.6,
-                                                "font-weight": "bolder",
-                                            }]
-                                        },
-                                        "options": {
-                                            "legend": {
-                                                "labels": {
-                                                    // This more specific font property overrides the global property
-                                                    "fontColor": 'white'
-                                                }
-                                            },
-                                            "scales": {
-                                                "yAxes": [{
-                                                    "ticks": {
-                                                        "beginAtZero": true
-                                                    }
-                                                }]
-                                            }
-                                        }
-                                    });
-
-                            </script>
-                        </div>
-                    </div><br>
-                    <!--/Graph Card-->
-                    <!--/Template Card-->
-                </div>
-                <!--Table Card w Triggers, add feature if you have extra time-->
-                <div class="w-full p-3">
-                    <br><br>
-                    <div class="bg-green-900 border border-white rounded shadow">
-                        <div class="border-b border-white p-3">
-                            <h5 class="font-bold uppercase text-yellow-500 text-3xl font-londrina">Your Triggers</h5>
-                        </div>
-                        <div class="p-5">
-
-                            <section class="x-out expanded">
-                                <dt class="open">YOUR TRIGGERS</dt>
-                                <dd>Trigger 1</dd>
-                                <dd>Trigger 2</dd>
-                                <dd>Trigger 3</dd>
-                                <dd>Trigger 4</dd>
-                                <dd>Trigger 5</dd>
-                            </section>
-
-                            <section class="x-out">
-                                <dt>Affirmations</dt>
-                                <dd>Affirmation 1</dd>
-                                <dd>Affirmation 2</dd>
-                                <dd>Affirmation 3</dd>
-                                <dd>Affirmation 4</dd>
-                                <dd>Affirmation 5</dd>
-                            </section>
-
-                            <section class="x-out">
-                                <dt>Resources</dt>
-                                <dd>Resources 1</dd>
-                                <dd>Resources 2</dd>
-                                <dd>Resources 3</dd>
-                                <dd>Resources 4</dd>
-                                <dd>Resources 5</dd>
-                            </section>
-
-                        </div>
-                    </div>
-                    <!--/table Card-->
-                <!-- </div> -->
-
-
+            <div class="block lg:hidden pr-4">
+              <button id="nav-toggle"
+                class="flex items-center px-3 py-2 border rounded text-gray-100 border-gray-100 hover:text-gray-100 hover:border-teal-500 appearance-none focus:outline-none">
+                <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <title>Menu</title>
+                  <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+                </svg>
+              </button>
             </div>
-
-            <!--/ Console Content-->
+          </div>
 
         </div>
+
+        <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-blue-900 z-20"
+          id="nav-content">
+          <ul class="list-reset lg:flex flex-1 items-center px-4 md:px-0">
+            <li class="mr-6 my-2 md:my-0">
+              <a href="#"
+                class="block py-1 md:py-3 pl-1 align-middle text-white no-underline  border-b-2 border-white ">
+                <i class="fas fa-home fa-fw mr-3 text-white"></i><span class="pb-1 md:pb-0 text-xl">Home</span>
+              </a>
+            </li>
+            <li class="mr-6 my-2 md:my-0">
+              <a href="../profile"
+                class="block py-1 md:py-3 pl-1 align-middle text-black no-underline hover:text-white border-b-2 border-black  hover:border-white">
+                <i class="fas fa-calendar-alt fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-xl">Calendar</span>
+              </a>
+            </li>
+            <li class="mr-6 my-2 md:my-0">
+              <a href="/edit-habits"
+                class="block py-1 md:py-3 pl-1 align-middle text-black no-underline hover:text-white border-b-2 border-black hover:border-white">
+                <i class="fas fa-chart-area fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-xl">Edit
+                  habits</span>
+              </a>
+            </li>
+
+          </ul>
+
+
+
+        </div>
+
+      </div>
+  </nav>
+  </section>
+
+  <!--Container-->
+  <div class="container w-full mx-auto pt-20 ">
+
+    <div class="w-full px-4 md:px-0 md:mt-8 mb-16 text-gray-100 leading-normal">
+
+      <!--Console Content-->
+      <br><br><br><br>
+      <div class="flex flex-wrap">
+        <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+          <!--Metric Card-->
+          <div class=" bg-blue-600 border border-blue-600 rounded shadow-2xl p-2">
+            <div class="flex flex-row items-center">
+              <div class="flex-shrink pr-4">
+                <div class="rounded p-3 bg-yellow-500"><i class="fas fa-cubes fa-2x fa-fw fa-inverse"></i></div>
+              </div>
+              <div class="card pb-2  flex-1 text-right md:text-center">
+                <h5 class="font-bold uppercase text-white text-xl">Total habits</h5>
+                <h3 class="font-bold text-3xl text-black">
+                  <%= habits.length %>
+                </h3>
+              </div>
+            </div>
+          </div>
+          <!--/Metric Card-->
+        </div>
+        <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+          <!--Metric Card-->
+          <div class="bg-blue-500 border border-blue-500 rounded shadow p-2">
+            <div class="flex flex-row items-center">
+              <div class="flex-shrink pr-4">
+                <div class="rounded p-3 bg-green-500"><i class="fas fa-comment-dollar fa-2x fa-fw fa-inverse"></i></div>
+              </div>
+              <div class="card pb-2 flex-1 text-right md:text-center">
+                <h5 class="font-bold uppercase text-white text-xl">Total Money Saved So Far</h5>
+                <h3 class="font-bold text-3xl text-black">
+                  $<%= cost.toFixed(2) %><span class="text-pink-500"><i class="fa fa-money"
+                        aria-hidden="true"></i></span></h3>
+              </div>
+            </div>
+          </div>
+          <!--/Metric Card-->
+        </div>
+        <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+          <!--Metric Card-->
+          <div class="bg-blue-400 border border-blue-400 rounded shadow p-2">
+            <div class="flex flex-row items-center">
+              <div class="flex-shrink pr-4">
+                <div class="rounded p-3 bg-red-500"><i class="fas fas fa-check-double fa-2x fa-fw fa-inverse"></i></div>
+              </div>
+              <div class="card pb-2 flex-1 text-right md:text-center">
+                <h5 class="font-bold uppercase text-white text-xl">Habits Avoided</h5>
+                <h3 class="font-bold text-3xl text-black">
+                  <%= habitsAvoidedPercentage %>% <span class="text-yellow-400"><i class="fas fa-caret-up"></i></span>
+                </h3>
+              </div>
+            </div>
+          </div>
+          <!--/Metric Card-->
+        </div>
+        <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+          <!--Metric Card-->
+          <div class="card bg-blue-600 border border-blue-600 rounded shadow p-2">
+            <div class="flex flex-row items-center">
+              <div class="flex-shrink pr-4">
+                <div class="rounded p-3 bg-yellow-500"><i class="fas fa-cookie-bite fa-2x fa-fw fa-inverse"></i></div>
+              </div>
+              <div class="card pb-2 flex-1 text-right md:text-center">
+                <h5 class="font-bold uppercase text-white text-xl">Total Rewards Given</h5>
+                <h3 class="font-bold text-3xl text-black">
+                  <%= totalRewards %>
+                </h3>
+              </div>
+            </div>
+          </div>
+          <!--/Metric Card-->
+        </div>
+        <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+          <!--Metric Card-->
+          <div class="card bg-blue-500 border border-blue-500 rounded shadow p-2">
+            <div class="flex flex-row items-center">
+              <div class="flex-shrink pr-4">
+                <div class="rounded p-3 bg-green-500"><i class="fas fa-bicycle fa-2x fa-fw fa-inverse"></i></div>
+              </div>
+              <div class="card pb-2 flex-1 text-right md:text-center">
+                <h5 class="font-bold uppercase text-white text-xl">How Far you've gone</h5>
+                <h3 class="font-bold text-3xl text-black">
+                  <%= miles.toFixed(4) < 0.01 ? feetConversion : miles.toFixed(4) + ' miles' %>
+                </h3>
+              </div>
+            </div>
+          </div>
+          <!--/Metric Card-->
+        </div>
+        <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+          <!--Metric Card-->
+          <div class="bg-blue-400 border border-blue-400 rounded shadow p-2">
+            <div class="flex flex-row items-center">
+              <div class="flex-shrink pr-4">
+                <div class="rounded p-3 bg-red-600"><i class="fas fa-exclamation-circle fa-2x fa-fw fa-inverse"></i>
+                </div>
+              </div>
+              <div class="card pb-2 flex-1 text-right md:text-center">
+                <h5 class="font-bold uppercase text-white text-xl">Habits engaged with</h5>
+                <h3 class="font-bold text-3xl text-black">
+                  <%= habitsNotAvoidedPercentage %>% <span class="text-red-500"><i class="fas fa-caret-up"></i></span>
+                </h3>
+              </div>
+            </div>
+          </div><br>
+          <!--/Metric Card-->
+        </div>
+      </div>
+
+      <!--Divider-->
+      <br>
+      <hr class="hr border-b-10 border-blue-700 my-8 mx-4"><br><br>
+
+      <div class="flex flex-row graphs flex-wrap flex-grow mt-2" id="graphs">
+
+        <div class="w-full md:w-1/2 p-3">
+          <!--Graph Card-->
+          <div class="bg-blue-800 border border-blue-800 rounded shadow">
+            <div class="border-b border-gray-100 p-3">
+              <h5 class="font-bold uppercase text-white text-2xl font-londrina">Times you've
+                rewarded yourself</h5>
+            </div>
+            <div class="p-5">
+              <canvas id="chartjs-7" class="chartjs" width="undefined" height="undefined"></canvas>
+              <script>
+                Chart.defaults.global.defaultFontColor = 'white'
+                Chart.defaults.global.defaultFontFamily = 'Inconsolata'
+                Chart.defaults.global.defaultFontSize = 16
+                var totalRewards = `<%- JSON.stringify(totalRewards) %>`
+                totalRewards = JSON.parse(totalRewards)
+
+                var rewardData = `<%- JSON.stringify(calendar) %>`
+                rewardData = JSON.parse(rewardData)
+
+                let rewardNamesObject = {}
+
+                rewardData.forEach((dataSet) => {
+                  let eachReward = dataSet.dataForServer
+                  let rewardSet = eachReward.rewardData
+                  rewardSet.forEach((reward) => {
+                    //if the object and its key exist, dont do anything, otherwise assign it the value of 0 if it doesnt exist
+                    rewardNamesObject[reward.reward] = rewardNamesObject[reward.reward] ? rewardNamesObject[reward.reward] : 0
+                    if (reward.gaveReward === true) {
+                      rewardNamesObject[reward.reward] += 1
+                    }
+                  })
+                })
+
+                //keys is  a method for objects to get the keys and then put them into arrays
+                let rewardNamesArray = Object.keys(rewardNamesObject)
+                let rewardCountArray = Object.values(rewardNamesObject)
+
+
+                // its figuring out the rewardCount for the day but we want it for the entire calendar
+                // to do: figure it out
+                new Chart(document.getElementById("chartjs-7"), {
+                  "type": "bar",
+                  "data": {
+                    "labels": rewardNamesArray,
+
+                    "datasets": [{
+                      "label": "times rewarded",
+                      "data": rewardCountArray,
+                      "backgroundColor": ["rgba(255, 90, 132)", "rgba(255, 129, 64)", "rgb(255, 237, 71)", "rgba(60, 167, 255)", "rgb(4, 142, 255)", "rgba(153, 102, 255)", "rgba(201, 203, 207)"],
+                      "borderColor": ["rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)"],
+                      "borderWidth": 2
+                    }]
+                  },
+                  "options": {
+                    "scales": {
+                      "yAxes": [{
+                        "ticks": {
+                          "beginAtZero": true
+                        }
+                      }]
+                    }
+                  }
+                });
+              </script>
+            </div>
+          </div>
+          <!--/Graph Card-->
+        </div>
+
+        <div class="w-full md:w-1/2 p-3">
+          <!--Graph Card-->
+          <div class="bg-blue-800 border border-blue-900 rounded shadow">
+            <div class="border-b border-white p-3">
+              <h5 class="font-bold uppercase text-white text-2xl font-londrina">Days refrained
+                from habit</h5>
+            </div>
+            <div class="p-5">
+              <canvas id="chartjs-0" class="chartjs" width="name of habit" height="days refrained from"></canvas>
+              <script>
+
+                var daysRefrainedFromHabit = `<%- JSON.stringify(daysRefrainedFromHabit) %>`
+                daysRefrainedFromHabit = JSON.parse(daysRefrainedFromHabit)
+                let habitNamesArray = []
+                let habitCountArray = []
+                daysRefrainedFromHabit.forEach((habit) => {
+                  habitNamesArray.push(habit.name)
+                  habitCountArray.push(habit.count)
+                })
+
+                new Chart(document.getElementById("chartjs-0"),
+                  {
+                    "type": "line",
+                    "data": {
+                      "labels": habitNamesArray,
+                      "datasets": [{
+                        "label": "days",
+                        "data": habitCountArray,
+
+                        "fill": true,
+                        "borderColor": "rgb(75, 162, 192)",
+                        "lineTension": 0.6,
+                        "font-weight": "bolder",
+                      }]
+                    },
+                    "options": {
+                      "legend": {
+                        "labels": {
+                          // This more specific font property overrides the global property
+                          "fontColor": 'white'
+                        }
+                      },
+                      "scales": {
+                        "yAxes": [{
+                          "ticks": {
+                            "beginAtZero": true
+                          }
+                        }]
+                      }
+                    }
+                  });
+
+              </script>
+            </div>
+          </div><br>
+          <!--/Graph Card-->
+        </div>
+
+        <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+          <!--Graph Card-->
+          <div class="bg-blue-600 border border-white rounded shadow">
+            <div class="border-b border-white p-3">
+              <h5 class="font-bold uppercase text-white text-2xl font-londrina">Weekly data of habit
+              </h5>
+            </div>
+            <div class="p-5">
+              <canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
+              <script>
+
+                let habitCountObject = {}
+
+                let today = new Date()
+
+                
+                rewardData.forEach((day) => {
+
+                  let todaysTime = today.getTime()
+                  let comparisonTime = new Date(day.dataForServer.date).getTime()
+                  let difference = (todaysTime - comparisonTime) / (1000 * 60 * 60 * 24)
+
+                  if (difference <= 6 && difference >= 0) {
+                    day.dataForServer.habits.forEach((habit) => {
+                      //checking to see if the habit has been definied
+                      habitCountObject[habit.habit] = habitCountObject[habit.habit] ? habitCountObject[habit.habit] : 0
+                      //checking to see if they did the habit that exists
+                      habitCountObject[habit.habit] = habit.didHabit ? habitCountObject[habit.habit] + 1 : habitCountObject[habit.habit]
+
+                    })
+                  }
+                })
+
+                let weekHabitCountArray = Object.values(habitCountObject)
+                let weekHabitCountNames = Object.keys(habitCountObject)
+
+                // var yValues = [0, 1, 2, 3, 4, 5, 6, 7];
+                new Chart(document.getElementById("chartjs-1"), {
+                  "type": "horizontalBar",
+                  "data": {
+                    "labels": weekHabitCountNames,
+                    "datasets": [{
+                      "label": "days avoided",
+                      "data": weekHabitCountArray,
+                      // "data": yValues,
+                      "fill": true,
+                      "backgroundColor": ["rgba(255, 90, 132)", "rgba(255, 129, 64)", "rgb(255, 237, 71)", "rgba(60, 167, 255)", "rgb(4, 142, 255)", "rgba(153, 102, 255)", "rgba(201, 203, 207)"],
+                      "borderColor": ["rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)"],
+
+                      "borderWidth": 2
+                    }]
+                  },
+                  "options": {
+                    "scales": {
+                      "yAxes": [{
+                        "ticks": {
+                          "beginAtZero": true
+                        }
+                      }],
+                      "xAxes": [{
+                        "ticks": {
+                          "beginAtZero": true
+                        }
+                      }]
+                    }
+                  }
+                });
+              </script>
+            </div>
+          </div>
+          <!--/Graph Card-->
+        </div>
+
+        <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+          <!--Graph Card-->
+          <div class="bg-indigo-900 border border-white rounded shadow-4xl">
+            <div class="border-b border-white p-3">
+              <h5 class="font-bold uppercase text-white text-2xl font-londrina"> Frequency of
+                avoiding
+                habit
+              </h5>
+            </div>
+            <div class="p-5"><canvas id="chartjs-4" class="chartjs" width="undefined" height="undefined"></canvas>
+              <script>
+                let totalCount = 0
+                let habitCountPercentage = []
+                habitCountArray.forEach((count) => {
+                  totalCount += count
+                })
+                habitCountArray.forEach((count) => {
+                  habitCountPercentage.push(((count / totalCount) * 100).toFixed(2))
+                })
+
+                new Chart(document.getElementById("chartjs-4"), {
+                  "type": "doughnut",
+                  "data": {
+                    "labels": habitNamesArray,
+                    "datasets": [{
+                      "label": "percentage",
+                      "render": 'percentage',
+                      "data": habitCountPercentage,
+                      "backgroundColor": ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"],
+                      "borderColor": ["rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)"],
+                      "borderWidth": 2
+                    }]
+                  }
+                });
+              </script>
+            </div>
+          </div>
+          <!--/Graph Card-->
+        </div>
+
+        <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+          <!--Template Card-->
+          <div class="bg-blue-800 border border-blue-900 rounded shadow">
+            <div class="border-b border-white p-3">
+              <h5 class="font-bold uppercase text-white text-2xl font-londrina">Total workouts</h5>
+            </div>
+            <div class="p-5">
+              <canvas id="chartjs-10" class="chartjs" width="name of habit" height="days refrained from"></canvas>
+              <script>
+                var trackedEvents = `<%- JSON.stringify(trackedEvents) %>`
+                trackedEvents = JSON.parse(trackedEvents)
+
+                let dateObj = {}
+
+                trackedEvents.forEach((workout) => {
+                  let day = new Date(workout.date)
+
+                  let dayString = day.getFullYear() + "-" + (day.getMonth() + 1) + "-" + day.getDate()
+
+                  dateObj[dayString] = dateObj[dayString] ? dateObj[dayString] + workout.miles : workout.miles
+                })
+
+                let dates = Object.keys(dateObj)
+                let milesCount = Object.values(dateObj)
+
+                new Chart(document.getElementById("chartjs-10"),
+                  {
+                    "type": "line",
+                    "data": {
+                      "labels": dates,
+                      "datasets": [{
+                        "label": "miles",
+                        "data": milesCount,
+
+                        "fill": true,
+                        "borderColor": "rgb(75, 162, 192)",
+                        "lineTension": 0.6,
+                        "font-weight": "bolder",
+                      }]
+                    },
+                    "options": {
+                      "legend": {
+                        "labels": {
+                          // This more specific font property overrides the global property
+                          "fontColor": 'white'
+                        }
+                      },
+                      "scales": {
+                        "yAxes": [{
+                          "ticks": {
+                            "beginAtZero": true
+                          }
+                        }]
+                      }
+                    }
+                  });
+
+              </script>
+            </div>
+          </div><br>
+          <!--/Graph Card-->
+          <!--/Template Card-->
+        </div>
+        <!--Table Card w Triggers, add feature if you have extra time-->
+        <div class="w-full p-3">
+          <br><br>
+          <div class="bg-green-900 border border-white rounded shadow">
+            <div class="border-b border-white p-3">
+              <h5 class="font-bold uppercase text-yellow-500 text-3xl font-londrina">Your Triggers</h5>
+            </div>
+            <div class="p-5">
+<!-- 
+              <section class="x-out expanded">
+                <dt class="open">YOUR TRIGGERS</dt>
+                <dd>Trigger 1</dd>
+                <dd>Trigger 2</dd>
+                <dd>Trigger 3</dd>
+                <dd>Trigger 4</dd>
+                <dd>Trigger 5</dd>
+              </section> -->
+
+              <div class="w-full md:w-1/2 p-3">
+                <!--Graph Card-->
+                <div class="bg-blue-800 border border-blue-900 rounded shadow">
+                  <div class="border-b border-white p-3">
+                    <h5 class="font-bold uppercase text-white text-2xl font-londrina">Days refrained
+                      from habit</h5>
+                  </div>
+                  <div class="p-5">
+                    <canvas id="chartjs-20" class="chartjs" width="name of habit" height="days refrained from"></canvas>
+                    <script>
+
+                      let calendar = `<%- JSON.stringify(calendar) %>`
+                      calendar = JSON.parse(calendar)
+                      const triggerCounts = {}
+                      calendar.forEach((day) => {
+                        day.dataForServer.habits.forEach((habit) =>{
+                          trigger = habit.trigger
+                          if(trigger){ //truthey
+                            //you use dot notation to access properties but we want to access the name of an actual trigger, not the word trigger.the square notation takes the value of that variable and tries to find that property inside that object. we use dot notation when hardcoding 
+                            let triggerCount = triggerCounts[trigger]
+                            if(!triggerCount){
+                              triggerCounts[trigger] = 1
+                            }
+                            else{
+                              //adds one to that property value
+                              triggerCounts[trigger] ++
+                            }
+                          }
+                        })
+                      })
+                      const triggerKeys = Object.keys(triggerCounts)
+                      //going to change the array of triggerkeys to be an array of trigger objects
+                      //ex of trigger keys => ["saw my ex", "migraine"]
+                      //ex of trigger array => [{trigger:"saw my ex", count: 4}, {trigger: "migraine", count:3}]
+                      //then sorting by the count property 
+
+                      const triggerArray = triggerKeys.map(k => ({trigger:k, count:triggerCounts[k]})).sort((a,b)=> a.count - b.count)
+                      console.log(triggerArray, 'triggerarray')
+
+                      console.log(triggerCounts, 'trigger counts')
+                      
+                      let triggerCountArray = triggerArray.map(t => t.count)
+                      console.log('count array', triggerCountArray)
+                      let triggerNameArray = triggerArray.map(t => t.trigger)
+                      console.log('name array', triggerNameArray)
+
+                      //track the days when you have a trigger but no bad habits => so we can see which triggers are assosciated with doing the bad habits
+                      //could show and document growth
+
+                      new Chart(document.getElementById("chartjs-20"),
+                        {
+                          "type": "bar",
+                          "data": {
+                            "labels": triggerNameArray,
+                            "datasets": [{
+                              "label": "days",
+                              "data": triggerCountArray,
+
+                              "fill": true,
+                              "borderColor": "rgb(75, 162, 192)",
+                              "lineTension": 0.6,
+                              "font-weight": "bolder",
+                            }]
+                          },
+                          "options": {
+                            "legend": {
+                              "labels": {
+                                // This more specific font property overrides the global property
+                                "fontColor": 'white'
+                              }
+                            },
+                            "scales": {
+                              "yAxes": [{
+                                "ticks": {
+                                  "beginAtZero": true
+                                }
+                              }]
+                            }
+                          }
+                        });
+
+                    </script>
+                  </div>
+                </div><br>
+                <!--/Graph Card-->
+              </div>
+
+
+
+
+            </div>
+          </div>
+          <!--/table Card-->
+          <!-- </div> -->
+
+
+        </div>
+
+        <!--/ Console Content-->
+
+      </div>
 
 
     </div>
@@ -608,79 +661,79 @@
 
     <script>
 
-        var $dts = $('dt');
-        $dts.on('click', function () {
-            $(this).toggleClass('open');
-            $(this).parent('section').toggleClass('expanded');
-        });
-        /*Toggle dropdown list*/
-        /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
+      var $dts = $('dt');
+      $dts.on('click', function () {
+        $(this).toggleClass('open');
+        $(this).parent('section').toggleClass('expanded');
+      });
+      /*Toggle dropdown list*/
+      /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
 
-        var userMenuDiv = document.getElementById("userMenu");
-        var userMenu = document.getElementById("userButton");
+      var userMenuDiv = document.getElementById("userMenu");
+      var userMenu = document.getElementById("userButton");
 
-        var navMenuDiv = document.getElementById("nav-content");
-        var navMenu = document.getElementById("nav-toggle");
+      var navMenuDiv = document.getElementById("nav-content");
+      var navMenu = document.getElementById("nav-toggle");
 
-        document.onclick = check;
+      document.onclick = check;
 
-        function check(e) {
-            var target = (e && e.target) || (event && event.srcElement);
+      function check(e) {
+        var target = (e && e.target) || (event && event.srcElement);
 
-            //User Menu
-            if (!checkParent(target, userMenuDiv)) {
-                // click NOT on the menu
-                if (checkParent(target, userMenu)) {
-                    // click on the link
-                    if (userMenuDiv.classList.contains("invisible")) {
-                        userMenuDiv.classList.remove("invisible");
-                    } else { userMenuDiv.classList.add("invisible"); }
-                } else {
-                    // click both outside link and outside menu, hide menu
-                    userMenuDiv.classList.add("invisible");
-                }
-            }
-
-            //Nav Menu
-            if (!checkParent(target, navMenuDiv)) {
-                // click NOT on the menu
-                if (checkParent(target, navMenu)) {
-                    // click on the link
-                    if (navMenuDiv.classList.contains("hidden")) {
-                        navMenuDiv.classList.remove("hidden");
-                    } else { navMenuDiv.classList.add("hidden"); }
-                } else {
-                    // click both outside link and outside menu, hide menu
-                    navMenuDiv.classList.add("hidden");
-                }
-            }
-
+        //User Menu
+        if (!checkParent(target, userMenuDiv)) {
+          // click NOT on the menu
+          if (checkParent(target, userMenu)) {
+            // click on the link
+            if (userMenuDiv.classList.contains("invisible")) {
+              userMenuDiv.classList.remove("invisible");
+            } else { userMenuDiv.classList.add("invisible"); }
+          } else {
+            // click both outside link and outside menu, hide menu
+            userMenuDiv.classList.add("invisible");
+          }
         }
 
-        function checkParent(t, elm) {
-            while (t.parentNode) {
-                if (t == elm) { return true; }
-                t = t.parentNode;
-            }
-            return false;
+        //Nav Menu
+        if (!checkParent(target, navMenuDiv)) {
+          // click NOT on the menu
+          if (checkParent(target, navMenu)) {
+            // click on the link
+            if (navMenuDiv.classList.contains("hidden")) {
+              navMenuDiv.classList.remove("hidden");
+            } else { navMenuDiv.classList.add("hidden"); }
+          } else {
+            // click both outside link and outside menu, hide menu
+            navMenuDiv.classList.add("hidden");
+          }
         }
+
+      }
+
+      function checkParent(t, elm) {
+        while (t.parentNode) {
+          if (t == elm) { return true; }
+          t = t.parentNode;
+        }
+        return false;
+      }
 
     </script>
 
     <script>
-        for (var i = 0; i < 100; i++) {
-            var star =
-                '<div class="star m-0" style="animation: twinkle ' +
-                (Math.random() * 5 + 5) +
-                's linear ' +
-                (Math.random() * 1 + 1) +
-                's infinite; top: ' +
-                Math.random() * $(window).height() +
-                'px; left: ' +
-                Math.random() * $(window).width() +
-                'px;"></div>';
-            $('.homescreen').append(star);
-        }
+      for (var i = 0; i < 100; i++) {
+        var star =
+          '<div class="star m-0" style="animation: twinkle ' +
+          (Math.random() * 5 + 5) +
+          's linear ' +
+          (Math.random() * 1 + 1) +
+          's infinite; top: ' +
+          Math.random() * $(window).height() +
+          'px; left: ' +
+          Math.random() * $(window).width() +
+          'px;"></div>';
+        $('.homescreen').append(star);
+      }
 
     </script>
     <script src="dashboard.js"></script>

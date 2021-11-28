@@ -102,10 +102,12 @@ function app() {
 
             // loop through all the checkboxes
             for (let i = 0; i < habitCheckboxes.length; i++) {
+                console.log('triggerSelectsVal', triggerSelects[i].value)
+                const triggerSelect = triggerSelects[i]
                 // below is a variable for the current checkbox
                 const habitCheckbox = habitCheckboxes[i];
                 // adds the data for each checkbox
-                habitData.push({ habit: habitCheckbox.value, didHabit: habitCheckbox.checked, reward: habitCheckbox.dataset.reward, cost: habitCheckbox.dataset.cost, trigger: null })
+                habitData.push({ habit: habitCheckbox.value, didHabit: habitCheckbox.checked, reward: habitCheckbox.dataset.reward, cost: habitCheckbox.dataset.cost, trigger: triggerSelect.value })
             }
 
             const dataForServer = {
@@ -416,7 +418,6 @@ window.onclick = function (event) {
 
 function check(event) {
 
-    console.log(new Date(this.event_date), ':date?')
     console.log('event.target', event.target)
     let targetId = `trigger_popup_${event.target.dataset.habitid}`
 
