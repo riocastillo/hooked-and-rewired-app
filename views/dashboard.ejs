@@ -669,7 +669,6 @@
                     let triggersForMercury = habit.trigger
 
                     if (triggersForMercury) {
-                      //setting properties of the object
                       if (mercuryObject[triggersForMercury]) {
                         if (inRetrogradeStatus === true) {
                           mercuryObject[triggersForMercury].t++
@@ -690,8 +689,6 @@
                   })
 
                 })
-                console.log(mercuryObject, 'mercury object')
-                //getting all of the names of their triggers and putting it into an array
                 let triggerKeysRetrograde = Object.keys(mercuryObject)
                 let dataLabels = []
                 let dataValues = []
