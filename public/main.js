@@ -310,7 +310,7 @@ function setBackground(dataForServer) {
             finalShadeNum -= scale
         }
     })
-    streakDate[0].style.background = `rgb(0,0, 255, 0.${Math.floor(finalShadeNum)})`
+    streakDate[0].style.background = `rgb(0,0, 250, 0.${Math.floor(finalShadeNum)})`
 
     let streakData = dataForServer.date
 

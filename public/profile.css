@@ -178,3 +178,11 @@ ol, ul.rewardList {
   .popup-div{
     display:none;
   }
+
+  .flex-grow .welcomeTo{
+    padding-right:0;
+  }
+
+  .tick{
+    margin-right:0;
+  }
