@@ -361,7 +361,7 @@
 
         <div class="w-full md:w-1/2 xl:w-1/3 p-3">
           <!--Graph Card-->
-          <div class="bg-blue-600 border border-white rounded shadow">
+          <div class="bg-blue-600 rounded shadow">
             <div class="border-b border-white p-3">
               <h5 class="font-bold uppercase text-white text-2xl font-londrina">Weekly data of habit
               </h5>
@@ -374,7 +374,7 @@
 
                 let today = new Date()
 
-                
+
                 rewardData.forEach((day) => {
 
                   let todaysTime = today.getTime()
@@ -412,6 +412,12 @@
                     }]
                   },
                   "options": {
+                    "legend": {
+                      "labels": {
+                        // This more specific font property overrides the global property
+                        "fontColor": 'white'
+                      }
+                    },
                     "scales": {
                       "yAxes": [{
                         "ticks": {
@@ -434,7 +440,7 @@
 
         <div class="w-full md:w-1/2 xl:w-1/3 p-3">
           <!--Graph Card-->
-          <div class="bg-indigo-900 border border-white rounded shadow-4xl">
+          <div class="bg-indigo-900 rounded shadow-4xl">
             <div class="border-b border-white p-3">
               <h5 class="font-bold uppercase text-white text-2xl font-londrina"> Frequency of
                 avoiding
@@ -535,208 +541,309 @@
           <!--/Graph Card-->
           <!--/Template Card-->
         </div>
-        <!--Table Card w Triggers, add feature if you have extra time-->
-        <div class="w-full p-3">
-          <br><br>
-          <div class="bg-green-900 border border-white rounded shadow">
+
+
+        <div class="w-full md:w-1/2 xl:w-1/2 p-3">
+          <!--Graph Card-->
+          <div class="bg-green-900  rounded shadow">
             <div class="border-b border-white p-3">
-              <h5 class="font-bold uppercase text-yellow-500 text-3xl font-londrina">Your Triggers</h5>
+              <h5 class="font-bold uppercase text-white text-2xl font-londrina">Overview of triggers
+              </h5>
             </div>
             <div class="p-5">
-<!-- 
-              <section class="x-out expanded">
-                <dt class="open">YOUR TRIGGERS</dt>
-                <dd>Trigger 1</dd>
-                <dd>Trigger 2</dd>
-                <dd>Trigger 3</dd>
-                <dd>Trigger 4</dd>
-                <dd>Trigger 5</dd>
-              </section> -->
+              <canvas id="chartjs-11" class="chartjs" width="undefined" height="undefined"></canvas>
+              <script>
+                let calendar = `<%- JSON.stringify(calendar) %>`
+                calendar = JSON.parse(calendar)
+                const triggerCounts = {}
+                calendar.forEach((day) => {
+                  day.dataForServer.habits.forEach((habit) => {
+                    trigger = habit.trigger
+                    if (trigger) { //truthey
+                      //you use dot notation to access properties but we want to access the name of an actual trigger, not the word trigger.the square notation takes the value of that variable and tries to find that property inside that object. we use dot notation when hardcoding 
+                      let triggerCount = triggerCounts[trigger]
+                      if (!triggerCount) {
+                        triggerCounts[trigger] = 1
+                      }
+                      else {
+                        //adds one to that property value
+                        triggerCounts[trigger]++
+                      }
+                    }
+                  })
+                })
+                const triggerKeys = Object.keys(triggerCounts)
+                //going to change the array of triggerkeys to be an array of trigger objects
+                //ex of trigger keys => ["saw my ex", "migraine"]
+                //ex of trigger array => [{trigger:"saw my ex", count: 4}, {trigger: "migraine", count:3}]
+                //then sorting by the count property 
 
-              <div class="w-full md:w-1/2 p-3">
-                <!--Graph Card-->
-                <div class="bg-blue-800 border border-blue-900 rounded shadow">
-                  <div class="border-b border-white p-3">
-                    <h5 class="font-bold uppercase text-white text-2xl font-londrina">Days refrained
-                      from habit</h5>
-                  </div>
-                  <div class="p-5">
-                    <canvas id="chartjs-20" class="chartjs" width="name of habit" height="days refrained from"></canvas>
-                    <script>
+                const triggerArray = triggerKeys.map(k => ({ trigger: k, count: triggerCounts[k] })).sort((a, b) => a.count - b.count)
 
-                      let calendar = `<%- JSON.stringify(calendar) %>`
-                      calendar = JSON.parse(calendar)
-                      const triggerCounts = {}
-                      calendar.forEach((day) => {
-                        day.dataForServer.habits.forEach((habit) =>{
-                          trigger = habit.trigger
-                          if(trigger){ //truthey
-                            //you use dot notation to access properties but we want to access the name of an actual trigger, not the word trigger.the square notation takes the value of that variable and tries to find that property inside that object. we use dot notation when hardcoding 
-                            let triggerCount = triggerCounts[trigger]
-                            if(!triggerCount){
-                              triggerCounts[trigger] = 1
-                            }
-                            else{
-                              //adds one to that property value
-                              triggerCounts[trigger] ++
-                            }
+
+                let triggerCountArray = triggerArray.map(t => t.count)
+                console.log('count array', triggerCountArray)
+                let triggerNameArray = triggerArray.map(t => t.trigger)
+                console.log('name array', triggerNameArray)
+
+                //track the days when you have a trigger but no bad habits => so we can see which triggers are assosciated with doing the bad habits
+                //could show and document growth
+
+                new Chart(document.getElementById("chartjs-11"),
+                  {
+                    "type": "bar",
+                    "data": {
+                      "labels": triggerNameArray,
+                      "datasets": [{
+                        "label": "trigger count",
+                        "data": triggerCountArray,
+                        "backgroundColor": ["rgba(255, 90, 132)", "rgba(255, 129, 64)", "rgb(255, 237, 71)", "rgba(60, 167, 255)", "rgb(4, 142, 255)", "rgba(153, 102, 255)", "rgba(201, 203, 207)"],
+                        "borderColor": "rgb(0,0,0)",
+                        "borderWidth": 2,
+                        "font-weight": "bolder",
+                      }]
+                    },
+                    "options": {
+                      "legend": {
+                        "labels": {
+                          // This more specific font property overrides the global property
+                          "fontColor": 'white'
+                        }
+                      },
+                      "scales": {
+                        "yAxes": [{
+                          "ticks": {
+                            "beginAtZero": true
                           }
-                        })
-                      })
-                      const triggerKeys = Object.keys(triggerCounts)
-                      //going to change the array of triggerkeys to be an array of trigger objects
-                      //ex of trigger keys => ["saw my ex", "migraine"]
-                      //ex of trigger array => [{trigger:"saw my ex", count: 4}, {trigger: "migraine", count:3}]
-                      //then sorting by the count property 
-
-                      const triggerArray = triggerKeys.map(k => ({trigger:k, count:triggerCounts[k]})).sort((a,b)=> a.count - b.count)
-                      console.log(triggerArray, 'triggerarray')
-
-                      console.log(triggerCounts, 'trigger counts')
-                      
-                      let triggerCountArray = triggerArray.map(t => t.count)
-                      console.log('count array', triggerCountArray)
-                      let triggerNameArray = triggerArray.map(t => t.trigger)
-                      console.log('name array', triggerNameArray)
-
-                      //track the days when you have a trigger but no bad habits => so we can see which triggers are assosciated with doing the bad habits
-                      //could show and document growth
-
-                      new Chart(document.getElementById("chartjs-20"),
-                        {
-                          "type": "bar",
-                          "data": {
-                            "labels": triggerNameArray,
-                            "datasets": [{
-                              "label": "days",
-                              "data": triggerCountArray,
-
-                              "fill": true,
-                              "borderColor": "rgb(75, 162, 192)",
-                              "lineTension": 0.6,
-                              "font-weight": "bolder",
-                            }]
-                          },
-                          "options": {
-                            "legend": {
-                              "labels": {
-                                // This more specific font property overrides the global property
-                                "fontColor": 'white'
-                              }
-                            },
-                            "scales": {
-                              "yAxes": [{
-                                "ticks": {
-                                  "beginAtZero": true
-                                }
-                              }]
-                            }
+                        }],
+                        "xAxes": [{
+                          "ticks": {
+                            "beginAtZero": true
                           }
-                        });
+                        }]
+                      }
+                    }
+                  });
 
-                    </script>
-                  </div>
-                </div><br>
-                <!--/Graph Card-->
-              </div>
-
-
-
-
+              </script>
             </div>
           </div>
-          <!--/table Card-->
-          <!-- </div> -->
-
-
+          <!--/Graph Card-->
         </div>
 
-        <!--/ Console Content-->
+        <!-- The mercury Modal -->
+        <div id="mercuryModal" class="modal">
+          <!-- Modal content -->
+          <div class="mercury-content">
+            <span class="close">&times;</span><br>
+            <h2 class="what-is-it">What even is a mercury retrograde?</h2><br>
+            <p class="explanation">
+              This is a period when the planet of Mercury is appearing to go backwards in its orbit. This retrograde
+              happens only three times a year, and because Mercury is said to govern the thinking, the learning, the
+              reasoning and communication of our everyday lives, when Mercury is in retrograde, it means that its power
+              to positively influence these domains is stifled. While many view this as potential for chaos, many also
+              few it as an invitation to explore our inner-tricks and chaos - especially as it relates to what triggers
+              us during this time.</p><br>
+
+          </div>
+        </div>
+        <!-- End of Intro Modal -->
+        <div class="w-full md:w-1/2 xl:w-1/2 p-3">
+          <!--Template Card-->
+          <div class="bg-green-700 border border-green-900 rounded shadow">
+            <div class="border-b border-white p-3">
+              <h5 class="font-bold uppercase text-white text-2xl font-londrina">Triggered on a mercury retrograde? <i
+                  class="question fa fa-question-circle" aria-hidden="true" onclick="openInfo(event)"></i></h5>
+            </div>
+            <div class="p-5">
+              <canvas id="chartjs-13" class="chartjs" width="name of habit" height="days refrained from"></canvas>
+              <script>
+
+                let mercuryObject = {}
+
+                calendar.forEach((day) => {
+                  let dates = day.dataForServer.date
+                  let habitsForMercury = day.dataForServer.habits
+                  let inRetrogradeStatus = day.dataForServer.inRetrograde
+                  habitsForMercury.forEach((habit) => {
+                    let triggersForMercury = habit.trigger
+
+                    if (triggersForMercury) {
+                      //setting properties of the object
+                      if (mercuryObject[triggersForMercury]) {
+                        if (inRetrogradeStatus === true) {
+                          mercuryObject[triggersForMercury].t++
+                        }
+                        else {
+                          mercuryObject[triggersForMercury].f++
+                        }
+                      }
+                      else {
+                        if (inRetrogradeStatus === true) {
+                          mercuryObject[triggersForMercury] = { t: 1, f: 0 }
+                        }
+                        else {
+                          mercuryObject[triggersForMercury] = { f: 1, t: 0 }
+                        }
+                      }
+                    }
+                  })
+
+                })
+                console.log(mercuryObject, 'mercury object')
+                //getting all of the names of their triggers and putting it into an array
+                let triggerKeysRetrograde = Object.keys(mercuryObject)
+                let dataLabels = []
+                let dataValues = []
+                triggerKeysRetrograde.forEach((trigger) =>{
+                  let countObject = mercuryObject[trigger]
+                  dataValues.push(countObject.t)
+                  dataLabels.push(trigger + ' in retrograde')
+                  dataValues.push(countObject.f)
+                  dataLabels.push(trigger + ' out of retrograde')
+                })
+
+
+                new Chart(document.getElementById("chartjs-13"), {
+                  "type": "pie",
+                  "data": {
+                    "labels": dataLabels,
+                    "datasets": [{
+                      "label": "percentage",
+                      "render": 'percentage',
+                      "data": dataValues,
+                      "backgroundColor": ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 99, 132)", "rgb(54, 162, 235)" ],
+                      "borderWidth": 2
+                    }]
+                  }
+                });
+              </script>
+              <script>
+
+                // Get the button that opens the modal
+                let questionButton = document.querySelector('.question')
+                // Get the <span> element that closes the modal
+                let closeModal = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on the button, open the modal
+                function openInfo(evt) {
+                  let intro = document.getElementById("mercuryModal");
+                  intro.style.display = "block";
+                }
+
+                // When the user clicks on <span> (x), close the modal
+                closeModal.onclick = function () {
+                  let intro = document.getElementById("mercuryModal");
+                  intro.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function (event) {
+                  let intro = document.getElementById("mercuryModal");
+                  if (event.target == intro) {
+                    intro.style.display = "none";
+                  }
+                }
+              </script>
+
+            </div>
+          </div><br>
+          <!--/Graph Card-->
+          <!--/Template Card-->
+        </div>
 
       </div>
-
-
     </div>
+    <!--/table Card-->
+    <!-- </div> -->
 
 
-    <script>
+  </div>
 
-      var $dts = $('dt');
-      $dts.on('click', function () {
-        $(this).toggleClass('open');
-        $(this).parent('section').toggleClass('expanded');
-      });
-      /*Toggle dropdown list*/
-      /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
+  <!--/ Console Content-->
 
-      var userMenuDiv = document.getElementById("userMenu");
-      var userMenu = document.getElementById("userButton");
+  </div>
 
-      var navMenuDiv = document.getElementById("nav-content");
-      var navMenu = document.getElementById("nav-toggle");
 
-      document.onclick = check;
+  </div>
 
-      function check(e) {
-        var target = (e && e.target) || (event && event.srcElement);
 
-        //User Menu
-        if (!checkParent(target, userMenuDiv)) {
-          // click NOT on the menu
-          if (checkParent(target, userMenu)) {
-            // click on the link
-            if (userMenuDiv.classList.contains("invisible")) {
-              userMenuDiv.classList.remove("invisible");
-            } else { userMenuDiv.classList.add("invisible"); }
-          } else {
-            // click both outside link and outside menu, hide menu
-            userMenuDiv.classList.add("invisible");
-          }
+  <script>
+
+    var $dts = $('dt');
+    $dts.on('click', function () {
+      $(this).toggleClass('open');
+      $(this).parent('section').toggleClass('expanded');
+    });
+
+    var userMenuDiv = document.getElementById("userMenu");
+    var userMenu = document.getElementById("userButton");
+
+    var navMenuDiv = document.getElementById("nav-content");
+    var navMenu = document.getElementById("nav-toggle");
+
+    document.onclick = check;
+
+    function check(e) {
+      var target = (e && e.target) || (event && event.srcElement);
+
+      //User Menu
+      if (!checkParent(target, userMenuDiv)) {
+        // click NOT on the menu
+        if (checkParent(target, userMenu)) {
+          // click on the link
+          if (userMenuDiv.classList.contains("invisible")) {
+            userMenuDiv.classList.remove("invisible");
+          } else { userMenuDiv.classList.add("invisible"); }
+        } else {
+          // click both outside link and outside menu, hide menu
+          userMenuDiv.classList.add("invisible");
         }
-
-        //Nav Menu
-        if (!checkParent(target, navMenuDiv)) {
-          // click NOT on the menu
-          if (checkParent(target, navMenu)) {
-            // click on the link
-            if (navMenuDiv.classList.contains("hidden")) {
-              navMenuDiv.classList.remove("hidden");
-            } else { navMenuDiv.classList.add("hidden"); }
-          } else {
-            // click both outside link and outside menu, hide menu
-            navMenuDiv.classList.add("hidden");
-          }
-        }
-
       }
 
-      function checkParent(t, elm) {
-        while (t.parentNode) {
-          if (t == elm) { return true; }
-          t = t.parentNode;
+      //Nav Menu
+      if (!checkParent(target, navMenuDiv)) {
+        // click NOT on the menu
+        if (checkParent(target, navMenu)) {
+          // click on the link
+          if (navMenuDiv.classList.contains("hidden")) {
+            navMenuDiv.classList.remove("hidden");
+          } else { navMenuDiv.classList.add("hidden"); }
+        } else {
+          // click both outside link and outside menu, hide menu
+          navMenuDiv.classList.add("hidden");
         }
-        return false;
       }
 
-    </script>
+    }
 
-    <script>
-      for (var i = 0; i < 100; i++) {
-        var star =
-          '<div class="star m-0" style="animation: twinkle ' +
-          (Math.random() * 5 + 5) +
-          's linear ' +
-          (Math.random() * 1 + 1) +
-          's infinite; top: ' +
-          Math.random() * $(window).height() +
-          'px; left: ' +
-          Math.random() * $(window).width() +
-          'px;"></div>';
-        $('.homescreen').append(star);
+    function checkParent(t, elm) {
+      while (t.parentNode) {
+        if (t == elm) { return true; }
+        t = t.parentNode;
       }
+      return false;
+    }
 
-    </script>
-    <script src="dashboard.js"></script>
+  </script>
+
+  <script>
+    for (var i = 0; i < 100; i++) {
+      var star =
+        '<div class="star m-0" style="animation: twinkle ' +
+        (Math.random() * 5 + 5) +
+        's linear ' +
+        (Math.random() * 1 + 1) +
+        's infinite; top: ' +
+        Math.random() * $(window).height() +
+        'px; left: ' +
+        Math.random() * $(window).width() +
+        'px;"></div>';
+      $('.homescreen').append(star);
+    }
+
+  </script>
+  <script src="dashboard.js"></script>
 
 </body>
 

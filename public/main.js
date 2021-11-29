@@ -79,7 +79,7 @@ function app() {
             this.event_date = new Date(this.year, this.month, date).toDateString();
         },
 
-        addEvent() {
+        async addEvent() {
             // get all the habit checkboxes from the modal popup on the calendar
             const habitCheckboxes = document.getElementsByClassName("habit_checkbox");
             const triggerSelects = document.getElementsByClassName('triggerSelect');
@@ -109,52 +109,70 @@ function app() {
                 // adds the data for each checkbox
                 habitData.push({ habit: habitCheckbox.value, didHabit: habitCheckbox.checked, reward: habitCheckbox.dataset.reward, cost: habitCheckbox.dataset.cost, trigger: triggerSelect.value })
             }
+            // this 'newDate' converts the string version of date into a real date for storing in mongodb
 
-            const dataForServer = {
-                habits: habitData,
-                date: new Date(this.event_date)
-                // this 'newDate' converts the string version of date into a real date for storing in mongodb
-            }
+            const dataForServerDate = new Date(this.event_date)
+            const queryString = dataForServerDate.getFullYear() + '-' + (dataForServerDate.getMonth()+1) + '-' + dataForServerDate.getDate()
+            let triggerDate = `https://mercuryretrogradeapi.com?date=${queryString}`
+            console.log(triggerDate, 'date')
+            let inRetrogradeStatus = await fetch(triggerDate)
+                //.then gets called after the fetch gets done and completes data & converts it into a json object
+                .then(res => res.json())
+                // takes in the json object and we get to do what we want with that data
+                .then(data => {
+                    console.log('data', data)
+                    return data.is_retrograde
+                })
+                .catch(err => {
+                    alert("Error - couldn't find results, sorry!")
+                })
+                console.log (inRetrogradeStatus, 'in retrograde status')
+
+        const dataForServer = {
+            habits: habitData,
+            inRetrograde: inRetrogradeStatus,
+            date: dataForServerDate
+        }
             console.log("addEvent: should send this data to the server in a fetch", dataForServer);
-            setBackground(dataForServer)
+        setBackground(dataForServer)
             displayRewards(dataForServer)
 
-            if (this.event_title == '') {
-                return;
-            }
-            this.events.push({
-                event_date: this.event_date,
-                event_title: this.event_title,
-                event_theme: this.event_theme
-            });
-            // clear the form data
-            this.event_title = '';
-            this.event_date = '';
-            // this.event_theme = 'blue';
-            // close the modal
-            this.openEventModal = false;
+            if(this.event_title == '') {
+        return;
+    }
+    this.events.push({
+        event_date: this.event_date,
+        event_title: this.event_title,
+        event_theme: this.event_theme
+    });
+    // clear the form data
+    this.event_title = '';
+    this.event_date = '';
+    // this.event_theme = 'blue';
+    // close the modal
+    this.openEventModal = false;
 
-        },
+},
 
 
-        getNoOfDays() {
-            let daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
+getNoOfDays() {
+    let daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
 
-            // find where to start calendar day of week
-            let dayOfWeek = new Date(this.year, this.month).getDay();
-            let blankdaysArray = [];
-            for (var i = 1; i <= dayOfWeek; i++) {
-                blankdaysArray.push(i);
-            }
+    // find where to start calendar day of week
+    let dayOfWeek = new Date(this.year, this.month).getDay();
+    let blankdaysArray = [];
+    for (var i = 1; i <= dayOfWeek; i++) {
+        blankdaysArray.push(i);
+    }
 
-            let daysArray = [];
-            for (var i = 1; i <= daysInMonth; i++) {
-                daysArray.push(i);
-            }
+    let daysArray = [];
+    for (var i = 1; i <= daysInMonth; i++) {
+        daysArray.push(i);
+    }
 
-            this.blankdays = blankdaysArray;
-            this.no_of_days = daysArray;
-        }
+    this.blankdays = blankdaysArray;
+    this.no_of_days = daysArray;
+}
     }
 }
 
