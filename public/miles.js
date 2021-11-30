@@ -170,7 +170,8 @@ let coordinateArray = []
 let count = 0
 let coordinateData = JSON.parse(document.querySelector("#events").dataset.coordinates)
 coordinateData.forEach((coordinate) => {
-    coordinateArray.push([coordinate.longitude + count, coordinate.latitude])
+    let extraDistance = count/10000
+    coordinateArray.push([coordinate.latitude + extraDistance, coordinate.longitude])
     count++
 })
 console.log(coordinateArray)
