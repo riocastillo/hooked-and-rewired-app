@@ -57,7 +57,7 @@
             <p class="name">Your workout history:</p>
             <ul class="history">
                 <% for(let i=0; i < trackedEvents.length; i++){ %>
-                    <li id="events">
+                    <li id="events" data-coordinates= "<%= JSON.stringify(trackedEvents[i].coordinates) %>">
                         <p id="date">Date:
                             <%= new Date(trackedEvents[i].date).toLocaleDateString('en-US') %>
                         </p>

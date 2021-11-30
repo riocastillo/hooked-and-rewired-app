@@ -128,6 +128,7 @@ document.querySelector('.button_base').addEventListener('click', () => {
         body: JSON.stringify({
             miles: totalDistance,
             date: today.toUTCString(),
+            coordinates: distanceArray,
         }),
     })
         .then((response) => {
@@ -138,6 +139,7 @@ document.querySelector('.button_base').addEventListener('click', () => {
             console.log('text=' + text)
             window.location.reload(true);
         });
+
 })
 
 
@@ -164,15 +166,20 @@ mymap.addLayer(Esri_WorldStreetMap)
 //record those in your coordinates and then create an array of those coordinates
 // create a red polyline from an array of LatLng points
 //we would keep a running track to the coordinates, and append the most recent set of coordinates to the line 
-var latlngs = [
-    [45.51, -122.68],
-    [37.77, -122.43],
-    [34.04, -118.2]
-];
+let coordinateArray = []
+let count = 0
+let coordinateData = JSON.parse(document.querySelector("#events").dataset.coordinates)
+coordinateData.forEach((coordinate) => {
+    coordinateArray.push([coordinate.longitude + count, coordinate.latitude])
+    count++
+})
+console.log(coordinateArray)
 
-var polyline = L.polyline(latlngs, { color: 'red' }).addTo(mymap);
+var polyline = L.polyline(coordinateArray, { color: 'red' }).addTo(mymap);
+console.log(polyline)
 
 // zoom the map to the polyline
 mymap.fitBounds(polyline.getBounds());
 
-setTimeout(() => {mymap.invalidateSize()}, 1000)
+setTimeout(() => { mymap.invalidateSize() }, 1000)
+

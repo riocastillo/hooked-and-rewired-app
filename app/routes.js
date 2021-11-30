@@ -283,7 +283,7 @@ module.exports = function (app, passport, db) {
 
   app.post("/miles", (req, res) => {
     db.collection("miles").insertOne(
-      { email: req.user.local.email, miles: req.body.miles, date: req.body.date },
+      { email: req.user.local.email, miles: req.body.miles, date: req.body.date, coordinates: req.body.coordinates },
       (err, result) => {
         if (err) return res.send(500, err);
         res.send(200, "sent!");

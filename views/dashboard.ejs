@@ -555,12 +555,13 @@
               <script>
                 let calendar = `<%- JSON.stringify(calendar) %>`
                 calendar = JSON.parse(calendar)
+                console.log('calendar:', calendar)
                 const triggerCounts = {}
                 calendar.forEach((day) => {
                   day.dataForServer.habits.forEach((habit) => {
                     trigger = habit.trigger
+
                     if (trigger) { //truthey
-                      //you use dot notation to access properties but we want to access the name of an actual trigger, not the word trigger.the square notation takes the value of that variable and tries to find that property inside that object. we use dot notation when hardcoding 
                       let triggerCount = triggerCounts[trigger]
                       if (!triggerCount) {
                         triggerCounts[trigger] = 1
@@ -572,22 +573,21 @@
                     }
                   })
                 })
+                console.log('triggerCounts Object:', triggerCounts)
                 const triggerKeys = Object.keys(triggerCounts)
-                //going to change the array of triggerkeys to be an array of trigger objects
                 //ex of trigger keys => ["saw my ex", "migraine"]
                 //ex of trigger array => [{trigger:"saw my ex", count: 4}, {trigger: "migraine", count:3}]
                 //then sorting by the count property 
 
                 const triggerArray = triggerKeys.map(k => ({ trigger: k, count: triggerCounts[k] })).sort((a, b) => a.count - b.count)
 
+                console.log('triggerArray:', triggerArray)
 
                 let triggerCountArray = triggerArray.map(t => t.count)
-                console.log('count array', triggerCountArray)
+                console.log('count array:', triggerCountArray)
                 let triggerNameArray = triggerArray.map(t => t.trigger)
-                console.log('name array', triggerNameArray)
+                console.log('name array:', triggerNameArray)
 
-                //track the days when you have a trigger but no bad habits => so we can see which triggers are assosciated with doing the bad habits
-                //could show and document growth
 
                 new Chart(document.getElementById("chartjs-11"),
                   {
@@ -641,9 +641,9 @@
               This is a period when the planet of Mercury is appearing to go backwards in its orbit. This retrograde
               happens only three times a year, and because Mercury is said to govern the thinking, the learning, the
               reasoning and communication of our everyday lives, when Mercury is in retrograde, it means that its power
-              to positively influence these domains is stifled. While many view this as potential for chaos, many also
-              few it as an invitation to explore our inner-tricks and chaos - especially as it relates to what triggers
-              us during this time.</p><br>
+              to positively influence these domains is stifled. While many view this as potential for chaos, others also
+              view it as an invitation to explore our inner-tricks and chaos - especially as it relates to what triggers
+              us. <span style="color: rgb(0, 67, 167)">So if you find yourself triggered during a retrograde, this is an invitation to be introspective and graceful with yourself.</span></p><br>
 
           </div>
         </div>
@@ -692,14 +692,21 @@
                 let triggerKeysRetrograde = Object.keys(mercuryObject)
                 let dataLabels = []
                 let dataValues = []
-                triggerKeysRetrograde.forEach((trigger) =>{
+                const backgroundColors = []
+                // first push the in retrograde counts and color
+                triggerKeysRetrograde.forEach((trigger) => {
                   let countObject = mercuryObject[trigger]
                   dataValues.push(countObject.t)
-                  dataLabels.push(trigger + ' in retrograde')
-                  dataValues.push(countObject.f)
-                  dataLabels.push(trigger + ' out of retrograde')
+                  dataLabels.push(trigger + ' in a retrograde')
+                  backgroundColors.push("rgb(52, 214, 255)")
                 })
-
+                // next push the out of retro counts and color
+                triggerKeysRetrograde.forEach((trigger) => {
+                  let countObject = mercuryObject[trigger]
+                  dataValues.push(countObject.f)
+                  dataLabels.push(trigger + ' out of a retrograde')
+                  backgroundColors.push("rgb(52, 106, 255)")
+                })
 
                 new Chart(document.getElementById("chartjs-13"), {
                   "type": "pie",
@@ -709,7 +716,7 @@
                       "label": "percentage",
                       "render": 'percentage',
                       "data": dataValues,
-                      "backgroundColor": ["rgb(52, 214, 255)", "rgb(52, 106, 255)","rgb(52, 214, 255)", "rgb(52, 106, 255)","rgb(52, 214, 255)", "rgb(52, 106, 255)","rgb(52, 214, 255)", "rgb(52, 106, 255)", ],
+                      "backgroundColor": backgroundColors,
                       "borderColor": "rgb(0,0,0)",
                       "borderWidth": 2,
                     }]

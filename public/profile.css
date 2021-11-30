@@ -183,6 +183,9 @@ ol, ul.rewardList {
     padding-right:0;
   }
 
-  .tick{
-    margin-right:0;
-  }
+ .powerOff{
+    color:black;
+    float:right;
+    padding-right:7%;
+    cursor: pointer;
+ }
