@@ -1,4 +1,29 @@
 
+// Get the button that opens the modal
+let questionButton = document.querySelector('.question')
+
+// Get the <span> element that closes the modal
+let closeModal = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+function openIntro(evt) {
+    let intro = document.getElementById("mercuryModal");
+    intro.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+closeModal.onclick = function () {
+    let intro = document.getElementById("mercuryModal");
+    intro.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    let intro = document.getElementById("mercuryModal");
+    if (event.target == intro) {
+        intro.style.display = "none";
+    }
+}
 
 // zingchart.RESIZESPEED = 0;
 // zingchart.DEBOUNCESPEED = 0;
