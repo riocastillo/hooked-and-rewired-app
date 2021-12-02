@@ -31,7 +31,7 @@ function app() {
 
         ],
         event_title: '',
-        event_date: '',
+        event_date: new Date(),
         // event_theme: '',
 
         // themes: [
@@ -110,9 +110,9 @@ function app() {
                 habitData.push({ habit: habitCheckbox.value, didHabit: habitCheckbox.checked, reward: habitCheckbox.dataset.reward, cost: habitCheckbox.dataset.cost, trigger: triggerSelect.value })
             }
             // this 'newDate' converts the string version of date into a real date for storing in mongodb
-
+            console.log(this.event_date, 'event date')
             const dataForServerDate = new Date(this.event_date)
-            const queryString = dataForServerDate.getFullYear() + '-' + (dataForServerDate.getMonth()+1) + '-' + dataForServerDate.getDate()
+            const queryString = dataForServerDate.getFullYear() + '-' + (dataForServerDate.getMonth() + 1) + '-' + dataForServerDate.getDate()
             let triggerDate = `https://mercuryretrogradeapi.com?date=${queryString}`
             console.log(triggerDate, 'date')
             let inRetrogradeStatus = await fetch(triggerDate)
@@ -126,53 +126,53 @@ function app() {
                 .catch(err => {
                     alert("Error - couldn't find results, sorry!")
                 })
-                console.log (inRetrogradeStatus, 'in retrograde status')
+            console.log(inRetrogradeStatus, 'in retrograde status')
 
-        const dataForServer = {
-            habits: habitData,
-            inRetrograde: inRetrogradeStatus,
-            date: dataForServerDate
-        }
+            const dataForServer = {
+                habits: habitData,
+                inRetrograde: inRetrogradeStatus,
+                date: dataForServerDate
+            }
             console.log("addEvent: should send this data to the server in a fetch", dataForServer);
-        setBackground(dataForServer)
+            setBackground(dataForServer)
             displayRewards(dataForServer)
 
-            if(this.event_title == '') {
-        return;
-    }
-    this.events.push({
-        event_date: this.event_date,
-        event_title: this.event_title,
-        event_theme: this.event_theme
-    });
-    // clear the form data
-    this.event_title = '';
-    this.event_date = '';
-    // this.event_theme = 'blue';
-    // close the modal
-    this.openEventModal = false;
+            if (this.event_title == '') {
+                return;
+            }
+            this.events.push({
+                event_date: this.event_date,
+                event_title: this.event_title,
+                event_theme: this.event_theme
+            });
+            // clear the form data
+            this.event_title = '';
+            this.event_date = new Date();
+            // this.event_theme = 'blue';
+            // close the modal
+            this.openEventModal = false;
 
-},
+        },
 
 
-getNoOfDays() {
-    let daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
+        getNoOfDays() {
+            let daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
 
-    // find where to start calendar day of week
-    let dayOfWeek = new Date(this.year, this.month).getDay();
-    let blankdaysArray = [];
-    for (var i = 1; i <= dayOfWeek; i++) {
-        blankdaysArray.push(i);
-    }
+            // find where to start calendar day of week
+            let dayOfWeek = new Date(this.year, this.month).getDay();
+            let blankdaysArray = [];
+            for (var i = 1; i <= dayOfWeek; i++) {
+                blankdaysArray.push(i);
+            }
 
-    let daysArray = [];
-    for (var i = 1; i <= daysInMonth; i++) {
-        daysArray.push(i);
-    }
+            let daysArray = [];
+            for (var i = 1; i <= daysInMonth; i++) {
+                daysArray.push(i);
+            }
 
-    this.blankdays = blankdaysArray;
-    this.no_of_days = daysArray;
-}
+            this.blankdays = blankdaysArray;
+            this.no_of_days = daysArray;
+        }
     }
 }
 
@@ -293,6 +293,10 @@ function setBackground(dataForServer) {
     //chaning it from a string to the date type that .date needs
     let dateSelected = new Date(dataForServer.date)
     streakDate = Array.from(div).filter((diva) => {
+        // console.log(MONTH_NAMES[dateSelected.getMonth()], 'test')
+        // console.log(dateSelected.getMonth(), 'test2')
+        // console.log(MONTH_NAMES, 'test3')
+        // console.log(dateSelected, 'test4')
         if (calendarMonth.innerText == MONTH_NAMES[dateSelected.getMonth()]) {
             if (diva.innerText == dateSelected.getDate()) {
                 return diva
@@ -311,7 +315,9 @@ function setBackground(dataForServer) {
             finalShadeNum -= scale
         }
     })
-    streakDate[0].style.background = `rgb(0,0, 250, 0.${Math.floor(finalShadeNum)})`
+    if (streakDate[0]) {
+        streakDate[0].style.background = `rgb(0,0, 250, 0.${Math.floor(finalShadeNum)})`
+    }
 
     let streakData = dataForServer.date
 
