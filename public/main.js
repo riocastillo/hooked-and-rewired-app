@@ -245,7 +245,8 @@ function displayRewards(dataForServer) {
     //     window.location.reload(true);
     //     })
 
-    document.querySelector(".sendRewardButton").addEventListener('click', () => {
+    document.querySelector(".sendRewardButton").addEventListener('click', (e) => {
+        // e.preventDefault() // will prevent all default functionality that comes w the button
         const rewardData = [];
         // loop through all the checkboxes, for each reward checkbox we want to push reward info into the data array
         for (let i = 0; i < rewardCheckboxes.length; i++) {
