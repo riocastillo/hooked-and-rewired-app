@@ -1,8 +1,4 @@
-<img src = "new.png" width = 100%>
 <img src = "demo-hooked.gif" width = 100%>
-
-## Notes
-_This app will be ready to launch in December._
 
 ## Description
 Hooked & Rewired is a fullstack app designed to help people who are trying to break bad habits. It takes 21 days to break a bad habit. This app isn't designed to make it easier, it's designed to make you better. 
